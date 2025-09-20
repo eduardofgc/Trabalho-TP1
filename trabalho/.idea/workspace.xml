@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c33ea94-f601-40ce-8bdf-119d8526690e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,13 +46,14 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "onboarding.tips.debug.path": "C:/Users/dudur/Java project/Trabalho-TP/trabalho/src/Main.java",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java" />
       <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java\grupo\trabalho" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -61,15 +61,28 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="grupo.trabalho.Main" />
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="grupo.trabalho.HelloApplication" />
       <module name="trabalho" />
       <option name="PROGRAM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\.m2\repository\org\openjfx\javafx-sdk-17.0.6\lib&quot; --add-modules javafx.controls,javafx.fxml  " />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="grupo.trabalho.Main" />
+      <module name="trabalho" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib;C:\Users\dudur\Java project\Trabalho-TP\trabalho\target\classes&quot; --add-modules grupo.trabalho,javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.HelloApplication" />
+      <item itemvalue="Application.Main" />
+    </list>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
