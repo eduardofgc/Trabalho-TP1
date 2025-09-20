@@ -11,6 +11,6 @@ module grupo.trabalho {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens grupo.trabalho to javafx.fxml;
-    exports grupo.trabalho;
+    opens grupo.trabalho to javafx.fxml;   // allow FXML reflection
+    exports grupo.trabalho;                // export package to other modules
 }
