@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1c33ea94-f601-40ce-8bdf-119d8526690e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.HelloApplication.executor": "Run",
     "Application.Main .executor": "Run",
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
@@ -53,20 +56,22 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java" />
+      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\resources\grupo\trabalho" />
       <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java\grupo\trabalho" />
+      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\resources" />
+      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="grupo.trabalho" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="HelloApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="grupo.trabalho.HelloApplication" />
       <module name="trabalho" />
       <option name="PROGRAM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\.m2\repository\org\openjfx\javafx-sdk-17.0.6\lib&quot; --add-modules javafx.controls,javafx.fxml  " />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\dudur\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib;C:\Users\dudur\Java project\Trabalho-TP\trabalho\target\classes&quot; --add-modules grupo.trabalho,javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
