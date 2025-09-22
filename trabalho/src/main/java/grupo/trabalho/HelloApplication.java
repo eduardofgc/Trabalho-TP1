@@ -7,6 +7,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -18,7 +22,6 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
 
     }
 
