@@ -45,6 +45,7 @@ public class HelloController {
             Scene mainScene = new Scene(mainRoot);
             mainStage.setScene(mainScene);
             mainStage.setResizable(false);
+            mainStage.setTitle("Gestão de RH - Menu Principal");
             mainStage.show();
 
         } catch (Exception e){

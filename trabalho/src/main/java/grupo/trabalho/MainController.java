@@ -18,9 +18,54 @@ import java.io.IOException;
 import java.net.URL;
 
 public class MainController {
+    private AdmController admController;
+    private HelloController helloController;
 
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button admButton;
+    @FXML
+    private Button candidaturaButton;
+    @FXML
+    private Button recrutamentoButton;
+    @FXML
+    private Button financeiroButton;
+
+    @FXML
+    public void goBackMenu(Button exitButton) throws IOException {
+        Stage prevStage = (Stage) exitButton.getScene().getWindow();
+        prevStage.close();
+
+        Stage mainStage = new Stage();
+        FXMLLoader loginFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/second-view.fxml"));
+        Parent loginRoot = loginFXMLLoader.load();
+
+        Scene scene = new Scene(loginRoot);
+        mainStage.setTitle("Gestão de RH - Menu Principal");
+        mainStage.setScene(scene);
+        mainStage.setResizable(false);
+        mainStage.show();
+    }
+
+    @FXML
+    private void goToAdm() throws IOException {
+        Stage prevStage = (Stage) admButton.getScene().getWindow();
+        prevStage.close();
+
+        Stage admStage = new Stage();
+        FXMLLoader admFXMLLoader = new FXMLLoader((getClass().getResource("/grupo/trabalho/adm-view.fxml")));
+        Parent admRoot = admFXMLLoader.load();
+
+        AdmController admController = admFXMLLoader.getController();
+        admController.setMainController(this);
+
+        Scene scene = new Scene(admRoot);
+        admStage.setTitle("Administração/Gestão");
+        admStage.setScene(scene);
+        admStage.setResizable(false);
+        admStage.show();
+    }
 
     @FXML
     private void handleLogout() throws IOException {
