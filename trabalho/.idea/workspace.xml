@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1c33ea94-f601-40ce-8bdf-119d8526690e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +62,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\resources\images" />
       <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\java\grupo\trabalho" />
       <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\resources\grupo\trabalho" />
       <recent name="C:\Users\dudur\Java project\Trabalho-TP\trabalho\src\main\resources" />

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -63,6 +64,8 @@ public class HelloController {
         Parent loginRoot = loginFXMLLoader.load();
 
         Scene scene = new Scene(loginRoot);
+
+        loginStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
         loginStage.setTitle("Gestão de RH");
         loginStage.setScene(scene);
         loginStage.setResizable(false);

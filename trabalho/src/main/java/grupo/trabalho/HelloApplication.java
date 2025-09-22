@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
+import javafx.scene.image.Image;
+
 
 public class HelloApplication extends Application {
     @Override
@@ -17,6 +17,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
         Parent root = fxmlLoader.load();
 
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
         Scene scene = new Scene(root);
         stage.setTitle("Gestão de RH");
         stage.setScene(scene);
