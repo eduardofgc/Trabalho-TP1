@@ -103,10 +103,10 @@ public class MainController {
         prevStage.close();
 
         Stage candidaturaStage = new Stage();
-        FXMLLoader rectrutamentoFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/recrutamento-view.fxml"));
-        Parent recrutamentoRoot = rectrutamentoFXMLLoader.load();
+        FXMLLoader recrutamentoFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/recrutamento-view.fxml"));
+        Parent recrutamentoRoot = recrutamentoFXMLLoader.load();
 
-        RecrutamentoController recrutamentoControllerController = rectrutamentoFXMLLoader.getController();
+        RecrutamentoController recrutamentoControllerController = recrutamentoFXMLLoader.getController();
         recrutamentoControllerController.setMainController(this);
 
         Scene scene = new Scene(recrutamentoRoot);
@@ -115,5 +115,26 @@ public class MainController {
         candidaturaStage.setResizable(false);
         candidaturaStage.show();
     }
+
+    @FXML
+    private void goToFinanceiro() throws IOException{
+        Stage prevStage = (Stage) financeiroButton.getScene().getWindow();
+        prevStage.close();
+
+        Stage financeiroStage = new Stage();
+        FXMLLoader financeiroFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
+        Parent financeiroRoot = financeiroFXMLLoader.load();
+
+        FinanceiroController financeiroController = financeiroFXMLLoader.getController();
+        financeiroController.setMainController(this);
+
+        Scene scene = new Scene(financeiroRoot);
+        financeiroStage.setTitle("Financeiro");
+        financeiroStage.setScene(scene);
+        financeiroStage.setResizable(false);
+        financeiroStage.show();
+    }
+
+
 
 }

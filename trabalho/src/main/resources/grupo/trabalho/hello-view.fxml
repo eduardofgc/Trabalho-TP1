@@ -2,46 +2,35 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="285.0" prefWidth="454.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.HelloController">
+<AnchorPane prefHeight="350" prefWidth="500" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.HelloController">
 
    <children>
-      <Button fx:id="loginButton" layoutX="155.0" layoutY="213.0" onAction="#handleLogin" style="-fx-background-color: white; -fx-text-fill: black; -fx-background-radius: 25; -fx-font-size: 14px; -fx-padding: 6 18 6 18;" text="Login">
-         <effect>
-            <DropShadow color="#aaaaaa" radius="3" />
-         </effect>
-      </Button>
-      <Button fx:id="exitButton" layoutX="237.0" layoutY="213.0" onAction="#handleExit" style="-fx-background-color: white; -fx-text-fill: black; -fx-background-radius: 25; -fx-font-size: 14px; -fx-padding: 6 18 6 18;" text="Sair">
-         <effect>
-            <DropShadow color="#aaaaaa" radius="3" />
-         </effect>
-      </Button>
+      <VBox alignment="CENTER" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
 
-      <Label layoutX="74.0" layoutY="31.0" style="-fx-text-fill: #333333; -fx-font-weight: bold;" text="Sistema de Gestão de RH" textAlignment="CENTER">
-         <font>
-            <Font size="26.0" />
-         </font>
-         <effect>
-            <DropShadow color="#aaaaaa" radius="3.0" />
-         </effect>
-      </Label>
+         <Label style="-fx-text-fill: #2c3e50;" text="Sistema de Gestão de RH">
+            <font>
+               <Font name="Segoe UI Semibold" size="26" />
+            </font>
+         </Label>
 
-      <Label layoutX="53.0" layoutY="103.0" style="-fx-text-fill: #333333; -fx-font-weight: bold;" text="Usuário:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="usernameField" layoutX="142.0" layoutY="99.0" prefWidth="250" promptText="Digite seu usuário" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8;" />
+         <VBox alignment="CENTER_LEFT" prefWidth="350" spacing="5.0">
+            <Label style="-fx-text-fill: #2c3e50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Usuário:" />
+            <TextField fx:id="usernameField" prefWidth="350" promptText="Digite seu usuário" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 8;" />
+         </VBox>
 
-      <Label layoutX="59.0" layoutY="154.0" style="-fx-text-fill: #333333; -fx-font-weight: bold;" text="Senha:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="passwordField" layoutX="141.0" layoutY="150.0" prefWidth="250" promptText="Digite sua senha" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 8;" />
+         <VBox alignment="CENTER_LEFT" prefWidth="350" spacing="5.0">
+            <Label style="-fx-text-fill: #2c3e50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Senha:" />
+            <PasswordField fx:id="passwordField" prefWidth="350" promptText="Digite sua senha" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 8;" />
+         </VBox>
+      </VBox>
+      <Button fx:id="loginButton" layoutX="139.0" layoutY="257.0" onAction="#handleLogin" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 20 8 20; -fx-background-radius: 8;" text="Login" />
+
+      <Button fx:id="exitButton" layoutX="284.0" layoutY="257.0" onAction="#handleExit" prefHeight="36.0" prefWidth="74.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50; -fx-font-size: 14px; -fx-padding: 8 20 8 20; -fx-background-radius: 8;" text="Sair" />
    </children>
 </AnchorPane>
