@@ -3,19 +3,13 @@ package grupo.trabalho;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class MainController {
     private AdmController admController;
@@ -82,6 +76,44 @@ public class MainController {
         loginStage.setScene(scene);
         loginStage.setResizable(false);
         loginStage.show();
+    }
+
+    @FXML
+    private void goToCandidatura() throws IOException {
+        Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
+        prevStage.close();
+
+        Stage candidaturaStage = new Stage();
+        FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
+        Parent candidaturaRoot = candidaturaFXMLLoader.load();
+
+        CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
+        candidaturaController.setMainController(this);
+
+        Scene scene = new Scene(candidaturaRoot);
+        candidaturaStage.setTitle("Candidatura");
+        candidaturaStage.setScene(scene);
+        candidaturaStage.setResizable(false);
+        candidaturaStage.show();
+    }
+
+    @FXML
+    private void goToRecrutamento() throws IOException {
+        Stage prevStage = (Stage) recrutamentoButton.getScene().getWindow();
+        prevStage.close();
+
+        Stage candidaturaStage = new Stage();
+        FXMLLoader rectrutamentoFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/recrutamento-view.fxml"));
+        Parent recrutamentoRoot = rectrutamentoFXMLLoader.load();
+
+        RecrutamentoController recrutamentoControllerController = rectrutamentoFXMLLoader.getController();
+        recrutamentoControllerController.setMainController(this);
+
+        Scene scene = new Scene(recrutamentoRoot);
+        candidaturaStage.setTitle("Recrutamento");
+        candidaturaStage.setScene(scene);
+        candidaturaStage.setResizable(false);
+        candidaturaStage.show();
     }
 
 }
