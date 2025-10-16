@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.MainController">
 
-    <children>
+<children>
         <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
             <Label style="-fx-text-fill: #2c3e50;" text="Menu Principal - Sistema de Gestão de RH">
                 <font>
