@@ -19,5 +19,15 @@ public class Administrador extends Usuario{
 
     }
 
+    public void editarUsuario(Usuario meuUsuario, String novoEmail, String novoLogin, String novaSenha){
+        meuUsuario.email = novoEmail;
+        meuUsuario.senha = novaSenha;
+    }
 
+    public void listarUsuarios(ArrayList<Usuario> usuariosArray){
+        for (Usuario u : usuariosArray){
+            //temp
+            System.out.println(u.getLogin());
+        }
+    }
 }
