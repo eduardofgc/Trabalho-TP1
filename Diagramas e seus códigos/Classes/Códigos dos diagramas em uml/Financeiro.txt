@@ -1,0 +1,155 @@
+@startuml
+' Configurações de aparência para consistência
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam class {
+    BackgroundColor LightGoldenRodYellow
+    ArrowColor Olive
+    BorderColor Olive
+}
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Gray
+}
+hide empty members
+
+' Título do Diagrama
+title Diagrama de Classes - Módulo Financeiro (Aluno 4)
+
+' =========================================
+' == ENUMERAÇÕES (Tipos de dados fixos) ==
+' =========================================
+enum RegimeContratacao {
+  CLT
+  ESTAGIO
+  PJ
+}
+note right
+  Regime de contratação do funcionário,
+  usado como base para o cálculo do salário.
+end note
+
+enum TipoRegraSalario {
+  PROVENTO
+  DESCONTO
+}
+note right
+  Define se uma regra salarial é um
+  acréscimo (benefício) ou uma
+  dedução (imposto, falta).
+end note
+
+enum StatusFuncionario {
+    ATIVO
+    INATIVO
+}
+
+
+' =========================================
+' == CLASSES DE OUTROS MÓDULOS (Contexto) ==
+' =========================================
+package Aluno 1 AdmGestão #LightBlue {
+  abstract class Usuario {
+    # nome String
+    # cpf String
+  }
+  class Administrador extends Usuario {
+    + configurarRegraSalarial(regra RegraSalario) void
+  }
+}
+
+
+' =========================================
+' == CLASSES DO MÓDULO FINANCEIRO (Aluno 4) ==
+' =========================================
+package Aluno 4 Financeiro #LightGoldenRodYellow {
+
+  class Funcionario extends Usuario {
+    - matricula int
+    - dataAdmissao Date
+    - salarioBase double
+    - regime RegimeContratacao
+    - status StatusFuncionario
+    - cargo String
+    - departamento String
+    + calcularSalarioLiquido(regras RegraSalario[]) double
+    + visualizarContracheque(mes int, ano int) Holerite
+  }
+  note left of Funcionario
+    Classe central do módulo, estendendo Usuario.
+    Contém todos os dados necessários para
+    o processamento da folha de pagamento.
+  end note
+
+  class RegraSalario {
+    - descricao String
+    - valor double
+    - tipo TipoRegraSalario
+  }
+  note right of RegraSalario
+    Representa benefícios (vale-transporte,
+    vale-alimentação) ou descontos (impostos).
+    Apenas Administradores podem configurar
+    essas regras. 
+  end note
+
+  class FolhaPagamento {
+    - dataGeracao Date
+    - mesReferencia int
+    - anoReferencia int
+    - valorTotal double
+    + gerarFolha(funcionarios Funcionario[]) void
+    + exportar(formato String) File
+  }
+  note bottom of FolhaPagamento
+    Representa o processamento mensal dos
+    pagamentos de todos os funcionários ativos. 
+    É composta por múltiplos Holerites.
+  end note
+
+  class Holerite {
+    - salarioBruto double
+    - totalProventos double
+    - totalDescontos double
+    - salarioLiquido double
+  }
+  note bottom of Holerite
+    Representa o contracheque individual
+    de um funcionário para um determinado mês.
+    É uma parte essencial da Folha de Pagamento.
+  end note
+
+}
+
+' =========================================
+' == RELACIONAMENTOS ENTRE AS CLASSES ==
+' =========================================
+
+' --- Relação de Herança ---
+Funcionario -- Usuario
+
+
+' --- Relação de Associação ---
+' Um Administrador gerencia as Regras Salariais
+Administrador 1 -- 0.. RegraSalario  configura 
+
+' As Regras Salariais são aplicadas ao cálculo do salário do Funcionário
+Funcionario 1 -- 0.. RegraSalario  aplica-se a
+
+' Cada Holerite pertence a um único Funcionário
+Holerite 1 -- 1 Funcionario  referente a
+
+
+' --- Relação de Composição ---
+' A Folha de Pagamento é composta por um ou mais Holerites.
+' Se a folha é excluída, os holerites daquele processamento também são.
+FolhaPagamento 1 -- 1.. Holerite  contém
+
+
+' --- Relação de Dependência ---
+' A FolhaPagamento USA uma lista de Funcionários para ser gerada
+FolhaPagamento .. Funcionario  usa
+
+@enduml

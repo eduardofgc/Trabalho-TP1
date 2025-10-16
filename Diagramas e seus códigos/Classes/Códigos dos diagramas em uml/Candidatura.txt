@@ -1,0 +1,126 @@
+@startuml
+' Configurações de aparência para consistência
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam class {
+    BackgroundColor LightCoral
+    ArrowColor Firebrick
+    BorderColor Firebrick
+}
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Gray
+}
+hide empty members
+
+' Título do Diagrama
+title Diagrama de Classes - Módulo de Candidatura (Aluno 2)
+
+' =========================================
+' == ENUMERAÇÕES (Tipos de dados fixos) ==
+' =========================================
+enum StatusCandidatura {
+  PENDENTE
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+}
+note right
+  Representa os status possíveis de uma
+  candidatura a uma vaga, conforme as
+  regras de negócio[cite: 19, 75].
+end note
+
+
+' =========================================
+' == CLASSES DE OUTROS MÓDULOS (Contexto) ==
+' =========================================
+package "Aluno 3: Recrutamento" #PaleGreen {
+  class Recrutador {
+    + gerenciarCandidato(candidato: Candidato): void
+    + atualizarStatusCandidatura(candidatura: Candidatura, novoStatus: StatusCandidatura): void
+  }
+  class Vaga {
+    - cargo: String
+    - status: String
+  }
+  class Entrevista {
+    ' Atributos e métodos definidos no outro diagrama
+  }
+}
+
+
+' =========================================
+' == CLASSES DO MÓDULO DE CANDIDATURA (Aluno 2) ==
+' =========================================
+package "Aluno 2: Candidatura" #LightCoral {
+  abstract class Pessoa {
+    # nome: String
+    # cpf: String
+    # email: String
+    # telefone: String
+  }
+
+  class Candidato extends Pessoa {
+    - formacao: String
+    - experiencia: String
+    - pretensaoSalarial: double
+    - disponibilidadeHorario: String
+    - dataCadastro: Date
+    - documentosAdicionais: File[]
+    + cadastrar(): void
+    + editarDados(): void
+    + excluir(): void
+    + validarCPF(): boolean
+  }
+  note left of Candidato
+    Representa um indivíduo que busca
+    uma vaga. Seus dados são gerenciados
+    pelo Recrutador[cite: 16].
+    O Candidato não tem acesso
+    direto ao sistema[cite: 113].
+  end note
+
+  class Candidatura {
+    - dataCandidatura: Date
+    - status: StatusCandidatura
+    + atualizarStatus(novoStatus: StatusCandidatura): void
+    + excluir(): void
+  }
+  note bottom of Candidatura
+    Esta é uma **Classe Associativa**.
+    Ela representa o ato de um Candidato
+    se inscrever em uma Vaga e contém
+    informações próprias dessa relação,
+    como a data e o status[cite: 18].
+  end note
+}
+
+' =========================================
+' == RELACIONAMENTOS ENTRE AS CLASSES ==
+' =========================================
+
+' --- Relação de Herança ---
+Candidato --|> Pessoa
+
+' --- Relação de Classe Associativa ---
+' Modela a candidatura como uma relação entre Candidato e Vaga
+(Candidato, Vaga) .. Candidatura
+
+' --- Cardinalidades da Associação ---
+Candidato "1" -- "0..*" Candidatura
+Vaga "1" -- "0..*" Candidatura
+
+' --- Relação de Composição ---
+' Uma Entrevista só existe no contexto de uma Candidatura
+Candidatura "1" *-- "0..*" Entrevista : possui
+
+' --- Relação de Associação (Gerenciamento) ---
+' O Recrutador é o ator que gerencia os dados de Candidatos e Candidaturas
+Recrutador "1" -- "0..*" Candidato : gerencia >
+Recrutador "1" -- "0..*" Candidatura : gerencia >
+
+
+@enduml

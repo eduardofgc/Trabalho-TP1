@@ -1,0 +1,144 @@
+@startuml
+' Configurações de aparência para consistência
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam class {
+    BackgroundColor LightBlue
+    ArrowColor RoyalBlue
+    BorderColor RoyalBlue
+}
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Gray
+}
+hide empty members
+
+' Título do Diagrama
+title Diagrama de Classes - Módulo de Adm/Gestão (Aluno 1)
+
+' =========================================
+' == ENUMERAÇÕES (Tipos de dados fixos) ==
+' =========================================
+enum PerfilAcesso {
+  ADMINISTRADOR
+  GESTOR
+  RECRUTADOR
+  FUNCIONARIO
+}
+note right
+  Representa os perfis de acesso
+  hierárquicos do sistema, conforme
+  as regras de negócio.
+end note
+
+' =========================================
+' == CLASSES DE OUTROS MÓDULOS (Contexto) ==
+' =========================================
+package "Aluno 2: Candidatura" #LightCoral {
+    abstract class Pessoa {
+        # nome: String
+        # cpf: String
+    }
+}
+
+package "Aluno 3: Recrutamento" #PaleGreen {
+  class Recrutador extends Usuario {
+    ' Atributos e métodos definidos no outro diagrama
+  }
+  class Vaga {
+    ' Atributos e métodos definidos no outro diagrama
+  }
+  class Contratacao {
+    ' Atributos e métodos definidos no outro diagrama
+  }
+}
+
+package "Aluno 4: Financeiro" #LightGoldenRodYellow {
+  class Funcionario extends Usuario {
+    ' Atributos e métodos definidos pelo Aluno 4
+  }
+}
+
+
+' =========================================
+' == CLASSES DO MÓDULO DE ADM/GESTÃO (Aluno 1) ==
+' =========================================
+package "Aluno 1: Adm/Gestão" #LightBlue {
+  abstract class Usuario extends Pessoa {
+    # email: String
+    # login: String
+    # senha: String
+    # perfis: PerfilAcesso[]
+    + fazerLogin(): boolean
+    + alterarSenha(novaSenha: String): void
+    + validarDados(): boolean
+  }
+  note right of Usuario
+    Classe base para todos os usuários com
+    acesso ao sistema. Herda de Pessoa e
+    contém dados de autenticação e perfis.
+  end note
+
+  class Administrador extends Usuario {
+    + cadastrarUsuario(dados: Map): Usuario
+    + editarUsuario(usuario: Usuario, novosDados: Map): void
+    + excluirUsuario(usuario: Usuario): void
+    + listarUsuarios(): Usuario[]
+    + pesquisarUsuario(criterio: String): Usuario[]
+    + gerenciarPerfis(usuario: Usuario, perfis: PerfilAcesso[]): void
+  }
+  note left of Administrador
+    Responsável por gerenciar todas as
+    contas de usuário do sistema.
+    Apenas o Administrador pode
+    criar, editar ou remover outros usuários.
+  end note
+
+  class Gestor extends Usuario {
+    + criarVaga(dadosVaga: Map): Vaga
+    + atribuirRecrutador(vaga: Vaga, recrutador: Recrutador): void
+    + autorizarContratacao(contratacao: Contratacao): void
+    + gerarRelatorioGestao(): Relatorio
+  }
+  note bottom of Gestor
+    Responsável por gerenciar o processo de
+    recrutamento (vagas e contratações) e
+    gerar relatórios estratégicos.
+  end note
+  
+  class Relatorio {
+    - dataGeracao: Date
+    - tipo: String
+    - dados: String
+    + exportar(formato: String): File
+  }
+}
+
+' =========================================
+' == RELACIONAMENTOS ENTRE AS CLASSES ==
+' =========================================
+
+' --- Relações de Herança ---
+Usuario --|> Pessoa
+Administrador --|> Usuario
+Gestor --|> Usuario
+Recrutador --|> Usuario
+Funcionario --|> Usuario
+
+
+' --- Relações de Associação e Dependência ---
+
+' Administrador gerencia todos os tipos de Usuário
+Administrador "1" -- "0..*" Usuario : gerencia >
+
+' Gestor interage com classes do módulo de Recrutamento
+Gestor "1" -- "0..*" Vaga : cria e gerencia >
+Gestor "1" -- "0..*" Contratacao : autoriza >
+Gestor "1" -- "0..*" Recrutador : supervisiona >
+
+' Gestor gera Relatórios
+Gestor ..> Relatorio : <<gera>>
+
+@enduml

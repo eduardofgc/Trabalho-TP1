@@ -1,0 +1,178 @@
+@startuml
+' Configurações de aparência para melhor legibilidade
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam class {
+    BackgroundColor PaleGreen
+    ArrowColor SeaGreen
+    BorderColor SeaGreen
+}
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Gray
+}
+hide empty members
+
+' Título do Diagrama
+title Diagrama de Classes - Módulo de Recrutamento (Aluno 3)
+
+' =========================================
+' == ENUMERAÇÕES (Tipos de dados fixos) ==
+' =========================================
+enum StatusVaga {
+  ABERTA
+  FECHADA
+}
+
+enum RegimeContratacao {
+  CLT
+  ESTAGIO
+  PJ
+}
+
+enum StatusCandidatura {
+  PENDENTE
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+}
+
+enum StatusContratacao {
+  SOLICITADA
+  AUTORIZADA
+  RECUSADA
+  EFETIVADA
+}
+
+
+' =========================================
+' == CLASSES DE OUTROS MÓDULOS (Contexto) ==
+' =========================================
+package "Aluno 1: Adm/Gestão" #LightBlue {
+  abstract class Usuario {
+    # nome: String
+    # login: String
+    # senha: String
+    + fazerLogin(): boolean
+    + alterarSenha(novaSenha: String): void
+  }
+
+  class Gestor extends Usuario {
+    + criarVaga(...): Vaga
+    + atribuirRecrutador(vaga: Vaga, recrutador: Recrutador): void
+    + autorizarContratacao(contratacao: Contratacao): void
+    + gerarRelatorioGestao(): Relatorio
+  }
+}
+
+package "Aluno 2: Candidatura" #LightCoral {
+  abstract class Pessoa {
+    # nome: String
+    # cpf: String
+    # email: String
+    # telefone: String
+  }
+
+  class Candidato extends Pessoa {
+    - formacao: String
+    - experiencia: String
+    - pretensaoSalarial: double
+  }
+
+  class Candidatura {
+    - dataCandidatura: Date
+    - status: StatusCandidatura
+    + atualizarStatus(novoStatus: StatusCandidatura): void
+  }
+}
+
+package "Aluno 4: Financeiro" #LightGoldenRodYellow {
+  class Funcionario extends Pessoa {
+    - matricula: int
+    - dataAdmissao: Date
+    - salarioBase: double
+    - status: String
+  }
+}
+
+' =========================================
+' == CLASSES DO MÓDULO DE RECRUTAMENTO (Aluno 3) ==
+' =========================================
+package "Aluno 3: Recrutamento" #PaleGreen {
+  class Recrutador extends Usuario {
+    + solicitarContratacao(candidatura: Candidatura): Contratacao
+    + agendarEntrevista(candidatura: Candidatura, data: Date, avaliador: String): Entrevista
+    + gerenciarProcessoSeletivo(vaga: Vaga): void
+    + cadastrarCandidatoAprovado(contratacao: Contratacao): Funcionario
+  }
+
+  class Vaga {
+    - cargo: String
+    - salarioBase: double
+    - requisitos: String[]
+    - departamento: String
+    - dataAbertura: Date
+    - status: StatusVaga
+    - regime: RegimeContratacao
+    + listarCandidaturas(): Candidatura[]
+    + filtrarVagas(...): Vaga[]
+    + fecharVaga(): void
+  }
+
+  class Entrevista {
+    - data: Date
+    - avaliador: String
+    - nota: double
+    - parecer: String
+    + registrarResultado(nota: double, parecer: String): void
+  }
+
+  class Contratacao {
+    - dataSolicitacao: Date
+    - dataAutorizacao: Date
+    - regime: RegimeContratacao
+    - status: StatusContratacao
+    + efetivar(): Funcionario
+  }
+}
+
+
+' =========================================
+' == RELACIONAMENTOS ENTRE AS CLASSES ==
+' =========================================
+
+' --- Relacionamentos de Associação ---
+Gestor "1" -- "0..*" Vaga : cria >
+Recrutador "1" -- "0..*" Vaga : é responsável por >
+Vaga "1" -- "0..*" Candidatura : recebe <
+Recrutador "1" -- "0..*" Contratacao : solicita >
+Gestor "1" -- "0..*" Contratacao : autoriza >
+Contratacao "1" -- "1" Candidatura : referente a >
+
+
+' --- Relacionamento de Composição ---
+' Uma Entrevista só existe no contexto de uma Candidatura.
+Candidatura "1" *-- "1..*" Entrevista : possui
+
+' --- Relacionamento de Dependência ---
+' A efetivação de uma Contratação CRIA um novo Funcionário.
+Contratacao ..> Funcionario : <<cria>>
+
+
+' --- Notas Explicativas ---
+note right of Vaga
+  A classe Vaga é o ponto central
+  do módulo, conectando Gestores,
+  Recrutadores e Candidaturas.
+end note
+
+note bottom of Contratacao
+  A contratação é o resultado de um
+  processo seletivo bem-sucedido,
+  formalizando a entrada do candidato
+  aprovado. Requer autorização de um Gestor.
+end note
+
+@enduml
