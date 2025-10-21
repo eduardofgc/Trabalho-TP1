@@ -30,4 +30,14 @@ public class Administrador extends Usuario{
             System.out.println(u.getLogin());
         }
     }
+
+    public Usuario pesquisarUsuario(String loginBuscado, ArrayList<Usuario> usuariosArray){
+        for (Usuario u : usuariosArray){
+            if (u.login.equals(loginBuscado)){
+                return u;
+            }
+        }
+
+        return null;
+    }
 }
