@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -31,7 +32,7 @@ public class AdmController {
     @FXML
     private Button voltarMenuButton;
     @FXML
-    private StackPane contentArea;
+    private AnchorPane contentArea;
     @FXML
     private Button activeButton;
 
@@ -50,7 +51,7 @@ public class AdmController {
                 throw new IllegalStateException("state não encontrado: " + fxml);
             }
 
-            Pane pane = FXMLLoader.load(resource);
+            AnchorPane pane = FXMLLoader.load(resource);
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
 
@@ -71,7 +72,7 @@ public class AdmController {
 
     @FXML
     public void showCadastrarUsuario(){
-        loadUI(""); //fxml da pagina do cadastrar usuario aqui
+        loadUI("/grupo/trabalho/cadastrarUsuario-view.fxml"); //fxml da pagina do cadastrar usuario aqui
         setActiveButton(cadastrarUsuarioButton);
     }
 

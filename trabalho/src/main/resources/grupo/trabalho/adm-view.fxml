@@ -17,13 +17,13 @@
             </Label>
         </VBox>
 
-        <AnchorPane fx:id="contentPane" prefHeight="334.0" prefWidth="600.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #cccccc; -fx-border-width: 1;" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+        <AnchorPane fx:id="contentArea" prefHeight="334.0" prefWidth="600.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #cccccc; -fx-border-width: 1;" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
             <children>
-                <Label layoutX="182.0" layoutY="149.0" style="-fx-text-fill: #555555;" text="Faça uma seleção (não implementado ainda)" />
+
             </children>
         </AnchorPane>
 
-         <Button fx:id="cadastrarUsuarioButton" layoutX="100.0" layoutY="457.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 8;" text="Cadastrar Usuário" />
+         <Button fx:id="cadastrarUsuarioButton" onAction="#showCadastrarUsuario" layoutX="100.0" layoutY="457.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 8;" text="Cadastrar Usuário" />
 
          <Button fx:id="listarUsuariosButton" layoutX="325.0" layoutY="456.0" prefHeight="42.0" prefWidth="150.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 8;" text="Listar Usuários" />
 
