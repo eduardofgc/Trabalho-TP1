@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ import java.net.URL;
 public class AdmController {
 
     private MainController mainController;
+    public BorderPane root;
 
     public void setMainController(MainController mainController){
         this.mainController = mainController;
@@ -33,38 +35,56 @@ public class AdmController {
     @FXML
     private Button activeButton;
 
-    private void loadUI(String fxml) {
-        try {
-            URL resource = getClass().getResource(fxml);
-            System.out.println(">> Tentando carregar: " + resource);
+    @FXML
+    private void voltarMenu() throws IOException {
 
-            if (resource == null) {
-                throw new IllegalStateException("FXML não encontrado: " + fxml);
+        mainController.goBackMenu(voltarMenuButton);
+    }
+
+    //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
+    public void loadUI(String fxml){
+        try{
+            URL resource = getClass().getResource(fxml);
+
+            if (resource == null){
+                throw new IllegalStateException("state não encontrado: " + fxml);
             }
 
             Pane pane = FXMLLoader.load(resource);
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
 
-        } catch (IOException e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private void setActiveButton(Button button) {
-        if (activeButton != null) {
+    private void setActiveButton(Button button){
+        if (activeButton != null){
             activeButton.setId("buttonLateral");
+            activeButton = button;
         }
+
         button.setId("buttonLateralActive");
         activeButton = button;
     }
 
-    //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
+    @FXML
+    public void showCadastrarUsuario(){
+        loadUI(""); //fxml da pagina do cadastrar usuario aqui
+        setActiveButton(cadastrarUsuarioButton);
+    }
 
     @FXML
-    private void voltarMenu() throws IOException {
+    public void showListarUsuarios(){
+        loadUI(""); //fxml da pagina do listar usuarios aqui
+        setActiveButton(listarUsuariosButton);
+    }
 
-        mainController.goBackMenu(voltarMenuButton);
+    @FXML
+    public void showGerarRelatorios(){
+        loadUI(""); //fxml da pagina do gerar relatorios aqui
+        setActiveButton(gerarRelatoriosButton);
     }
 
 }
