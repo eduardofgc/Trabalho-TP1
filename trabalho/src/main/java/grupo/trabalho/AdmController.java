@@ -78,13 +78,13 @@ public class AdmController {
 
     @FXML
     public void showListarUsuarios(){
-        loadUI(""); //fxml da pagina do listar usuarios aqui
+        loadUI("/grupo/trabalho/listarUsuarios-view.fxml"); //fxml da pagina do listar usuarios aqui
         setActiveButton(listarUsuariosButton);
     }
 
     @FXML
     public void showGerarRelatorios(){
-        loadUI(""); //fxml da pagina do gerar relatorios aqui
+        loadUI(""); //fxml da pagina do gerar relatorios aqui TODO: permanencia de dados via .txt
         setActiveButton(gerarRelatoriosButton);
     }
 

@@ -24,6 +24,7 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.show();
 
+        //TODO: colocar icone em todas as paginas
     }
 
     public static void main(String[] args) {
