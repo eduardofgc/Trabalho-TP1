@@ -9,6 +9,12 @@ public class Usuario {
         this.senha = minhaSenha;
     }
 
+    //Overload pra cadastrar usuario (setar email depois)
+    Usuario(String meuLogin, String minhaSenha){
+        this.login = meuLogin;
+        this.senha = minhaSenha;
+    }
+
     public String getLogin(){
         return this.login;
     }

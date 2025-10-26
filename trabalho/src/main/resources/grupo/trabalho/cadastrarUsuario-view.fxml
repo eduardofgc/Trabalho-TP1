@@ -14,10 +14,10 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="261.0" layoutY="138.0" />
-      <TextField layoutX="262.0" layoutY="197.0" />
+      <TextField layoutX="261.0" layoutY="138.0" fx:id="loginTextField" />
+      <TextField layoutX="262.0" layoutY="197.0" fx:id="senhaTextField" />
       <Label layoutX="192.0" layoutY="142.0" prefHeight="18.0" prefWidth="53.0" text="Login:" />
       <Label layoutX="192.0" layoutY="201.0" text="Senha:" />
-      <Button layoutX="268.0" layoutY="253.0" mnemonicParsing="false" text="Registrar" />
+      <Button layoutX="268.0" layoutY="253.0" mnemonicParsing="false" text="Registrar" fx:id="cadastrarUsuarioFinal" onAction="#clickCadastrarUsuarioFinal" />
    </children>
 </AnchorPane>
