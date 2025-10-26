@@ -28,19 +28,19 @@
               AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
               AnchorPane.topAnchor="130.0">
 
-            <Button prefHeight="42.0" prefWidth="220.0"
+            <Button fx:id="cadastrarCandidatosButton" onAction="#goToCadastrar"  prefHeight="42.0" prefWidth="220.0"
                     style="-fx-background-color: white; -fx-text-fill: #2c3e50;
                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;
                            -fx-background-radius: 8;"
                     text="Cadastrar Candidatos"/>
 
-            <Button prefHeight="42.0" prefWidth="220.0"
+            <Button fx:id="listarCandidatosButton" onAction="#goToListar" prefHeight="42.0" prefWidth="220.0"
                     style="-fx-background-color: white; -fx-text-fill: #2c3e50;
                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;
                            -fx-background-radius: 8;"
                     text="Listar Candidatos"/>
 
-            <Button prefHeight="42.0" prefWidth="220.0"
+            <Button fx:id="statusDaCandidaturaButton" onAction="#goToStatus" prefHeight="42.0" prefWidth="220.0"
                     style="-fx-background-color: white; -fx-text-fill: #2c3e50;
                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;
                            -fx-background-radius: 8;"
@@ -56,5 +56,4 @@
                 text="Voltar ao Menu Principal"/>
     </children>
 </AnchorPane>
-
 

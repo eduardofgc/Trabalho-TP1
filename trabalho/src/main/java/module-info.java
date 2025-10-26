@@ -4,6 +4,7 @@ module grupo.trabalho {
     requires javafx.web;
     requires java.desktop;
 
+
     opens grupo.trabalho to javafx.fxml;   // allow FXML reflection
-    exports grupo.trabalho;                // export package to other modules
+    exports grupo.trabalho;
 }
