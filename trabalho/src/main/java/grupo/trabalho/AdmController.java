@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -48,7 +49,14 @@ public class AdmController {
     private TextField loginTextField;
     @FXML
     private ListView<String> listaElementos;
-
+    @FXML
+    private CheckBox adminCheckBox;
+    @FXML
+    private CheckBox gestorCheckBox;
+    @FXML
+    private CheckBox recrutadorCheckBox;
+    @FXML
+    private CheckBox candidatoCheckBox;
 
 
     @FXML
@@ -124,9 +132,19 @@ public class AdmController {
         }
 
         Usuario novoUsuario = new Usuario(novoLogin, novaSenha);
+
+        novoUsuario.isAdmin = adminCheckBox.isSelected();
+        novoUsuario.isGestor = gestorCheckBox.isSelected();
+        novoUsuario.isCandidato = candidatoCheckBox.isSelected();
+        novoUsuario.isRecrutador = recrutadorCheckBox.isSelected();
+
         AdmClasses.addToUserList(novoUsuario);
 
-        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){ //TODO
+        if (novoUsuario.isAdmin){ //TODO
+
+        }
+
+        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){
             writer.write(novoLogin + ", " + novaSenha + System.lineSeparator());
 
             AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
@@ -138,7 +156,7 @@ public class AdmController {
 
     }
 
-    public void listarUsuariosEmPag() throws IOException {
+    public void listarUsuariosEmPag() throws IOException { //nao usado
         try{
             List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
             listaElementos.getItems().addAll(lines);

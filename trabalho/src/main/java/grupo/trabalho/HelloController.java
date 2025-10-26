@@ -34,22 +34,29 @@ public class HelloController {
         String triedUsername = usernameField.getText();
         String triedPassword = passwordField.getText();
 
-        Stage prevStage = (Stage) loginButton.getScene().getWindow();
-        prevStage.close();
+        boolean found = AdmClasses.checkForUser(triedUsername, triedPassword);
 
-        try{
-            FXMLLoader mainScreenFXML = new FXMLLoader(getClass().getResource("second-view.fxml"));
-            Parent mainRoot = mainScreenFXML.load();
+        if (found){
+            Stage prevStage = (Stage) loginButton.getScene().getWindow();
+            prevStage.close();
 
-            Stage mainStage = new Stage();
-            Scene mainScene = new Scene(mainRoot);
-            mainStage.setScene(mainScene);
-            mainStage.setResizable(false);
-            mainStage.setTitle("Gestão de RH - Menu Principal");
-            mainStage.show();
+            try{
+                FXMLLoader mainScreenFXML = new FXMLLoader(getClass().getResource("second-view.fxml"));
+                Parent mainRoot = mainScreenFXML.load();
 
-        } catch (Exception e){
-            e.printStackTrace();
+                Stage mainStage = new Stage();
+                Scene mainScene = new Scene(mainRoot);
+                mainStage.setScene(mainScene);
+                mainStage.setResizable(false);
+                mainStage.setTitle("Gestão de RH - Menu Principal");
+                mainStage.show();
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            AlertHelper.showInfo("Credenciais incorretas.");
         }
 
 

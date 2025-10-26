@@ -2,6 +2,7 @@ package grupo.trabalho;
 
 public class Usuario {
     String email, login, senha;
+    boolean isAdmin, isCandidato, isRecrutador, isGestor;
 
     Usuario(String meuEmail, String meuLogin, String minhaSenha) {
         this.email = meuEmail;
@@ -18,6 +19,8 @@ public class Usuario {
     public String getLogin(){
         return this.login;
     }
+
+    public String getSenha(){return this.senha;}
 
     public boolean fazerLogin(String loginTentado, String senhaTentada) {
         if (loginTentado.equals(this.login) && senhaTentada.equals(this.senha)) {
