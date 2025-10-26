@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +15,9 @@ import javafx.stage.Stage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class AdmController {
 
@@ -42,6 +46,10 @@ public class AdmController {
     private TextField senhaTextField;
     @FXML
     private TextField loginTextField;
+    @FXML
+    private ListView<String> listaElementos;
+
+
 
     @FXML
     private void voltarMenu() throws IOException {
@@ -50,22 +58,21 @@ public class AdmController {
     }
 
     //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
-    public void loadUI(String fxml){
-        try{
-            URL resource = getClass().getResource(fxml);
+    public Object loadUI(String fxml) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            AnchorPane pane = loader.load();
 
-            if (resource == null){
-                throw new IllegalStateException("state não encontrado: " + fxml);
-            }
-
-            AnchorPane pane = FXMLLoader.load(resource);
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
 
-        } catch (Exception e){
+            return loader.getController(); // <--- return the controller of that FXML
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
+
 
     private void setActiveButton(Button button){
         if (activeButton != null){
@@ -84,10 +91,21 @@ public class AdmController {
     }
 
     @FXML
-    public void showListarUsuarios(){
-        loadUI("/grupo/trabalho/listarUsuarios-view.fxml"); //fxml da pagina do listar usuarios aqui
+    public void showListarUsuarios() {
+        Object controllerObj = loadUI("/grupo/trabalho/listarUsuarios-view.fxml");
         setActiveButton(listarUsuariosButton);
+
+        if (controllerObj instanceof ListarUsuariosController controller) {
+            try {
+                List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
+                controller.loadUsuarios(lines);
+            } catch (IOException e) {
+                AlertHelper.showInfo("Erro: impossível acessar usuariosInfo.txt");
+                e.printStackTrace();
+            }
+        }
     }
+
 
     @FXML
     public void showGerarRelatorios(){
@@ -109,11 +127,25 @@ public class AdmController {
         AdmClasses.addToUserList(novoUsuario);
 
         try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){ //TODO
+            writer.write(novoLogin + ", " + novaSenha + System.lineSeparator());
+
+            AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
 
         } catch (IOException e){
-
+            AlertHelper.showInfo("Erro cadastrando usuário.");
+            e.printStackTrace();
         }
 
+    }
+
+    public void listarUsuariosEmPag() throws IOException {
+        try{
+            List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
+            listaElementos.getItems().addAll(lines);
+        } catch (IOException e){
+            AlertHelper.showInfo("Erro: impossível acessar usuariosInfo.txt");
+            e.printStackTrace();
+        }
     }
 
 }

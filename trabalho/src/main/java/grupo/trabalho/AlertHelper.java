@@ -7,7 +7,7 @@ public class AlertHelper {
 
     public static void showInfo(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Info");
+        alert.setTitle("Aviso");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
