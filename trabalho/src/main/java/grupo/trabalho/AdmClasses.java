@@ -1,4 +1,5 @@
 package grupo.trabalho;
+
 import javafx.scene.control.ListView;
 
 import java.io.FileWriter;
@@ -10,32 +11,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AdmClasses {
+
     public static ArrayList<Usuario> usuariosArray = new ArrayList<>();
 
-    public static void addToUserList(Usuario meuUsuario){
-        usuariosArray.add(meuUsuario);
+    public static void addToUserList(Usuario usuario) {
+        usuariosArray.add(usuario);
     }
 
-    public static Usuario searchFor(String meuLogin){
-        boolean found = false;
-
-        for (Usuario u : usuariosArray){
-            if (u.getLogin().equals(meuLogin)){
-                found = true;
-                return u;
-            }
-        }
-
-        return null;
+    public static Usuario searchFor(String login){
+        return usuariosArray.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst()
+                .orElse(null);
     }
 
     public static void ensureAdminUser() {
         Path path = Path.of("usuariosInfo.txt");
-
         try {
-            if (!Files.exists(path) || Files.readAllLines(path).isEmpty()) {
+            if (Files.readAllLines(path).isEmpty()) {
                 try (FileWriter writer = new FileWriter(path.toFile(), true)) {
-                    writer.write("Admin, 12345678" + System.lineSeparator());
+                    writer.write("Admin,12345678,true,false,false,false" + System.lineSeparator());
                     System.out.println("Default admin user created: Admin / 12345678");
                 }
             }
@@ -44,11 +39,34 @@ public class AdmClasses {
         }
     }
 
-    public static void deletarUsuario(Usuario usuario, ListView<String> listView) throws IOException {
+    public static boolean checkForUser(String login, String senha) {
+        Path path = Path.of("usuariosInfo.txt");
+        if (!Files.exists(path)) return false;
+
+        try {
+            List<String> lines = Files.readAllLines(path);
+            for (String line : lines) {
+                String[] parts = line.split(",\\s*");
+                if (parts.length >= 2) {
+                    String fileLogin = parts[0];
+                    String fileSenha = parts[1];
+                    if (fileLogin.equals(login) && fileSenha.equals(senha)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static void deletarUsuario(Usuario usuario, ListView<Usuario> listView) throws IOException {
         usuariosArray.removeIf(u -> u.getLogin().equals(usuario.getLogin()));
 
         if (listView != null) {
-            listView.getItems().removeIf(item -> item.startsWith(usuario.getLogin() + ","));
+            listView.getItems().removeIf(item -> item.getLogin().equals(usuario.getLogin()));
         }
 
         Path path = Path.of("usuariosInfo.txt");
@@ -61,28 +79,4 @@ public class AdmClasses {
             Files.write(path, updatedLines);
         }
     }
-
-
-    public static boolean checkForUser(String meuLogin, String minhaSenha) {
-        try {
-            List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-
-            for (String line : lines) {
-                String[] parts = line.split(",\\s*");
-                if (parts.length >= 2) {
-                    String login = parts[0];
-                    String senha = parts[1];
-                    if (login.equals(meuLogin) && senha.equals(minhaSenha)) {
-                        return true;
-                    }
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
 }
