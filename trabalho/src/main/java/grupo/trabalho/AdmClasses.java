@@ -1,9 +1,12 @@
 package grupo.trabalho;
+import javafx.scene.control.ListView;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdmClasses {
     public static ArrayList<Usuario> usuariosArray = new ArrayList<>();
@@ -25,6 +28,25 @@ public class AdmClasses {
         return null;
     }
 
+    public static void deletarUsuario(Usuario usuario, ListView<String> listView) throws IOException {
+        usuariosArray.removeIf(u -> u.getLogin().equals(usuario.getLogin()));
+
+        if (listView != null) {
+            listView.getItems().removeIf(item -> item.startsWith(usuario.getLogin() + ","));
+        }
+
+        Path path = Path.of("usuariosInfo.txt");
+        if (Files.exists(path)) {
+            List<String> updatedLines = Files.readAllLines(path)
+                    .stream()
+                    .filter(line -> !line.startsWith(usuario.getLogin() + ","))
+                    .collect(Collectors.toList());
+
+            Files.write(path, updatedLines);
+        }
+    }
+
+
     public static boolean checkForUser(String meuLogin, String minhaSenha) {
         try {
             List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
@@ -39,6 +61,7 @@ public class AdmClasses {
                     }
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
