@@ -1,6 +1,7 @@
 package grupo.trabalho;
 import javafx.scene.control.ListView;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,13 +29,18 @@ public class AdmClasses {
         return null;
     }
 
-    public static void ensureAdmin() {
-        boolean adminExists = usuariosArray.stream()
-                .anyMatch(u -> u.getLogin().equals("admin"));
+    public static void ensureAdminUser() {
+        Path path = Path.of("usuariosInfo.txt");
 
-        if (!adminExists) {
-            usuariosArray.add(new Usuario("Admin", "12345678"));
-            System.out.println("Default admin user added to array.");
+        try {
+            if (!Files.exists(path) || Files.readAllLines(path).isEmpty()) {
+                try (FileWriter writer = new FileWriter(path.toFile(), true)) {
+                    writer.write("Admin, 12345678" + System.lineSeparator());
+                    System.out.println("Default admin user created: Admin / 12345678");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.show();
 
-        AdmClasses.ensureAdmin();
+        AdmClasses.ensureAdminUser();
 
         //TODO: colocar icone em todas as paginas
     }

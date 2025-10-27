@@ -1,7 +1,1 @@
-eduardo, 12345678
-filipe, 082020421
-Lucas, 0102030404
-teste, jvhvkjbkjbkjbkjb
-GG, asdasdzzz
 Admin, 12345678
-sadasdasd, sadasd
