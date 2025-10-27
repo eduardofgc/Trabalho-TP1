@@ -74,7 +74,7 @@ public class AdmController {
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
 
-            return loader.getController(); // <--- return the controller of that FXML
+            return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
