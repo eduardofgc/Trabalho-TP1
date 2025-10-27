@@ -20,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import static grupo.trabalho.AdmClasses.usuariosArray;
+
 public class AdmController {
 
     private MainController mainController;
@@ -63,6 +65,16 @@ public class AdmController {
     private void voltarMenu() throws IOException {
 
         mainController.goBackMenu(voltarMenuButton);
+    }
+
+    public static void ensureAdmin() {
+        boolean adminExists = usuariosArray.stream()
+                .anyMatch(u -> u.getLogin().equals("admin"));
+
+        if (!adminExists) {
+            usuariosArray.add(new Usuario("admin", "12345678"));
+            System.out.println("Default admin user added to array.");
+        }
     }
 
     //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
