@@ -18,7 +18,7 @@ public class Holerite {
         this.ano = ano;
         this.salarioBruto = funcionario.getSalarioBase();
 
-        // Calcula totais conforme o tipo
+
         for (RegraSalarial r : regras) {
             if (r.getTipo() == TipoRegraSalario.PROVENTO) totalProventos += r.getValor();
             else totalDescontos += r.getValor();

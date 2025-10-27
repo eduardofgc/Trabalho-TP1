@@ -40,19 +40,21 @@ public class FinanceiroController {
 
     @FXML
     public void goBackFinanceiro(Button exitButton) throws IOException {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
+        Stage stage0 = (Stage) exitButton.getScene().getWindow();
+        stage0.close();
 
+        Stage stage1 = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
         Parent root = loader.load();
-        stage.getIcons().clear();
-        stage.getIcons().add(new Image(
+        stage1.getIcons().clear();
+        stage1.getIcons().add(new Image(
                 getClass().getResourceAsStream("/images/logoFinanceiro.png")
         ));
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Financeiro");
-        stage.setResizable(false);
-        stage.show();
+        stage1.setScene(scene);
+        stage1.setTitle("Financeiro");
+        stage1.setResizable(false);
+        stage1.show();
     }
 
     @FXML
@@ -76,7 +78,7 @@ public class FinanceiroController {
         stage.show();
     }
     @FXML
-    private void goConfigRegras() throws IOException {
+        private void goConfigRegras() throws IOException {
         Stage stage = (Stage) configRegrasButton.getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/configRegras-view.fxml"));

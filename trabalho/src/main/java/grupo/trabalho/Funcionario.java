@@ -34,6 +34,7 @@ public class Funcionario extends Usuario {
     public String getDepartamento() { return departamento; }
 
     public void setStatus(StatusFuncionario status) { this.status = status; }
+
     public double calcularSalarioLiquido(List<RegraSalarial> regrasSalario) {
         double salarioLiquido = salarioBase;
 
@@ -55,9 +56,4 @@ public class Funcionario extends Usuario {
         return new Holerite(this, mes, ano, salarioLiquido, regrasSalario);
     }
 
-
-    @Override
-    public String toString() {
-        return getNome() + " - " + cargo + " - " + departamento + " - R$ " + salarioBase;
-    }
 }

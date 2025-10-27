@@ -6,39 +6,94 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="420" prefWidth="600" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.ConfigRegrasController">
+<AnchorPane prefHeight="420" prefWidth="600"
+            style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="grupo.trabalho.ConfigRegrasController">
 
     <children>
-        <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-           <children>
-               <Label style="-fx-text-fill: #2c3e50;" text="Configuração de Regras Salariais">
-                   <font>
-                       <Font name="Segoe UI Semibold" size="32" />
-                   </font>
-               </Label>
-           </children>
+
+        <!-- Título -->
+        <VBox alignment="CENTER" spacing="10.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="40.0">
+            <children>
+                <Label style="-fx-text-fill: #2c3e50;"
+                       text="Configuração de Regras Salariais">
+                    <font>
+                        <Font name="Segoe UI Semibold" size="30" />
+                    </font>
+                </Label>
+            </children>
         </VBox>
-          <TextField fx:id="salarioBaseField" layoutX="63.0" layoutY="156.0" prefHeight="31.0" prefWidth="202.0" />
-          <Label layoutX="63.0" layoutY="126.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Salário Base:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-          <Label layoutX="63.0" layoutY="202.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Bonificação (%):">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-          <Label layoutX="63.0" layoutY="284.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Desconto (%):">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-          <TextField fx:id="bonusField" layoutX="63.0" layoutY="232.0" prefHeight="31.0" prefWidth="202.0" />
-          <TextField fx:id="descontoField" layoutX="63.0" layoutY="314.0" prefHeight="31.0" prefWidth="202.0" />
 
-            <Button fx:id="salvarButton" layoutX="332.0" layoutY="227.0" prefHeight="42.0" prefWidth="220.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;                            -fx-background-radius: 8;" text="Salvar" />
+        <!-- Campo de Descrição -->
+        <Label layoutX="63.0" layoutY="110.0"
+               prefWidth="200"
+               style="-fx-text-fill: #2c3e50;"
+               text="Descrição da Regra:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="descricaoField"
+                   layoutX="63.0" layoutY="135.0"
+                   prefHeight="31.0" prefWidth="230.0"
+                   promptText="Ex: Bônus mensal" />
 
-            <Button fx:id="financButton" layoutX="332.0" layoutY="299.0" onAction="#handleMenuButton" prefHeight="42.0" prefWidth="220.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;                            -fx-background-radius: 8;" text="Voltar" />
+        <!-- Campo de Salário -->
+        <Label layoutX="63.0" layoutY="180.0"
+               prefWidth="150"
+               style="-fx-text-fill: #2c3e50;"
+               text="Valor (R$):">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="salarioField"
+                   layoutX="63.0" layoutY="205.0"
+                   prefHeight="31.0" prefWidth="230.0"
+                   promptText="Ex: 500.00" />
+
+        <!-- ComboBox Tipo -->
+        <Label layoutX="63.0" layoutY="255.0"
+               prefWidth="150"
+               style="-fx-text-fill: #2c3e50;"
+               text="Tipo de Regra:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="tipoCombo"
+                  layoutX="63.0" layoutY="280.0"
+                  prefHeight="31.0" prefWidth="230.0"
+                  promptText="Selecione um tipo" />
+
+        <!-- Botão Salvar -->
+        <Button fx:id="salvarButton"
+                layoutX="332.0" layoutY="220.0"
+                onAction="#salvarRegras"
+                prefWidth="220.0"
+                style="-fx-background-color: white;
+                       -fx-text-fill: #2c3e50;
+                       -fx-font-size: 14px;
+                       -fx-padding: 10 20 10 20;
+                       -fx-background-radius: 8;"
+                text="Salvar" />
+
+        <!-- Botão Voltar -->
+        <Button fx:id="financButton"
+                layoutX="332.0" layoutY="285.0"
+                onAction="#handleMenuButton"
+                prefHeight="42.0" prefWidth="220.0"
+                style="-fx-background-color: #2c3e50;
+                       -fx-text-fill: white;
+                       -fx-font-size: 14px;
+                       -fx-padding: 10 20 10 20;
+                       -fx-background-radius: 8;"
+                text="Voltar" />
+
     </children>
 </AnchorPane>

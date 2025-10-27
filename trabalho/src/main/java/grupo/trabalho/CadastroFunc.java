@@ -2,7 +2,7 @@ package grupo.trabalho;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.time.LocalDate;
+
 
 public class CadastroFunc {
 
