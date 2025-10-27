@@ -28,6 +28,16 @@ public class AdmClasses {
         return null;
     }
 
+    public static void ensureAdmin() {
+        boolean adminExists = usuariosArray.stream()
+                .anyMatch(u -> u.getLogin().equals("admin"));
+
+        if (!adminExists) {
+            usuariosArray.add(new Usuario("Admin", "12345678"));
+            System.out.println("Default admin user added to array.");
+        }
+    }
+
     public static void deletarUsuario(Usuario usuario, ListView<String> listView) throws IOException {
         usuariosArray.removeIf(u -> u.getLogin().equals(usuario.getLogin()));
 

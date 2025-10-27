@@ -67,16 +67,6 @@ public class AdmController {
         mainController.goBackMenu(voltarMenuButton);
     }
 
-    public static void ensureAdmin() {
-        boolean adminExists = usuariosArray.stream()
-                .anyMatch(u -> u.getLogin().equals("admin"));
-
-        if (!adminExists) {
-            usuariosArray.add(new Usuario("admin", "12345678"));
-            System.out.println("Default admin user added to array.");
-        }
-    }
-
     //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
     public Object loadUI(String fxml) {
         try {
