@@ -26,11 +26,10 @@
             </Label>
 
             <!-- Botões principais -->
-<<<<<<< HEAD
+
+            <Button text="Cadastrar Funcionário"/>
+
             <Button text="Cadastrar Funcionário"
-=======
-            <Button text="Cadastrar Funcio  nário"
->>>>>>> main
                     prefWidth="300"
                     style="-fx-background-color: white; -fx-text-fill: #2c3e50;
                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;
