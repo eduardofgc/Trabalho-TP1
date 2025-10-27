@@ -1,0 +1,37 @@
+@startuml test
+
+' Configuração de aparência
+skinparam actorStyle awesome
+
+' Atores do sistema
+actor Administrador
+actor "Gestor do RH" as Gestor
+
+' Fronteira do Sistema de RH
+rectangle "Sistema de Gestão de RH" {
+  usecase "Gerenciar Contas de Usuário" as UC1
+  usecase "Gerar Relatórios de Gestão" as UC2
+  usecase "Autenticar-se no Sistema" as UC_Auth
+  
+  ' Casos de uso de outros módulos para dar contexto
+  usecase "Gerenciar Vagas" as UC_Vaga
+  usecase "Autorizar Contratação" as UC_Contratacao
+}
+
+' Relacionamentos do Administrador
+' Apenas o Administrador pode gerenciar as contas de todos os usuários.
+Administrador -- UC1
+
+' Relacionamentos do Gestor do RH
+' O Gestor é responsável por gerar relatórios estratégicos.
+Gestor -- UC2
+' O Gestor também interage com funcionalidades do módulo de Recrutamento.
+Gestor -- UC_Vaga
+Gestor -- UC_Contratacao
+
+' Relacionamento Comum
+' Ambos são usuários do sistema e precisam se autenticar para acessar suas funções.
+Administrador -- UC_Auth
+Gestor -- UC_Auth
+
+@enduml

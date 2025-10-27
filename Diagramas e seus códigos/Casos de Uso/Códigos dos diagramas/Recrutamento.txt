@@ -1,0 +1,31 @@
+@startuml
+' Configuração de aparência
+skinparam actorStyle awesome
+left to right direction
+
+' Atores do sistema
+actor "Recrutador do RH" as Recrutador
+actor "Gestor do RH" as Gestor
+
+' Fronteira do Sistema de RH
+rectangle "Sistema de Gestão de RH" {
+  usecase "Gerenciar Vagas" as UC1
+  usecase "Gerenciar Candidatos" as UC2
+  usecase "Gerenciar Candidaturas" as UC3
+  usecase "Agendar Entrevista" as UC4
+  usecase "Solicitar Contratação" as UC5
+  usecase "Autorizar Contratação" as UC6
+  usecase "Admitir Candidato Aprovado" as UC7
+}
+
+' Relacionamentos entre Atores e Casos de Uso
+Gestor -- UC1
+Gestor -- UC6
+
+Recrutador -- UC2
+Recrutador -- UC3
+Recrutador -- UC4
+Recrutador -- UC5
+Recrutador -- UC7
+
+@enduml

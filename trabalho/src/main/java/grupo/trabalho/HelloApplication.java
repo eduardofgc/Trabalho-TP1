@@ -2,19 +2,18 @@ package grupo.trabalho;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
-
-import java.awt.*;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
-
+import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+        AdmClasses.ensureAdminUser();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/hello-view.fxml"));
         Parent root = fxmlLoader.load();
 
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
@@ -23,7 +22,6 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
     }
 
     public static void main(String[] args) {

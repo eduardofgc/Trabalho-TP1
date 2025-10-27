@@ -1,0 +1,38 @@
+*@startuml
+' Configuração de aparência
+skinparam actorStyle awesome
+
+' Atores que interagem com este módulo
+actor Administrador
+actor "Gestor do RH" as Gestor
+actor "Funcionário" as Funcionario
+
+' Fronteira do Sistema de RH
+rectangle "Sistema de Gestão de RH" {
+  usecase "Configurar Regras Salariais" as UC1
+  usecase "Gerar Folha de Pagamento" as UC2
+  usecase "Consultar Contracheques" as UC3
+  usecase "Exportar Relatórios Financeiros" as UC4
+  usecase "Autenticar-se no Sistema" as UC_Auth
+}
+
+' Relacionamentos do Administrador
+' Apenas o Administrador pode definir as regras de benefícios e descontos.
+Administrador -- UC1
+
+' Relacionamentos do Gestor
+' O Gestor é responsável por gerar a folha e extrair relatórios.
+Gestor -- UC2
+Gestor -- UC4
+
+' Relacionamentos do Funcionário
+' O Funcionário pode acessar seus próprios dados financeiros.
+Funcionario -- UC3
+
+' Relacionamento Comum
+' Todos os atores precisam se autenticar para acessar o sistema.
+Administrador -- UC_Auth
+Gestor -- UC_Auth
+Funcionario -- UC_Auth
+
+@enduml

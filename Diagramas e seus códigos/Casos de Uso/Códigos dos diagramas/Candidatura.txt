@@ -1,0 +1,31 @@
+@startuml
+' Configuração de aparência
+skinparam actorStyle awesome
+
+' Atores que interagem com este módulo
+actor "Recrutador do RH" as Recrutador
+actor "Gestor do RH" as Gestor
+
+' Fronteira do Sistema de RH
+rectangle "Sistema de Gestão de RH" {
+  usecase "Gerenciar Candidatos" as UC1
+  usecase "Gerenciar Candidaturas" as UC2
+  usecase "Consultar Candidaturas" as UC3
+  usecase "Autenticar-se no Sistema" as UC_Auth
+}
+
+' Relacionamentos do Recrutador
+' O Recrutador é o principal responsável por todas as operações com candidatos.
+Recrutador -- UC1
+Recrutador -- UC2
+
+' Relacionamentos do Gestor
+' O Gestor tem um papel de supervisão, podendo apenas consultar as candidaturas.
+Gestor -- UC3
+
+' Relacionamento Comum
+' Ambos precisam se autenticar para acessar suas funções.
+Recrutador -- UC_Auth
+Gestor -- UC_Auth
+
+@enduml
