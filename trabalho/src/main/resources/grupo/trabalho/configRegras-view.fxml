@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="420" prefWidth="600" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.ConfigRegrasController">
+
+    <children>
+        <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+           <children>
+               <Label style="-fx-text-fill: #2c3e50;" text="Configuração de Regras Salariais">
+                   <font>
+                       <Font name="Segoe UI Semibold" size="32" />
+                   </font>
+               </Label>
+           </children>
+        </VBox>
+          <TextField fx:id="salarioBaseField" layoutX="63.0" layoutY="156.0" prefHeight="31.0" prefWidth="202.0" />
+          <Label layoutX="63.0" layoutY="126.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Salário Base:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+          <Label layoutX="63.0" layoutY="202.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Bonificação (%):">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+          <Label layoutX="63.0" layoutY="284.0" prefWidth="150" style="-fx-text-fill: #2c3e50;" text="Desconto (%):">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+          <TextField fx:id="bonusField" layoutX="63.0" layoutY="232.0" prefHeight="31.0" prefWidth="202.0" />
+          <TextField fx:id="descontoField" layoutX="63.0" layoutY="314.0" prefHeight="31.0" prefWidth="202.0" />
+
+            <Button fx:id="salvarButton" layoutX="332.0" layoutY="227.0" prefHeight="42.0" prefWidth="220.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;                            -fx-background-radius: 8;" text="Salvar" />
+
+            <Button fx:id="financButton" layoutX="332.0" layoutY="299.0" onAction="#handleMenuButton" prefHeight="42.0" prefWidth="220.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white;                            -fx-font-size: 14px; -fx-padding: 10 20 10 20;                            -fx-background-radius: 8;" text="Voltar" />
+    </children>
+</AnchorPane>

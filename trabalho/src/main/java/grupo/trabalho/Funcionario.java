@@ -1,6 +1,7 @@
 package grupo.trabalho;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Funcionario extends Usuario {
     private int matricula;
@@ -23,7 +24,7 @@ public class Funcionario extends Usuario {
         this.cargo = cargo;
         this.departamento = departamento;
     }
-
+    public String getNome() { return getNome(); }
     public int getMatricula() { return matricula; }
     public LocalDate getDataAdmissao() { return dataAdmissao; }
     public double getSalarioBase() { return salarioBase; }
@@ -33,9 +34,30 @@ public class Funcionario extends Usuario {
     public String getDepartamento() { return departamento; }
 
     public void setStatus(StatusFuncionario status) { this.status = status; }
-    /*
+    public double calcularSalarioLiquido(List<RegraSalarial> regrasSalario) {
+        double salarioLiquido = salarioBase;
+
+        if (regrasSalario != null) {
+            for (RegraSalarial regra : regrasSalario) {
+                if (regra.getTipo() == TipoRegraSalario.PROVENTO) {
+                    salarioLiquido += regra.getValor();
+                } else {
+                    salarioLiquido -= regra.getValor();
+                }
+            }
+        }
+
+        return salarioLiquido;
+    }
+
+    public Holerite visualizarContracheque(int mes, int ano, List<RegraSalarial> regrasSalario) {
+        double salarioLiquido = calcularSalarioLiquido(regrasSalario);
+        return new Holerite(this, mes, ano, salarioLiquido, regrasSalario);
+    }
+
+
     @Override
     public String toString() {
         return getNome() + " - " + cargo + " - " + departamento + " - R$ " + salarioBase;
-    }*/
+    }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class FinanceiroController {
 
@@ -43,7 +44,10 @@ public class FinanceiroController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
         Parent root = loader.load();
-
+        stage.getIcons().clear();
+        stage.getIcons().add(new Image(
+                getClass().getResourceAsStream("/images/logoFinanceiro.png")
+        ));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Financeiro");
@@ -57,6 +61,10 @@ public class FinanceiroController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/cadastroFunc-view.fxml"));
         Parent root = loader.load();
+        stage.getIcons().clear();
+        stage.getIcons().add(new Image(
+                getClass().getResourceAsStream("/images/logoCadastroFunc.png")
+        ));
 
         CadastroFunc cadastroFunc = loader.getController();
         cadastroFunc.setFinanceiroController(this);
@@ -66,5 +74,22 @@ public class FinanceiroController {
         stage.setTitle("Cadastro de Funcionário");
         stage.setResizable(false);
         stage.show();
+    }
+    @FXML
+    private void goConfigRegras() throws IOException {
+        Stage stage = (Stage) configRegrasButton.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/configRegras-view.fxml"));
+        Parent root = loader.load();
+        stage.getIcons().clear();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoFinanceiro.png")));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Configuração de Regras Salariais");
+        stage.setResizable(false);
+        stage.show();
+
+        ConfigRegrasController controller = loader.getController();
+        controller.setFinanceiroController(this);
     }
 }
