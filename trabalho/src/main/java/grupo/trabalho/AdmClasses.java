@@ -25,7 +25,7 @@ public class AdmClasses {
                 .orElse(null);
     }
 
-    public static void ensureAdminUser() {
+    public static void ensureAdminUser() { //TODO: FIX ADMIN INICIAL
         Path path = Path.of("usuariosInfo.txt");
         try {
             if (Files.readAllLines(path).isEmpty()) {

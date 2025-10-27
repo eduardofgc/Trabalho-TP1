@@ -30,7 +30,7 @@ public class HelloController {
     private Button logoutButton;
 
     @FXML
-    private void handleLogin() throws IOException {
+    private void handleLogin() throws IOException { //TODO: FIX USUARIO INICIAL ADMIN
         String triedUsername = usernameField.getText();
         String triedPassword = passwordField.getText();
         boolean gambiarra = false;
@@ -51,6 +51,7 @@ public class HelloController {
 
                 Stage mainStage = new Stage();
                 Scene mainScene = new Scene(mainRoot);
+
                 mainStage.setScene(mainScene);
                 mainStage.setResizable(false);
                 mainStage.setTitle("Gestão de RH - Menu Principal");

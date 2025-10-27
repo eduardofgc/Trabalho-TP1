@@ -4,7 +4,7 @@ import java.util.Date;
 public class Vaga {
     private String cargo, requisitos, departamento, status;
     private double salarioBase;
-    private Date dataAbertura;
+    private Date dataAbertura, dataFechamento;
     public boolean estaAberta;
     public Recrutador recrutador;
 
