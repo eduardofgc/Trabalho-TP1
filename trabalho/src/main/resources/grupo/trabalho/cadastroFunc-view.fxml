@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="480" prefWidth="640" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.CadastroFunc">
+
+    <children>
+
+        <!-- Título -->
+        <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+   <children>
+               <Label style="-fx-text-fill: #2c3e50;" text="Cadastro de Funcionário">
+                   <font>
+                       <Font name="Segoe UI Semibold" size="32" />
+                   </font>
+               </Label>
+   </children>
+        </VBox>
+
+
+        <Button fx:id="financButton" layoutX="67.0" layoutY="392.0" onAction="#handleMenuButton" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white;-fx-font-size: 14px; -fx-padding: 10 20 10 20;-fx-background-radius: 8;" text="Voltar" />
+          <Label layoutX="51.0" layoutY="98.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Nome:" />
+        <Label layoutX="50.0" layoutY="164.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="CPF:" />
+        <Label layoutX="51.0" layoutY="230.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Matrícula:" />
+        <Label layoutX="342.0" layoutY="98.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Cargo:" />
+        <Label layoutX="342.0" layoutY="230.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Data de admissão:" />
+        <Label layoutX="342.0" layoutY="295.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Departamento:" />
+        <Label layoutX="342.0" layoutY="164.0" style="-fx-text-fill: #2c3e50; -fx-font-weight: bold;" text="Salário:" />
+          <TextField fx:id="nomeField" layoutX="47.0" layoutY="118.0" prefHeight="40.0" prefWidth="260.0" promptText="Nome" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <TextField fx:id="cpfField" layoutX="47.0" layoutY="185.0" prefHeight="40.0" prefWidth="260.0" promptText="CPF" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <TextField fx:id="matriculaField" layoutX="48.0" layoutY="252.0" prefHeight="40.0" prefWidth="260.0" promptText="Matrícula" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <DatePicker fx:id="dataAdmissaoPicker" layoutX="338.0" layoutY="252.0" prefHeight="40.0" prefWidth="260.0" promptText="Data" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7;" />
+          <TextField fx:id="cargoField" layoutX="338.0" layoutY="118.0" prefHeight="40.0" prefWidth="260.0" promptText="Cargo" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <TextField fx:id="departamentoField" layoutX="338.0" layoutY="316.0" prefHeight="40.0" prefWidth="260.0" promptText="Departamento" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <TextField fx:id="salarioField" layoutX="338.0" layoutY="185.0" prefHeight="40.0" prefWidth="260.0" promptText="Salário" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bdc3c7; -fx-padding: 0 10;" />
+          <ComboBox fx:id="regimeCombo" layoutX="47.0" layoutY="316.0" prefHeight="40.0" prefWidth="123.0" promptText="Regime" style="-fx-background-radius: 8; -fx-border-radius: 8;" />
+          <ComboBox fx:id="statusCombo" layoutX="185.0" layoutY="316.0" prefHeight="40.0" prefWidth="123.0" promptText="Status" style="-fx-background-radius: 8; -fx-border-radius: 8;" />
+
+
+         <Button fx:id="salvarButton" layoutX="358.0" layoutY="391.0" onAction="#salvarFuncionario" prefHeight="42.0" prefWidth="220.0" style="-fx-background-color: white; -fx-text-fill: #2c3e50;-fx-font-size: 14px; -fx-padding: 10 20 10 20;-fx-background-radius: 8;" text="Salvar" />
+
+    </children>
+</AnchorPane>
