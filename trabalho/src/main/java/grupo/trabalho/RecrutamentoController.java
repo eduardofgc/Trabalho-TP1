@@ -2,14 +2,14 @@ package grupo.trabalho;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class RecrutamentoController {
 
@@ -25,6 +25,20 @@ public class RecrutamentoController {
     public AnchorPane contentArea;
     @FXML
     private Button activeButton;
+    @FXML
+    public Button cadastrarVagaButton;
+    @FXML
+    public TextField cargoTextfield;
+    @FXML
+    public TextField statusTextfield;
+    @FXML
+    public DatePicker dataAberturaDataPicker;
+    @FXML
+    public TextField requisitosTextfield;
+    @FXML
+    public TextField departamentoTextfield;
+    @FXML
+    public TextField salarioBaseTextfield;
 
     private MainController mainController;
 
@@ -63,6 +77,21 @@ public class RecrutamentoController {
     }
 
     @FXML
+    public void clickCadastrarVagaButton(){
+        String cargo = cargoTextfield.getText();
+        String requisitos = requisitosTextfield.getText();
+        String departamento = departamentoTextfield.getText();
+        String status = statusTextfield.getText();
+        double salarioBase = Double.parseDouble(salarioBaseTextfield.getText());
+        LocalDate dataAbertura = dataAberturaDataPicker.getValue();
+
+        Vaga novaVaga = new Vaga(cargo, requisitos, departamento, status, salarioBase, dataAbertura);
+        RecrutamentoClasses.addToVagaList(novaVaga);
+
+
+    }
+
+    @FXML
     public void showCadastrarVagas(){
         loadUI("/grupo/trabalho/cadastrarVaga-view.fxml");
         setActiveButton(cadastrarVagasButton);
@@ -76,7 +105,7 @@ public class RecrutamentoController {
 
     @FXML
     public void showAgendarEntrevista(){
-        loadUI("/grupo/trabalho/agendarEntrevista-view.fxml"); //TODO: add agendarEntrevista fxml
+        loadUI("/grupo/trabalho/agendarEntrevista-view.fxml");
         setActiveButton(agendarEntrevistaButton);
     }
 }

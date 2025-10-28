@@ -144,20 +144,20 @@ public class AdmController {
         AdmClasses.addToUserList(novoUsuario);
 
         if (novoUsuario.isAdmin){ //TODO
-            permissions = "true, false, false, false";
+            permissions = "true,false,false,false";
         }
         else if (novoUsuario.isGestor){
-            permissions = "false, true, false, false";
+            permissions = "false,true,false,false";
         }
         else if (novoUsuario.isCandidato){
-            permissions = "false, false, true, false";
+            permissions = "false,false,true,false";
         }
         else if (novoUsuario.isRecrutador){
-            permissions = "false, false, false, true";
+            permissions = "false,false,false,true";
         }
 
         try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){
-            writer.write(novoLogin + ", " + novaSenha + ", " + permissions + System.lineSeparator());
+            writer.write(novoLogin + ", " + novaSenha + "," + permissions + System.lineSeparator());
 
             AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
 

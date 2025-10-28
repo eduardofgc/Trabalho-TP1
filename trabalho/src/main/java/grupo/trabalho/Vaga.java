@@ -1,14 +1,15 @@
 package grupo.trabalho;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Vaga {
     private String cargo, requisitos, departamento, status;
     private double salarioBase;
-    private Date dataAbertura, dataFechamento;
+    private LocalDate dataAbertura, dataFechamento;
     public boolean estaAberta;
     public Recrutador recrutador;
 
-    Vaga(String meuCargo, String meusRequisitos, String meuDepartamento, String meuStatus, double meuSalarioBase, Date minhaDataAbertura){
+    Vaga(String meuCargo, String meusRequisitos, String meuDepartamento, String meuStatus, double meuSalarioBase, LocalDate minhaDataAbertura){
         this.cargo = meuCargo;
         this.requisitos = meusRequisitos;
         this.departamento = meuDepartamento;
