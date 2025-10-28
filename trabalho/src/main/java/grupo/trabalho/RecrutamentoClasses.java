@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class RecrutamentoClasses {
 
     public static ArrayList<Vaga> vagasArray = new ArrayList<>();
+    public static ArrayList<Entrevista> entrevistasArray = new ArrayList<>();
 
     public static void addToVagaList(Vaga minhaVaga){
         vagasArray.add(minhaVaga);
@@ -20,5 +21,13 @@ public class RecrutamentoClasses {
 
     public static void removeFromVagaList(Vaga minhaVaga){
         vagasArray.remove(minhaVaga);
+    }
+
+    public static void addToEntrevistaList(Entrevista minhaEntrevista){
+        entrevistasArray.add(minhaEntrevista);
+    }
+
+    public static void removeFromEntrevistaList(Entrevista minhaEntrevista){
+        entrevistasArray.remove(minhaEntrevista);
     }
 }

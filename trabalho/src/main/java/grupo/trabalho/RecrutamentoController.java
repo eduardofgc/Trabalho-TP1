@@ -76,7 +76,7 @@ public class RecrutamentoController {
 
     @FXML
     public void showAgendarEntrevista(){
-        loadUI(""); //TODO: add agendarEntrevista fxml
+        loadUI("/grupo/trabalho/agendarEntrevista-view.fxml"); //TODO: add agendarEntrevista fxml
         setActiveButton(agendarEntrevistaButton);
     }
 }
