@@ -94,4 +94,17 @@ public class FinanceiroController {
         ConfigRegrasController controller = loader.getController();
         controller.setFinanceiroController(this);
     }
+    @FXML
+    private void goFolhaPagamento() throws IOException {
+        Stage stage = (Stage) folhaPagamentoButton.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("#"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Gerar Folha de Pagamento");
+        stage.setResizable(false);
+        stage.show();
+    }
 }

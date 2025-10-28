@@ -15,10 +15,11 @@ public class FolhaPagamento {
     private int mesReferencia;
     private int anoReferencia;
     private double valorTotal;
+
     private Holerite holerite;
     private List<Holerite> holerites;
 
-    public FolhaPagamento(int mesReferencia, int anoReferencia) {
+    public void FolhaPagamento() {
         this.dataGeracao = new Date();
         this.mesReferencia = mesReferencia;
         this.anoReferencia = anoReferencia;
@@ -28,14 +29,10 @@ public class FolhaPagamento {
 
 
     public void gerarFolha(List<Funcionario> funcionarios) {
-        holerites.clear();
-        valorTotal = 0.0;
 
         for (Funcionario f : funcionarios) {
             if (f.getStatus() == StatusFuncionario.ATIVO) {
-                Holerite h = f.calcularSalarioLiquido(mesReferencia, anoReferencia);
-                holerites.add(h);
-                valorTotal += h.getSalarioLiquido();
+
             }
         }
     }

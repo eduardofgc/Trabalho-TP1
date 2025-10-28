@@ -24,6 +24,7 @@ public class Funcionario extends Usuario {
         this.cargo = cargo;
         this.departamento = departamento;
     }
+
     public String getNome() { return getNome(); }
     public int getMatricula() { return matricula; }
     public LocalDate getDataAdmissao() { return dataAdmissao; }
@@ -50,10 +51,10 @@ public class Funcionario extends Usuario {
 
         return salarioLiquido;
     }
-
-    public Holerite visualizarContracheque(int mes, int ano, List<RegraSalarial> regrasSalario) {
+ /*
+    public Holerite visualizarHolerite(int mes, int ano, List<RegraSalarial> regrasSalario) {
         double salarioLiquido = calcularSalarioLiquido(regrasSalario);
         return new Holerite(this, mes, ano, salarioLiquido, regrasSalario);
     }
-
+*/
 }
