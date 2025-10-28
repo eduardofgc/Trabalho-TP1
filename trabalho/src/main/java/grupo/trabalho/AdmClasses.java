@@ -18,6 +18,10 @@ public class AdmClasses {
         usuariosArray.add(usuario);
     }
 
+    public static void fetchUsersFromArchive(){ //TODO
+
+    }
+
     public static Usuario searchFor(String login){
         return usuariosArray.stream()
                 .filter(u -> u.getLogin().equals(login))
@@ -25,7 +29,7 @@ public class AdmClasses {
                 .orElse(null);
     }
 
-    public static void ensureAdminUser() {
+    public static void ensureAdminUser() { //TODO: FIX ADMIN INICIAL
         Path path = Path.of("usuariosInfo.txt");
         try {
             if (Files.readAllLines(path).isEmpty()) {

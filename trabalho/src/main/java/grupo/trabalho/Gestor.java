@@ -1,4 +1,5 @@
 package grupo.trabalho;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ public class Gestor extends Usuario{
         super(meuEmail, meuLogin, minhaSenha);
     }
 
-    public Vaga criarVaga(String meuCargo, String meusRequisitos, String meuDepartamento, String meuStatus, double meuSalarioBase, Date minhaDataAbertura){
+    public Vaga criarVaga(String meuCargo, String meusRequisitos, String meuDepartamento, String meuStatus, double meuSalarioBase, LocalDate minhaDataAbertura){
         Vaga novaVaga = new Vaga(meuCargo, meusRequisitos, meuDepartamento, meuStatus, meuSalarioBase, minhaDataAbertura);
         return novaVaga;
     }

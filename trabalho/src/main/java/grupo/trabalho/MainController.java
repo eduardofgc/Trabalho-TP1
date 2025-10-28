@@ -123,7 +123,10 @@ public class MainController {
         Stage financeiroStage = new Stage();
         FXMLLoader financeiroFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
         Parent financeiroRoot = financeiroFXMLLoader.load();
-
+        financeiroStage.getIcons().clear();
+        financeiroStage.getIcons().add(new Image(
+                getClass().getResourceAsStream("/images/logoFinanceiro.png")
+        ));
         FinanceiroController financeiroController = financeiroFXMLLoader.getController();
         financeiroController.setMainController(this);
 
