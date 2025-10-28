@@ -18,6 +18,10 @@ public class AdmClasses {
         usuariosArray.add(usuario);
     }
 
+    public static void fetchUsersFromArchive(){
+
+    }
+
     public static Usuario searchFor(String login){
         return usuariosArray.stream()
                 .filter(u -> u.getLogin().equals(login))

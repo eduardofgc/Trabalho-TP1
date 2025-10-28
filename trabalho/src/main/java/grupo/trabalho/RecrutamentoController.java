@@ -70,7 +70,7 @@ public class RecrutamentoController {
 
     @FXML
     public void showListarVagas(){
-        loadUI(""); //TODO: add listarVagas fxml
+        loadUI("/grupo/trabalho/listarVagas-view.fxml");
         setActiveButton(listarVagasButton);
     }
 

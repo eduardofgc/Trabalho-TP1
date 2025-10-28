@@ -127,6 +127,7 @@ public class AdmController {
     public void clickCadastrarUsuarioFinal() throws IOException {
         String novaSenha = senhaTextField.getText();
         String novoLogin = loginTextField.getText();
+        String permissions = null;
 
         if (novaSenha.isEmpty() || novoLogin.isEmpty()){
             AlertHelper.showInfo("Erro: por favor, preencha todos os campos.");
@@ -143,11 +144,20 @@ public class AdmController {
         AdmClasses.addToUserList(novoUsuario);
 
         if (novoUsuario.isAdmin){ //TODO
-
+            permissions = "true, false, false, false";
+        }
+        else if (novoUsuario.isGestor){
+            permissions = "false, true, false, false";
+        }
+        else if (novoUsuario.isCandidato){
+            permissions = "false, false, true, false";
+        }
+        else if (novoUsuario.isRecrutador){
+            permissions = "false, false, false, true";
         }
 
         try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){
-            writer.write(novoLogin + ", " + novaSenha + System.lineSeparator());
+            writer.write(novoLogin + ", " + novaSenha + ", " + permissions + System.lineSeparator());
 
             AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
 

@@ -18,5 +18,7 @@ public class RecrutamentoClasses {
         vagasArray.add(minhaVaga);
     }
 
-
+    public static void removeFromVagaList(Vaga minhaVaga){
+        vagasArray.remove(minhaVaga);
+    }
 }

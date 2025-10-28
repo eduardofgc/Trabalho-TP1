@@ -5,6 +5,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class ListarUsuariosController {
@@ -32,6 +35,12 @@ public class ListarUsuariosController {
         if (confirm.showAndWait().get() == ButtonType.OK) {
             AdmClasses.usuariosArray.clear();
             listaElementos.getItems().clear();
+
+            try (FileWriter fw = new FileWriter("usuariosInfo.txt", false)) {
+                fw.write("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -18,6 +18,7 @@ public class ListarController {
     public void setCandidaturaController(CandidaturaController candidaturaController){
         this.candidaturaController = candidaturaController;
     }
+
     @FXML
     private TableView<Candidato> tabela;
 
