@@ -157,7 +157,7 @@ public class AdmController {
         }
 
         try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){
-            writer.write(novoLogin + ", " + novaSenha + "," + permissions + System.lineSeparator());
+            writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
 
             AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
 

@@ -1,1 +1,5 @@
 Admin,12345678,true,false,false,false
+Gestor,12345678,false,true,false,false
+Recrutador,12345678,false,false,false,true
+Candidato,12345678,false,false,true,false
+novoUser,123321,false,false,true,false

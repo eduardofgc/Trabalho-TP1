@@ -7,23 +7,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="327.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.AdmController">
+<AnchorPane prefHeight="336.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.AdmController">
    <children>
       <Label layoutX="166.0" layoutY="29.0" prefHeight="86.0" prefWidth="268.0" text="Cadastrar novo usuário">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="261.0" layoutY="138.0" fx:id="loginTextField" />
-      <TextField layoutX="262.0" layoutY="197.0" fx:id="senhaTextField" />
-      <Label layoutX="192.0" layoutY="142.0" prefHeight="18.0" prefWidth="53.0" text="Login:" />
-      <Label layoutX="192.0" layoutY="201.0" text="Senha:" />
-      <Button layoutX="268.0" layoutY="253.0" mnemonicParsing="false" text="Registrar" fx:id="cadastrarUsuarioFinal" onAction="#clickCadastrarUsuarioFinal" />
+      <TextField fx:id="loginTextField" layoutX="262.0" layoutY="111.0" />
+      <TextField fx:id="senhaTextField" layoutX="262.0" layoutY="144.0" />
+      <Label layoutX="166.0" layoutY="114.0" prefHeight="18.0" prefWidth="53.0" text="Login:" />
+      <Label layoutX="166.0" layoutY="148.0" text="Senha:" />
+      <Button fx:id="cadastrarUsuarioFinal" layoutX="268.0" layoutY="264.0" mnemonicParsing="false" onAction="#clickCadastrarUsuarioFinal" text="Registrar" />
 
-      <CheckBox layoutX="450.0" layoutY="130.0" text="Admin?" fx:id="adminCheckBox" />
-      <CheckBox layoutX="450.0" layoutY="160.0" text="Gestor?" fx:id="gestorCheckBox" />
-      <CheckBox layoutX="450.0" layoutY="190.0" text="Recrutador?" fx:id="recrutadorCheckBox" />
-      <CheckBox layoutX="450.0" layoutY="220.0" text="Candidato?" fx:id="candidatoCheckBox" />
+      <CheckBox fx:id="adminCheckBox" layoutX="120.0" layoutY="229.0" text="Admin?" />
+      <CheckBox fx:id="gestorCheckBox" layoutX="220.0" layoutY="229.0" text="Gestor?" />
+      <CheckBox fx:id="recrutadorCheckBox" layoutX="325.0" layoutY="229.0" text="Recrutador?" />
+      <CheckBox fx:id="candidatoCheckBox" layoutX="434.0" layoutY="229.0" text="Candidato?" />
+      <Label layoutX="166.0" layoutY="181.0" text="E-mail:" />
+      <TextField layoutX="262.0" layoutY="177.0" />
    </children>
 </AnchorPane>
-
