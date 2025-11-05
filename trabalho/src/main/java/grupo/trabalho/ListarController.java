@@ -13,11 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class ListarController {
-    private CandidaturaController candidaturaController;
-
-    public void setCandidaturaController(CandidaturaController candidaturaController){
-        this.candidaturaController = candidaturaController;
-    }
 
     @FXML
     private TableView<Candidato> tabela;
@@ -41,19 +36,27 @@ public class ListarController {
         tabela.setItems(lista);
     }
 
-    public void voltarMenu(ActionEvent event) {
-        trocarTela(event, "candidatura-view.fxml");
+    @FXML
+    private void voltarMenu(ActionEvent event) {
+        trocarTela(event, "/grupo/trabalho/candidatura-view.fxml");
     }
 
-    private void trocarTela(ActionEvent event, String fxml) {
+    private void trocarTela(ActionEvent event, String fxmlPath) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            // tenta carregar o FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            // cria nova cena
             Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+            // obtém o palco atual
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
         } catch (Exception e) {
+            System.out.println("Erro ao trocar tela: " + fxmlPath);
             e.printStackTrace();
         }
     }

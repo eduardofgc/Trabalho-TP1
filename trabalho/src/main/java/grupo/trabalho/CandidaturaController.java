@@ -47,7 +47,6 @@ public class CandidaturaController {
         Parent root = loader.load();
 
         ListarController controller = loader.getController();
-        controller.setCandidaturaController(this);
 
         stage.setScene(new Scene(root));
         stage.setTitle("Listar Candidatos");

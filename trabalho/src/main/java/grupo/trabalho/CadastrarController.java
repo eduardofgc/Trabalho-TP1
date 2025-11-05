@@ -37,10 +37,22 @@ public class CadastrarController {
         String email = txtEmail.getText();
         String vaga = comboVaga.getValue();
 
-        System.out.println("Candidato salvo:");
+        if (nome.isEmpty() || email.isEmpty() || vaga == null) {
+            System.out.println("Preencha todos os campos!");
+            return;
+        }
+
+        Candidato novo = new Candidato(nome, email, vaga);
+        CandidatoRepository.adicionarCandidato(novo);
+
+        System.out.println("Candidato salvo com sucesso!");
         System.out.println("Nome: " + nome);
         System.out.println("Email: " + email);
         System.out.println("Vaga: " + vaga);
+
+        txtNome.clear();
+        txtEmail.clear();
+        comboVaga.setValue(null);
     }
 
     @FXML
@@ -52,7 +64,7 @@ public class CadastrarController {
         Parent root = loader.load();
 
         CandidaturaController candidaturaController = loader.getController();
-        candidaturaController.setMainController(null); // ou passe o MainController se houver
+        candidaturaController.setMainController(null);
 
         Stage stage = new Stage();
         stage.setTitle("Candidatura");
