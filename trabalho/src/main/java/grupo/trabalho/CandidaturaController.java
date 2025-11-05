@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class CandidaturaController {
@@ -46,7 +45,7 @@ public class CandidaturaController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/listar.fxml"));
         Parent root = loader.load();
 
-        ListarController controller = loader.getController();
+        // ❌ Removido: controller.setCandidaturaController(this);
 
         stage.setScene(new Scene(root));
         stage.setTitle("Listar Candidatos");
