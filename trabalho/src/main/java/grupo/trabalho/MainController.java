@@ -43,21 +43,27 @@ public class MainController {
 
     @FXML
     private void goToAdm() throws IOException {
-        Stage prevStage = (Stage) admButton.getScene().getWindow();
-        prevStage.close();
 
-        Stage admStage = new Stage();
-        FXMLLoader admFXMLLoader = new FXMLLoader((getClass().getResource("/grupo/trabalho/adm-view.fxml")));
-        Parent admRoot = admFXMLLoader.load();
+        if (HelloController.currentUser.isAdmin || HelloController.currentUser.isGestor){
+            Stage prevStage = (Stage) admButton.getScene().getWindow();
+            prevStage.close();
 
-        AdmController admController = admFXMLLoader.getController();
-        admController.setMainController(this);
+            Stage admStage = new Stage();
+            FXMLLoader admFXMLLoader = new FXMLLoader((getClass().getResource("/grupo/trabalho/adm-view.fxml")));
+            Parent admRoot = admFXMLLoader.load();
 
-        Scene scene = new Scene(admRoot);
-        admStage.setTitle("Administração/Gestão");
-        admStage.setScene(scene);
-        admStage.setResizable(false);
-        admStage.show();
+            AdmController admController = admFXMLLoader.getController();
+            admController.setMainController(this);
+
+            Scene scene = new Scene(admRoot);
+            admStage.setTitle("Administração/Gestão");
+            admStage.setScene(scene);
+            admStage.setResizable(false);
+            admStage.show();
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão pra isso.");
+        }
     }
 
     @FXML
@@ -79,44 +85,57 @@ public class MainController {
 
     @FXML
     private void goToCandidatura() throws IOException {
-        Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
-        prevStage.close();
 
-        Stage candidaturaStage = new Stage();
-        FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
-        Parent candidaturaRoot = candidaturaFXMLLoader.load();
+        if (HelloController.currentUser.isRecrutador || HelloController.currentUser != null || HelloController.currentUser.isAdmin && HelloController.currentUser != null){
+            Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
+            prevStage.close();
 
-        CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
-        candidaturaController.setMainController(this);
+            Stage candidaturaStage = new Stage();
+            FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
+            Parent candidaturaRoot = candidaturaFXMLLoader.load();
 
-        Scene scene = new Scene(candidaturaRoot);
-        candidaturaStage.setTitle("Candidatura");
-        candidaturaStage.setScene(scene);
-        candidaturaStage.setResizable(false);
-        candidaturaStage.show();
+            CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
+            candidaturaController.setMainController(this);
+
+            Scene scene = new Scene(candidaturaRoot);
+            candidaturaStage.setTitle("Candidatura");
+            candidaturaStage.setScene(scene);
+            candidaturaStage.setResizable(false);
+            candidaturaStage.show();
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão pra isso.");
+        }
     }
 
     @FXML
     private void goToRecrutamento() throws IOException {
-        Stage prevStage = (Stage) recrutamentoButton.getScene().getWindow();
-        prevStage.close();
 
-        Stage candidaturaStage = new Stage();
-        FXMLLoader recrutamentoFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/recrutamento-view.fxml"));
-        Parent recrutamentoRoot = recrutamentoFXMLLoader.load();
+        if (HelloController.currentUser != null && HelloController.currentUser.isRecrutador || HelloController.currentUser.isAdmin){
+            Stage prevStage = (Stage) recrutamentoButton.getScene().getWindow();
+            prevStage.close();
 
-        RecrutamentoController recrutamentoControllerController = recrutamentoFXMLLoader.getController();
-        recrutamentoControllerController.setMainController(this);
+            Stage candidaturaStage = new Stage();
+            FXMLLoader recrutamentoFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/recrutamento-view.fxml"));
+            Parent recrutamentoRoot = recrutamentoFXMLLoader.load();
 
-        Scene scene = new Scene(recrutamentoRoot);
-        candidaturaStage.setTitle("Recrutamento");
-        candidaturaStage.setScene(scene);
-        candidaturaStage.setResizable(false);
-        candidaturaStage.show();
+            RecrutamentoController recrutamentoControllerController = recrutamentoFXMLLoader.getController();
+            recrutamentoControllerController.setMainController(this);
+
+            Scene scene = new Scene(recrutamentoRoot);
+            candidaturaStage.setTitle("Recrutamento");
+            candidaturaStage.setScene(scene);
+            candidaturaStage.setResizable(false);
+            candidaturaStage.show();
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão pra isso.");
+        }
     }
 
     @FXML
     private void goToFinanceiro() throws IOException{
+
         Stage prevStage = (Stage) financeiroButton.getScene().getWindow();
         prevStage.close();
 

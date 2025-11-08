@@ -1,21 +1,14 @@
 package grupo.trabalho;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -60,14 +53,11 @@ public class AdmController {
     @FXML
     private CheckBox candidatoCheckBox;
 
-
     @FXML
     private void voltarMenu() throws IOException {
-
         mainController.goBackMenu(voltarMenuButton);
     }
 
-    //VIDE CODIGO DC (eu mesmo) PARA FRAME QUE MUDA
     public Object loadUI(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
@@ -82,7 +72,6 @@ public class AdmController {
             return null;
         }
     }
-
 
     private void setActiveButton(Button button){
         if (activeButton != null){
@@ -118,11 +107,9 @@ public class AdmController {
         }
     }
 
-
-
     @FXML
     public void showGerarRelatorios(){
-        loadUI(""); //fxml da pagina do gerar relatorios aqui TODO: permanencia de dados via .txt
+        loadUI("");
         setActiveButton(gerarRelatoriosButton);
     }
 
@@ -146,7 +133,7 @@ public class AdmController {
 
         AdmClasses.addToUserList(novoUsuario);
 
-        if (novoUsuario.isAdmin){ //TODO
+        if (novoUsuario.isAdmin){
             permissions = "true,false,false,false";
         }
         else if (novoUsuario.isGestor){
@@ -168,13 +155,12 @@ public class AdmController {
             AlertHelper.showInfo("Erro cadastrando usuário.");
             e.printStackTrace();
         }
-
     }
 
     public void listarUsuariosEmPag() {
         try {
             List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            listaElementos.getItems().clear(); // clear old data
+            listaElementos.getItems().clear();
 
             for (String line : lines) {
                 String[] parts = line.split(",");
@@ -203,6 +189,4 @@ public class AdmController {
             e.printStackTrace();
         }
     }
-
-
 }

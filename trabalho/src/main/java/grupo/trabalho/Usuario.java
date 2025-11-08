@@ -10,23 +10,29 @@ public class Usuario {
         this.senha = minhaSenha;
     }
 
-    //Overload pra cadastrar usuario (setar email depois)
     Usuario(String meuLogin, String minhaSenha){
         this.login = meuLogin;
         this.senha = minhaSenha;
+    }
+
+    Usuario(String meuLogin, String minhaSenha, boolean admin, boolean gestor, boolean candidato, boolean recrutador){
+        this.login = meuLogin;
+        this.senha = minhaSenha;
+        this.isAdmin = admin;
+        this.isGestor = gestor;
+        this.isCandidato = candidato;
+        this.isRecrutador = recrutador;
     }
 
     public String getLogin(){
         return this.login;
     }
 
-    public String getSenha(){return this.senha;}
+    public String getSenha(){
+        return this.senha;
+    }
 
     public boolean fazerLogin(String loginTentado, String senhaTentada) {
-        if (loginTentado.equals(this.login) && senhaTentada.equals(this.senha)) {
-            return true;
-        } else {
-            return false;
-        }
+        return loginTentado.equals(this.login) && senhaTentada.equals(this.senha);
     }
 }
