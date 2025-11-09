@@ -1,6 +1,7 @@
 package grupo.trabalho;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -42,8 +43,6 @@ public class AdmController {
     private TextField senhaTextField;
     @FXML
     private TextField loginTextField;
-    @FXML
-    private ListView<String> listaElementos;
     @FXML
     private CheckBox adminCheckBox;
     @FXML
@@ -88,7 +87,6 @@ public class AdmController {
         loadUI("/grupo/trabalho/cadastrarUsuario-view.fxml");
         setActiveButton(cadastrarUsuarioButton);
 
-        listarUsuariosEmPag();
     }
 
     @FXML
@@ -108,10 +106,22 @@ public class AdmController {
     }
 
     @FXML
-    public void showGerarRelatorios(){
-        loadUI("");
-        setActiveButton(gerarRelatoriosButton);
+    public void showGerarRelatorios() {
+        System.out.println("Cliquei no botão gerar relatorios!"); // teste
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/gerarRelatorio-view.fxml"));
+            Parent view = loader.load();
+
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(view);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     @FXML
     public void clickCadastrarUsuarioFinal() throws IOException {
@@ -157,36 +167,5 @@ public class AdmController {
         }
     }
 
-    public void listarUsuariosEmPag() {
-        try {
-            List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            listaElementos.getItems().clear();
 
-            for (String line : lines) {
-                String[] parts = line.split(",");
-
-                if (parts.length >= 6) {
-                    String nome = parts[0];
-                    String senha = parts[1];
-                    boolean admin = Boolean.parseBoolean(parts[2]);
-                    boolean gestor = Boolean.parseBoolean(parts[3]);
-                    boolean candidato = Boolean.parseBoolean(parts[4]);
-                    boolean recrutador = Boolean.parseBoolean(parts[5]);
-
-                    StringBuilder roles = new StringBuilder();
-                    if (admin) roles.append("Admin ");
-                    if (gestor) roles.append("Gestor ");
-                    if (candidato) roles.append("Candidato ");
-                    if (recrutador) roles.append("Recrutador ");
-
-                    String formatted = String.format("%s — %s", nome, roles.toString().trim());
-                    listaElementos.getItems().add(formatted);
-                }
-            }
-
-        } catch (IOException e) {
-            AlertHelper.showInfo("Erro: impossível acessar usuariosInfo.txt");
-            e.printStackTrace();
-        }
-    }
 }

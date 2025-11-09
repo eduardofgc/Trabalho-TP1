@@ -5,6 +5,7 @@ module grupo.trabalho {
     requires java.desktop;
 
 
-    opens grupo.trabalho to javafx.fxml;   // allow FXML reflection
+
+    opens grupo.trabalho to javafx.fxml;
     exports grupo.trabalho;
 }
