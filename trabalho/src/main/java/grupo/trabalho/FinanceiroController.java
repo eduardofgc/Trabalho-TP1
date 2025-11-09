@@ -1,6 +1,11 @@
 package grupo.trabalho;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,33 +14,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.scene.image.Image;
 
-public class FinanceiroController {
+import java.nio.file.*;
+import java.time.LocalDate;
+import java.util.List;
 
+public class FinanceiroController {
     private MainController mainController;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    @FXML
-    private Button menuButton;
-
-    @FXML
-    private Button cadastroButton;
-
-    @FXML
-    private Button configRegrasButton;
-
-    @FXML
-    private Button folhaPagamentoButton;
-
-    @FXML
-    private void handleMenuButton() throws IOException {
-        if (mainController != null) {
-            mainController.goBackMenu(menuButton);
-        } else {
-            System.err.println("MainController não foi configurado!");
-        }
     }
 
     @FXML
@@ -56,55 +43,197 @@ public class FinanceiroController {
         stage1.setResizable(false);
         stage1.show();
     }
+    @FXML private Button menuButton;
+    @FXML private TableView<Funcionario> tabelaFuncionarios;
+    @FXML private TableColumn<Funcionario, String> colNome;
+    @FXML private TableColumn<Funcionario, String> colCpf;
+    @FXML private TableColumn<Funcionario, String> colMatricula;
+    @FXML private TableColumn<Funcionario, String> colCargo;
+    @FXML private TableColumn<Funcionario, String> colDepartamento;
+    @FXML private TableColumn<Funcionario, String> colRegime;
+    @FXML private TableColumn<Funcionario, Double> colSalarioBase;
+    @FXML private TableColumn<Funcionario, Double> colSalarioLiquido;
+    @FXML private TableColumn<Funcionario, String> colDataAdmissao;
+    @FXML private Label labelTotal;
+    @FXML private ComboBox<String> comboCargo;
+    @FXML private ComboBox<String> comboRegime;
+    @FXML private ComboBox<String> comboStatus;
+    @FXML private ComboBox<String> comboDepartamento;
 
     @FXML
-    private void gocadastroFunc() throws IOException {
-        Stage stage = (Stage) cadastroButton.getScene().getWindow();
+    private void handleMenuButton() throws IOException {
+        if (mainController != null) {
+            mainController.goBackMenu(menuButton);
+        } else {
+            System.err.println("MainController não foi configurado!");
+        }
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/cadastroFunc-view.fxml"));
-        Parent root = loader.load();
-        stage.getIcons().clear();
-        stage.getIcons().add(new Image(
-                getClass().getResourceAsStream("/images/logoCadastroFunc.png")
-        ));
+    private final String CAMINHO_ARQUIVO = "dados_Funcionarios.txt";
 
-        CadastroFunc cadastroFunc = loader.getController();
-        cadastroFunc.setFinanceiroController(this);
+    @FXML
+    public void atualizarTabela() {
+        ObservableList<Funcionario> lista = FXCollections.observableArrayList();
+        double total = 0;
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Cadastro de Funcionário");
-        stage.setResizable(false);
-        stage.show();
+        try {
+            System.out.println("Procurando arquivo em: " + Paths.get(CAMINHO_ARQUIVO).toAbsolutePath());
+
+            List<String> linhas = Files.readAllLines(Paths.get(CAMINHO_ARQUIVO));
+            for (String linha : linhas) {
+                String[] p = linha.split(";");
+                if (p.length == 10) {
+                    String nome = p[0];
+                    String cpf = p[1];
+                    int matricula = Integer.parseInt(p[2]);
+                    LocalDate dataAdmissao = LocalDate.parse(p[3]);
+                    double salarioBase = Double.parseDouble(p[4]);
+                    double salarioLiquido = Double.parseDouble(p[5]);
+                    RegimeContratacao regime = RegimeContratacao.valueOf(p[6].trim().toUpperCase());
+                    StatusFuncionario status = StatusFuncionario.valueOf(p[7].trim().toUpperCase());
+                    String cargo = p[8];
+                    String departamento = p[9];
+
+                    if (status == StatusFuncionario.ATIVO) { // só haverá funcionários ATIVO na tabela
+                        Funcionario f = new Funcionario(nome, cpf, matricula, dataAdmissao, salarioBase,
+                                salarioLiquido, regime, status, cargo, departamento);
+                        lista.add(f);
+                        total += salarioLiquido;
+                    }
+                }
+            }
+            tabelaFuncionarios.setItems(lista);
+            labelTotal.setText(String.format("Total da folha: R$ %.2f", total));
+
+        } catch (IOException e) {
+            System.err.println("Erro ao ler arquivo: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void initialize() {
+        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        colCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+        colDepartamento.setCellValueFactory(new PropertyValueFactory<>("departamento"));
+        colRegime.setCellValueFactory(new PropertyValueFactory<>("regime"));
+        colSalarioBase.setCellValueFactory(new PropertyValueFactory<>("salarioBase"));
+        colSalarioLiquido.setCellValueFactory(new PropertyValueFactory<>("salarioLiquido"));
+        colDataAdmissao.setCellValueFactory(new PropertyValueFactory<>("dataAdmissao"));
+        comboRegime.setItems(FXCollections.observableArrayList("CLT", "ESTAGIO", "PJ"));
+        comboStatus.setItems(FXCollections.observableArrayList("ATIVO", "INATIVO"));
+        comboCargo.setItems(FXCollections.observableArrayList("Analista", "Estagiário", "Consultor", "Secretária"));
+        comboDepartamento.setItems(FXCollections.observableArrayList("Financeiro", "TI", "RH", "Administração"));
+
+        atualizarTabela();
+
+        tabelaFuncionarios.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // clique duplo
+                Funcionario selecionado = tabelaFuncionarios.getSelectionModel().getSelectedItem();
+                if (selecionado != null) {
+                    abrirTelaDetalhes(selecionado);
+                }
+            }
+        });
     }
     @FXML
-        private void goConfigRegras() throws IOException {
-        Stage stage = (Stage) configRegrasButton.getScene().getWindow();
+    private void filtrarFuncionarios() {
+        ObservableList<Funcionario> listaFiltrada = FXCollections.observableArrayList();
+        double total = 0;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/configRegras-view.fxml"));
-        Parent root = loader.load();
-        stage.getIcons().clear();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoFinanceiro.png")));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Configuração de Regras Salariais");
-        stage.setResizable(false);
-        stage.show();
+        try {
+            List<String> linhas = Files.readAllLines(Paths.get(CAMINHO_ARQUIVO));
 
-        ConfigRegrasController controller = loader.getController();
-        controller.setFinanceiroController(this);
+            for (String linha : linhas) {
+                String[] p = linha.split(";");
+                if (p.length == 10) {
+                    String nome = p[0];
+                    String cpf = p[1];
+                    int matricula = Integer.parseInt(p[2]);
+                    LocalDate dataAdmissao = LocalDate.parse(p[3]);
+                    double salarioBase = Double.parseDouble(p[4]);
+                    double salarioLiquido = Double.parseDouble(p[5]);
+                    RegimeContratacao regime = RegimeContratacao.valueOf(p[6].trim().toUpperCase());
+                    StatusFuncionario status = StatusFuncionario.valueOf(p[7].trim().toUpperCase());
+                    String cargo = p[8];
+                    String departamento = p[9];
+
+                    // 🔍 FILTROS
+                    boolean condicao = true;
+
+                    if (comboCargo.getValue() != null && !comboCargo.getValue().isEmpty())
+                        condicao &= cargo.equalsIgnoreCase(comboCargo.getValue());
+
+                    if (comboRegime.getValue() != null && !comboRegime.getValue().isEmpty())
+                        condicao &= regime.name().equalsIgnoreCase(comboRegime.getValue());
+
+                    if (comboStatus.getValue() != null && !comboStatus.getValue().isEmpty())
+                        condicao &= status.name().equalsIgnoreCase(comboStatus.getValue());
+
+                    if (comboDepartamento.getValue() != null && !comboDepartamento.getValue().isEmpty())
+                        condicao &= departamento.equalsIgnoreCase(comboDepartamento.getValue());
+
+                    if (condicao) {
+                        Funcionario f = new Funcionario(nome, cpf, matricula, dataAdmissao,salarioBase,
+                                salarioLiquido, regime, status, cargo, departamento);
+                        listaFiltrada.add(f);
+                        total += salarioLiquido;
+                    }
+                }
+            }
+
+            tabelaFuncionarios.setItems(listaFiltrada);
+            labelTotal.setText(String.format("Total da folha: R$ %.2f", total));
+
+        } catch (IOException e) {
+            System.err.println("Erro ao ler arquivo: " + e.getMessage());
+        }
     }
     @FXML
-    private void goFolhaPagamento() throws IOException {
-        Stage stage = (Stage) folhaPagamentoButton.getScene().getWindow();
+    private void limparFiltros() {
+        comboCargo.setValue(null);
+        comboRegime.setValue(null);
+        comboStatus.setValue(null);
+        comboDepartamento.setValue(null);
+        atualizarTabela(); // recarrega todos os funcionários
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("#"));
-        Parent root = loader.load();
+    @FXML
+    private void abrirTelaDetalhes(Funcionario funcionario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("detalhes-salario-view.fxml"));
+            Parent root = loader.load();
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Gerar Folha de Pagamento");
-        stage.setResizable(false);
-        stage.show();
+            // Pega o controller da nova tela e passa o funcionário selecionado
+            DetalhesSalarioController controller = loader.getController();
+            controller.setFuncionario(funcionario);
+
+            Stage stage = new Stage();
+            stage.setTitle("Detalhes do Salário - " + funcionario.getNome());
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void exportarCSV() {
+        try {
+            StringBuilder sb = new StringBuilder();
+            for (Funcionario f : tabelaFuncionarios.getItems()) {
+                sb.append(String.format("%s;%s;%s;%s;%s;%.2f;%s%n",
+                        f.getNome(), f.getCpf(), f.getMatricula(),
+                        f.getCargo(), f.getDepartamento(),
+                        f.getSalarioBase(), f.getRegime()));
+            }
+
+            Files.write(Paths.get("dadosFuncionarios.txt"), sb.toString().getBytes());
+            System.out.println("Relatório exportado para dados/relatorio_financeiro.csv");
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar CSV: " + e.getMessage());
+        }
     }
 }

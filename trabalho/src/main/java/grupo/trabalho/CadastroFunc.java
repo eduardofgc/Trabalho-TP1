@@ -41,7 +41,7 @@ public class CadastroFunc {
             e.printStackTrace();
         }
     }
-
+/*
     @FXML
     private void salvarFuncionario() {
         try {
@@ -66,7 +66,7 @@ public class CadastroFunc {
             mostrarAlerta("Erro", "Verifique os dados informados.");
         }
     }
-
+*/
     private void mostrarAlerta(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);

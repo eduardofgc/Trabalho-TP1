@@ -33,7 +33,7 @@ public class ConfigRegrasController {
     public void initialize() {
         tipoCombo.getItems().setAll(TipoRegraSalario.values());
     }
-
+    /*
     @FXML
     private void handleMenuButton() {
         try {
@@ -41,7 +41,7 @@ public class ConfigRegrasController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
     @FXML
     private void salvarRegras() {
         try {
