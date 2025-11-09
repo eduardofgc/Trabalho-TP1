@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -90,7 +92,8 @@
       <version>6.2.3</version>
     </dependency>
 
-    <!-- =================== IITEXT PDF (ADICIONADO!) =================== -->
+    <!-- =================== PDF GENERATION =================== -->
+    <!-- iText (you already had, kept it) -->
     <dependency>
       <groupId>com.itextpdf</groupId>
       <artifactId>kernel</artifactId>
@@ -105,6 +108,13 @@
       <groupId>com.itextpdf</groupId>
       <artifactId>io</artifactId>
       <version>7.2.5</version>
+    </dependency>
+
+    <!-- PDFBox (added ✅) -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>2.0.29</version>
     </dependency>
 
     <!-- =================== TESTES =================== -->
@@ -123,8 +133,12 @@
 
   </dependencies>
 
-  <!-- =================== GLUON REPO (já tinha) =================== -->
+  <!-- =================== REPOSITORIES (Updated ✅) =================== -->
   <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
     <repository>
       <id>gluon-releases</id>
       <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
