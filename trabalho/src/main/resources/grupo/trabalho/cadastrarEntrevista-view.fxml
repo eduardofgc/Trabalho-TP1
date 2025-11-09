@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="grupo.trabalho.CadastrarEntrevistaController">
+
+    <children>
+        <Label layoutX="90.0" layoutY="14.0" text="Cadastrar Entrevista">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+
+        <Label layoutX="50.0" layoutY="60.0" text="Data:" />
+        <DatePicker fx:id="dataPicker" layoutX="150.0" layoutY="56.0" prefWidth="200.0" />
+
+        <Label layoutX="50.0" layoutY="100.0" text="Avaliador:" />
+        <TextField fx:id="avaliadorField" layoutX="150.0" layoutY="96.0" prefWidth="200.0" />
+
+        <Label layoutX="50.0" layoutY="140.0" text="Nota:" />
+        <TextField fx:id="notaField" layoutX="150.0" layoutY="136.0" prefWidth="200.0" />
+
+        <Label layoutX="50.0" layoutY="180.0" text="Parecer:" />
+        <TextArea fx:id="parecerField" layoutX="150.0" layoutY="176.0" prefWidth="200.0" prefHeight="50.0" />
+
+        <Button fx:id="cadastrarButton" layoutX="150.0" layoutY="240.0" prefWidth="100.0"
+                text="Cadastrar" onAction="#clickCadastrar" />
+    </children>
+</AnchorPane>
