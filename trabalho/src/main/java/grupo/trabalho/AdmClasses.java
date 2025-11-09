@@ -13,21 +13,20 @@ public class AdmClasses {
 
     public static void ensureAdminUser() {
         boolean adminExists = false;
-
         for (Usuario u : usuariosArray) {
             if (u.isAdmin) {
                 adminExists = true;
                 break;
             }
         }
-
         if (!adminExists) {
-            Usuario defaultAdmin = new Usuario("admin", "admin123");
+            Usuario defaultAdmin = new Usuario("admin@admin.com", "admin", "admin123");
             defaultAdmin.isAdmin = true;
             addToUserList(defaultAdmin);
-
-            try (FileWriter writer = new FileWriter("usuariosInfo.txt", true)) {
+            try (FileWriter writer = new FileWriter("usuariosInfo.txt", true);
+                 FileWriter emailWriter = new FileWriter("emailInfo.txt", true)) {
                 writer.write("admin,admin123,true,false,false,false" + System.lineSeparator());
+                emailWriter.write("admin@admin.com" + System.lineSeparator());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -36,12 +35,15 @@ public class AdmClasses {
 
     public static void fetchUsersFromArchive() {
         usuariosArray.clear();
-        try (BufferedReader reader = new BufferedReader(new FileReader("usuariosInfo.txt"))){
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] p = line.split(",");
+        try (BufferedReader userReader = new BufferedReader(new FileReader("usuariosInfo.txt"));
+             BufferedReader emailReader = new BufferedReader(new FileReader("emailInfo.txt"))) {
+            String userLine;
+            while ((userLine = userReader.readLine()) != null) {
+                String emailLine = emailReader.readLine();
+                String[] p = userLine.split(",");
                 if (p.length == 6){
                     Usuario u = new Usuario(
+                            emailLine != null ? emailLine : "",
                             p[0],
                             p[1],
                             Boolean.parseBoolean(p[2]),
@@ -63,9 +65,10 @@ public class AdmClasses {
                         novoUsuario.isGestor + "," +
                         novoUsuario.isCandidato + "," +
                         novoUsuario.isRecrutador;
-
-        try (FileWriter writer = new FileWriter("usuariosInfo.txt", true)) {
+        try (FileWriter writer = new FileWriter("usuariosInfo.txt", true);
+             FileWriter emailWriter = new FileWriter("emailInfo.txt", true)) {
             writer.write(novoUsuario.getLogin() + "," + novoUsuario.getSenha() + "," + permissions + System.lineSeparator());
+            emailWriter.write(novoUsuario.getEmail() + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,17 +81,4 @@ public class AdmClasses {
     public static Usuario searchFor(String login){
         return usuariosArray.stream().filter(u -> u.getLogin().equals(login)).findFirst().orElse(null);
     }
-
-    public static void debugPrintUsers() {
-        for (Usuario u : usuariosArray) {
-            System.out.println(
-                    u.getLogin() +
-                            " " + u.isAdmin +
-                            " " + u.isGestor +
-                            " " + u.isCandidato +
-                            " " + u.isRecrutador
-            );
-        }
-    }
 }
-

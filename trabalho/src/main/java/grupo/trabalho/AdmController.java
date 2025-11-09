@@ -1,10 +1,10 @@
 package grupo.trabalho;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
-import static grupo.trabalho.AdmClasses.usuariosArray;
 
 public class AdmController {
 
@@ -25,6 +23,8 @@ public class AdmController {
         this.mainController = mainController;
     }
 
+    @FXML
+    public TextField emailTextField;
     @FXML
     private Button cadastrarUsuarioButton;
     @FXML
@@ -53,6 +53,19 @@ public class AdmController {
     private CheckBox candidatoCheckBox;
 
     @FXML
+    public void showGerarRelatorios() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/gerarRelatorio-view.fxml"));
+            Parent view = loader.load();
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
     private void voltarMenu() throws IOException {
         mainController.goBackMenu(voltarMenuButton);
     }
@@ -61,10 +74,8 @@ public class AdmController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             AnchorPane pane = loader.load();
-
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
-
             return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +88,6 @@ public class AdmController {
             activeButton.setId("buttonLateral");
             activeButton = button;
         }
-
         button.setId("buttonLateralActive");
         activeButton = button;
     }
@@ -86,14 +96,12 @@ public class AdmController {
     public void showCadastrarUsuario(){
         loadUI("/grupo/trabalho/cadastrarUsuario-view.fxml");
         setActiveButton(cadastrarUsuarioButton);
-
     }
 
     @FXML
     public void showListarUsuarios() {
         Object controllerObj = loadUI("/grupo/trabalho/listarUsuarios-view.fxml");
         setActiveButton(listarUsuariosButton);
-
         if (controllerObj instanceof ListarUsuariosController controller) {
             try {
                 List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
@@ -106,36 +114,16 @@ public class AdmController {
     }
 
     @FXML
-    public void showGerarRelatorios() {
-        System.out.println("Cliquei no botão gerar relatorios!"); // teste
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/gerarRelatorio-view.fxml"));
-            Parent view = loader.load();
-
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(view);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    @FXML
     public void clickCadastrarUsuarioFinal() throws IOException {
         String novaSenha = senhaTextField.getText();
         String novoLogin = loginTextField.getText();
+        String novoEmail = emailTextField.getText();
         String permissions = null;
-
-        if (novaSenha.isEmpty() || novoLogin.isEmpty()){
+        if (novaSenha.isEmpty() || novoLogin.isEmpty() || novoEmail.isEmpty()){
             AlertHelper.showInfo("Erro: por favor, preencha todos os campos.");
             return;
         }
-
-        Usuario novoUsuario = new Usuario(novoLogin, novaSenha);
-
+        Usuario novoUsuario = new Usuario(novoEmail, novoLogin, novaSenha);
         novoUsuario.isAdmin = adminCheckBox.isSelected();
         novoUsuario.isGestor = gestorCheckBox.isSelected();
         novoUsuario.isCandidato = candidatoCheckBox.isSelected();
@@ -156,16 +144,14 @@ public class AdmController {
             permissions = "false,false,false,true";
         }
 
-        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true)){
+        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
+            FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
             writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
-
+            emailWriter.write(novoEmail + System.lineSeparator());
             AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
-
         } catch (IOException e){
             AlertHelper.showInfo("Erro cadastrando usuário.");
             e.printStackTrace();
         }
     }
-
-
 }
