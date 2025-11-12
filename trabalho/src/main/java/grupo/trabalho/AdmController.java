@@ -24,6 +24,57 @@ public class AdmController {
     }
 
     @FXML
+    public void onHover(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #e8eef5; -fx-text-fill: #2c3e50; -fx-font-size: 14px; " +
+                        "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.03; -fx-scale-y: 1.03;"
+        );
+    }
+
+    @FXML
+    public void onExit(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: white; -fx-text-fill: #2c3e50; -fx-font-size: 14px; " +
+                        "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
+        );
+    }
+
+    @FXML
+    public void onPress(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 0.97; -fx-scale-y: 0.97;");
+    }
+
+    @FXML
+    public void onRelease(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 1.03; -fx-scale-y: 1.03;");
+    }
+
+    @FXML
+    public void onHoverDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #1f2b38; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.04; -fx-scale-y: 1.04;"
+        );
+    }
+
+    @FXML
+    public void onExitDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
+        );
+    }
+
+    @FXML
+    public void onReleaseDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #1f2b38; -fx-text-fill: white; -fx-font-size: 14px; " +
+                        "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.04; -fx-scale-y: 1.04;"
+        );
+    }
+
+
+    @FXML
     public TextField emailTextField;
     @FXML
     private Button cadastrarUsuarioButton;

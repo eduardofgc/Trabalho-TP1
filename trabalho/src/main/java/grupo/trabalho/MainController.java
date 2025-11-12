@@ -26,6 +26,53 @@ public class MainController {
     private Button financeiroButton;
 
     @FXML
+    public void onHover(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #e1e8f0; -fx-text-fill: #2c3e50; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.03; -fx-scale-y: 1.03;"
+        );
+    }
+
+    @FXML
+    public void onExit(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: white; -fx-text-fill: #2c3e50; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
+        );
+    }
+
+    @FXML
+    public void onPress(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 0.97; -fx-scale-y: 0.97;");
+    }
+
+    @FXML
+    public void onRelease(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 1.03; -fx-scale-y: 1.03;");
+    }
+
+    @FXML
+    public void onHoverDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #1a252f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 18 8 18; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.05; -fx-scale-y: 1.05;"
+        );
+    }
+
+    @FXML
+    public void onExitDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 18 8 18; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
+        );
+    }
+
+    @FXML
+    public void onReleaseDark(javafx.scene.input.MouseEvent e) {
+        ((Button)e.getSource()).setStyle(
+                "-fx-background-color: #1a252f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 18 8 18; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.05; -fx-scale-y: 1.05;"
+        );
+    }
+
+
+
+    @FXML
     public void goBackMenu(Button exitButton) throws IOException {
         Stage prevStage = (Stage) exitButton.getScene().getWindow();
         prevStage.close();
