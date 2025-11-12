@@ -1,90 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="grupo.trabalho.FinanceiroController"
-            prefWidth="900" prefHeight="600"
-            style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);">
+<AnchorPane prefHeight="600" prefWidth="900" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.FinanceiroController">
 
     <children>
 
-        <!-- Título -->
         <Label layoutX="366.0" layoutY="14.0" prefHeight="60.0" prefWidth="168.0" text="Financeiro">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
 
-        <!-- Tabela de Funcionários -->
-        <TableView fx:id="tabelaFuncionarios"
-                   layoutX="50.0" layoutY="90.0"
-                   prefHeight="350.0" prefWidth="800.0">
+        <TableView fx:id="tabelaFuncionarios" layoutX="50.0" layoutY="90.0" prefHeight="350.0" prefWidth="800.0">
             <columns>
-                <TableColumn fx:id="colNome" prefWidth="150" text="Nome"/>
-                <TableColumn fx:id="colCpf" prefWidth="120" text="CPF"/>
-                <TableColumn fx:id="colMatricula" prefWidth="100" text="Matrícula"/>
-                <TableColumn fx:id="colCargo" prefWidth="120" text="Cargo"/>
-                <TableColumn fx:id="colDepartamento" prefWidth="120" text="Departamento"/>
-                <TableColumn fx:id="colRegime" prefWidth="100" text="Regime"/>
-                <TableColumn fx:id="colSalarioBase" prefWidth="100" text="Salário Base"/>
-                <TableColumn fx:id="colSalarioLiquido" prefWidth="100" text="Salário Líquido"/>
-                <TableColumn fx:id="colDataAdmissao" prefWidth="120" text="Data Admissão"/>
+                <TableColumn fx:id="colNome" prefWidth="150" text="Nome" />
+                <TableColumn fx:id="colCpf" prefWidth="120" text="CPF" />
+                <TableColumn fx:id="colMatricula" prefWidth="100" text="Matrícula" />
+                <TableColumn fx:id="colCargo" prefWidth="120" text="Cargo" />
+                <TableColumn fx:id="colDepartamento" prefWidth="120" text="Departamento" />
+                <TableColumn fx:id="colRegime" prefWidth="100" text="Regime" />
+                <TableColumn fx:id="colSalarioBase" prefWidth="100" text="Salário Base" />
+                <TableColumn fx:id="colSalarioLiquido" prefWidth="100" text="Salário Líquido" />
+                <TableColumn fx:id="colDataAdmissao" prefWidth="120" text="Data Admissão" />
             </columns>
         </TableView>
 
-        <!-- Seção de filtros centralizada -->
-        <HBox layoutX="140.0" layoutY="460.0"
-              spacing="10" alignment="CENTER"
-              prefWidth="620.0" prefHeight="40.0">
+        <HBox alignment="CENTER" layoutX="51.0" layoutY="460.0" prefHeight="40.0" prefWidth="800.0" spacing="10">
+   <children>
 
-            <ComboBox fx:id="comboCargo" promptText="Cargo" prefWidth="120"/>
-            <ComboBox fx:id="comboRegime" promptText="Regime" prefWidth="150"/>
-            <ComboBox fx:id="comboStatus" promptText="Status" prefWidth="120"/>
-            <ComboBox fx:id="comboDepartamento" promptText="Departamento" prefWidth="150"/>
+               <ComboBox fx:id="comboCargo" prefWidth="120.0" promptText="Cargo" />
+               <ComboBox fx:id="comboRegime" prefWidth="150" promptText="Regime" />
+               <ComboBox fx:id="comboStatus" prefWidth="120" promptText="Status" />
+               <ComboBox fx:id="comboDepartamento" prefWidth="150" promptText="Departamento" />
 
-            <Button text="Filtrar"
-                    onAction="#filtrarFuncionarios"
-                    prefWidth="100"
-                    style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+               <Button onAction="#filtrarFuncionarios" prefWidth="100" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Filtrar" />
 
-            <Button text="Limpar"
-                    onAction="#limparFiltros"
-                    prefWidth="100"
-                    style="-fx-background-color: #bdc3c7; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+               <Button onAction="#limparFiltros" prefWidth="100" style="-fx-background-color: #bdc3c7; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-background-radius: 8;" text="Limpar" />
+   </children>
 
         </HBox>
 
-        <!-- Botões inferiores -->
-        <Button fx:id="btnAtualizar"
-                layoutX="300.0" layoutY="520.0"
-                prefWidth="120.0"
-                text="Atualizar"
-                onAction="#atualizarTabela"
-                style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+        <Button fx:id="btnAtualizar" layoutX="300.0" layoutY="520.0" onAction="#atualizarTabela" prefWidth="120.0" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Atualizar" />
 
-        <Button fx:id="btnExportarCSV"
-                layoutX="450.0" layoutY="520.0"
-                prefWidth="120.0"
-                text="Exportar CSV"
-                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+        <Button fx:id="exportarButton" layoutX="450.0" layoutY="520.0" onAction="#handleExportarRelatorio" prefWidth="120.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Gerar Folha" />
 
-        <Button fx:id="menuButton"
-                layoutX="720.0" layoutY="520.0"
-                prefWidth="130.0"
-                text="Voltar"
-                onAction="#handleMenuButton"
-                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+
+        <Button fx:id="menuButton" layoutX="720.0" layoutY="520.0" onAction="#handleMenuButton" prefWidth="130.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Voltar" />
 
         <!-- Total da Folha -->
-        <Label fx:id="labelTotal"
-               layoutX="50.0" layoutY="565.0"
-               prefWidth="400.0"
-               text="Total da folha: R$ 0,00"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label fx:id="labelTotal" layoutX="50.0" layoutY="565.0" prefWidth="400.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Total da folha: R$ 0,00" />
 
     </children>
 </AnchorPane>

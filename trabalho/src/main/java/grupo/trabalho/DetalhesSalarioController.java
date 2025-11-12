@@ -1,9 +1,10 @@
 package grupo.trabalho;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.fxml.FXML;
-
+import javafx.stage.FileChooser;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,18 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.io.File;
 
 public class DetalhesSalarioController {
 
@@ -107,7 +120,6 @@ public class DetalhesSalarioController {
                     String cpfLinha = p[1].trim();
 
                     if (cpfLinha.equals(funcionario.getCpf().trim())) {
-                        // Substitui o salário (índice 5)
                         p[5] = String.format(Locale.US, "%.2f", novoSalario);
                         funcionario.setSalarioLiquido(novoSalario);
                         linha = String.join(";", p);
@@ -136,13 +148,9 @@ public class DetalhesSalarioController {
             if (Files.exists(Paths.get(CAMINHO_LANCAMENTOS))) {
                 linhasExistentes = Files.readAllLines(Paths.get(CAMINHO_LANCAMENTOS));
             }
-
-            // Remove lançamentos antigos desse funcionário
             linhasExistentes = linhasExistentes.stream()
                     .filter(l -> !l.startsWith(funcionario.getCpf() + ";"))
                     .collect(Collectors.toList());
-
-            // Adiciona os novos lançamentos
             for (Lancamento p : proventos) {
                 linhasExistentes.add(funcionario.getCpf() + ";Provento;" + p.getDescricao() + ";" + p.getValor());
             }
@@ -157,20 +165,15 @@ public class DetalhesSalarioController {
         }
     }
     private void atualizarTela() {
+
         labelNome.setText(funcionario.getNome());
         labelSalarioBase.setText(String.format("R$ %.2f", funcionario.getSalarioBase()));
-
         double totalProventos = proventos.stream().mapToDouble(Lancamento::getValor).sum();
         double totalDescontos = descontos.stream().mapToDouble(Lancamento::getValor).sum();
-
         labelProventos.setText(String.format("R$ %.2f", totalProventos));
         labelDescontos.setText(String.format("R$ %.2f", totalDescontos));
-
-        // Atualiza salário líquido com método do funcionário
         double salarioLiquido = funcionario.calcularSalario(totalProventos, totalDescontos);
         labelLiquido.setText(String.format("R$ %.2f", salarioLiquido));
-
-        // Atualiza o salário no arquivo
         atualizarSalarioNoArquivo(salarioLiquido);
     }
 
@@ -204,14 +207,10 @@ public class DetalhesSalarioController {
             return;
         }
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
-                "Deseja realmente excluir o lançamento selecionado?", ButtonType.YES, ButtonType.NO);
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,"Deseja realmente excluir o lançamento selecionado?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> resultado = confirm.showAndWait();
         if (resultado.isPresent() && resultado.get() == ButtonType.YES) {
-            // Remove da tabela
             listaTabela.remove(selecionado);
-
-            // Remove da lista de proventos ou descontos
             if (selecionado.getTipo().equalsIgnoreCase("Provento")) {
                 proventos.removeIf(p -> p.getDescricao().equals(selecionado.getDescricao()) &&
                         p.getValor() == selecionado.getValor());
@@ -219,8 +218,6 @@ public class DetalhesSalarioController {
                 descontos.removeIf(d -> d.getDescricao().equals(selecionado.getDescricao()) &&
                         d.getValor() == selecionado.getValor());
             }
-
-            // Salva alterações e atualiza tela
             salvarLancamentos();
             atualizarTela();
         }
@@ -265,34 +262,288 @@ public class DetalhesSalarioController {
     }
     @FXML
     private void salvarFuncionario() {
-        String caminho = "funcionarios.txt";  // você pode usar um caminho absoluto se quiser
+        String caminho = "funcionarios.txt";
         try (PrintWriter pw = new PrintWriter(new FileWriter(caminho, true))) {
             pw.println("Nome: " + funcionario.getNome());
 
-            // Proventos
             pw.println("Proventos:");
             for (Lancamento p : proventos) {
                 pw.printf("%.2f;%s;%.2f%n", funcionario.getSalarioBase(), p.getDescricao(), p.getValor());
             }
-
-            // Descontos
             pw.println("Descontos:");
             for (Lancamento d : descontos) {
                 pw.printf("%.2f;%s;%.2f%n", funcionario.getSalarioBase(), d.getDescricao(), d.getValor());
             }
 
-            // Totais
             double totalP = proventos.stream().mapToDouble(Lancamento::getValor).sum();
             double totalD = descontos.stream().mapToDouble(Lancamento::getValor).sum();
 
             pw.println("Total Proventos: " + totalP);
             pw.println("Total Descontos: " + totalD);
-            pw.println(); // linha em branco entre funcionários
+            pw.println();
 
             System.out.println("Dados salvos com sucesso!");
 
         } catch (IOException e) {
             System.err.println("Erro ao salvar dados: " + e.getMessage());
         }
+    }
+    @FXML
+    private void gerarHoleritePDF() {
+        if (funcionario == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Nenhum funcionário selecionado.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Salvar Holerite em PDF");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos PDF", "*.pdf"));
+        fileChooser.setInitialFileName("holerite_" + funcionario.getNome().replace(" ", "_") + ".pdf");
+        File arquivo = fileChooser.showSaveDialog(null);
+
+        if (arquivo == null) return;
+
+        try (PDDocument doc = new PDDocument()) {
+            PDPage pagina = new PDPage(PDRectangle.A4);
+            doc.addPage(pagina);
+
+            PDPageContentStream conteudo = new PDPageContentStream(doc, pagina);
+
+            float margin = 50;
+            float pageWidth = pagina.getMediaBox().getWidth();
+            float yStart = pagina.getMediaBox().getHeight() - margin;
+
+            conteudo.setNonStrokingColor(38, 70, 83);
+            conteudo.addRect(0, yStart - 20, pageWidth, 40);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(255, 255, 255);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 16);
+            String titulo = "HOLERITE - " + LocalDate.now().getMonth().getDisplayName(java.time.format.TextStyle.FULL, new java.util.Locale("pt", "BR")).toUpperCase() + "/" + LocalDate.now().getYear();
+            float tituloWidth = PDType1Font.HELVETICA_BOLD.getStringWidth(titulo) / 1000 * 16;
+            conteudo.newLineAtOffset((pageWidth - tituloWidth) / 2, yStart - 10);
+            conteudo.showText(titulo);
+            conteudo.endText();
+            float currentY = yStart - 80;
+
+            conteudo.setNonStrokingColor(240, 240, 240);
+            conteudo.addRect(margin, currentY - 70, pageWidth - 2 * margin, 70);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(0, 0, 0);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 14);
+            conteudo.newLineAtOffset(margin + 10, currentY - 20);
+            conteudo.showText("Dados do Funcionário");
+            conteudo.endText();
+
+            conteudo.beginText();
+            conteudo.setFont(PDType1Font.HELVETICA, 11);
+            conteudo.newLineAtOffset(margin + 10, currentY - 40);
+            conteudo.showText("Nome: " + funcionario.getNome());
+            conteudo.newLineAtOffset(0, -15);
+            conteudo.showText("Matrícula: " + funcionario.getMatricula());
+            conteudo.newLineAtOffset(300, 15);
+            conteudo.showText("Cargo: " + funcionario.getCargo());
+            conteudo.newLineAtOffset(0, -15);
+            conteudo.showText("Departamento: " + funcionario.getDepartamento());
+            conteudo.endText();
+
+            currentY -= 120;
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(69, 123, 157);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            conteudo.newLineAtOffset(margin, currentY);
+            conteudo.showText("PROVENTOS");
+            conteudo.endText();
+
+
+            conteudo.setNonStrokingColor(69, 123, 157);
+            conteudo.addRect(margin, currentY - 20, pageWidth - 2 * margin, 20);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(255, 255, 255);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 10);
+            conteudo.newLineAtOffset(margin + 10, currentY - 13);
+            conteudo.showText("Descrição");
+            conteudo.newLineAtOffset(pageWidth - 2 * margin - 100, 0);
+            conteudo.showText("Valor (R$)");
+            conteudo.endText();
+
+            currentY -= 40;
+            double totalProventos = 0;
+
+            for (Lancamento p : proventos) {
+                if (currentY < margin + 50) {
+                    conteudo.close();
+                    pagina = new PDPage(PDRectangle.A4);
+                    doc.addPage(pagina);
+                    conteudo = new PDPageContentStream(doc, pagina);
+                    currentY = pagina.getMediaBox().getHeight() - margin;
+                }
+
+                if (proventos.indexOf(p) % 2 == 0) {
+                    conteudo.setNonStrokingColor(250, 250, 250);
+                } else {
+                    conteudo.setNonStrokingColor(240, 240, 240);
+                }
+                conteudo.addRect(margin, currentY - 15, pageWidth - 2 * margin, 15);
+                conteudo.fill();
+
+                conteudo.beginText();
+                conteudo.setNonStrokingColor(0, 0, 0);
+                conteudo.setFont(PDType1Font.HELVETICA, 9);
+                conteudo.newLineAtOffset(margin + 10, currentY - 10);
+                conteudo.showText(p.getDescricao());
+                conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
+                conteudo.showText(String.format("R$ %.2f", p.getValor()));
+                conteudo.endText();
+
+                totalProventos += p.getValor();
+                currentY -= 15;
+            }
+
+            currentY -= 10;
+            conteudo.setNonStrokingColor(200, 230, 200);
+            conteudo.addRect(margin, currentY - 20, pageWidth - 2 * margin, 20);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(0, 100, 0);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 10);
+            conteudo.newLineAtOffset(margin + 10, currentY - 13);
+            conteudo.showText("TOTAL DE PROVENTOS");
+            conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
+            conteudo.showText(String.format("R$ %.2f", totalProventos));
+            conteudo.endText();
+
+            currentY -= 40;
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(69, 123, 157);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            conteudo.newLineAtOffset(margin, currentY);
+            conteudo.showText("DESCONTOS");
+            conteudo.endText();
+
+            conteudo.setNonStrokingColor(69, 123, 157);
+            conteudo.addRect(margin, currentY - 20, pageWidth - 2 * margin, 20);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(255, 255, 255);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 10);
+            conteudo.newLineAtOffset(margin + 10, currentY - 13);
+            conteudo.showText("Descrição");
+            conteudo.newLineAtOffset(pageWidth - 2 * margin - 100, 0);
+            conteudo.showText("Valor (R$)");
+            conteudo.endText();
+
+            currentY -= 40;
+            double totalDescontos = 0;
+
+            for (Lancamento d : descontos) {
+                if (currentY < margin + 50) {
+                    conteudo.close();
+                    pagina = new PDPage(PDRectangle.A4);
+                    doc.addPage(pagina);
+                    conteudo = new PDPageContentStream(doc, pagina);
+                    currentY = pagina.getMediaBox().getHeight() - margin;
+                }
+
+                // Fundo alternado
+                if (descontos.indexOf(d) % 2 == 0) {
+                    conteudo.setNonStrokingColor(250, 250, 250);
+                } else {
+                    conteudo.setNonStrokingColor(240, 240, 240);
+                }
+                conteudo.addRect(margin, currentY - 15, pageWidth - 2 * margin, 15);
+                conteudo.fill();
+
+                conteudo.beginText();
+                conteudo.setNonStrokingColor(0, 0, 0);
+                conteudo.setFont(PDType1Font.HELVETICA, 9);
+                conteudo.newLineAtOffset(margin + 10, currentY - 10);
+                conteudo.showText(d.getDescricao());
+                conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
+                conteudo.showText(String.format("R$ %.2f", d.getValor()));
+                conteudo.endText();
+
+                totalDescontos += d.getValor();
+                currentY -= 15;
+            }
+
+            currentY -= 10;
+            conteudo.setNonStrokingColor(255, 200, 200);
+            conteudo.addRect(margin, currentY - 20, pageWidth - 2 * margin, 20);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(150, 0, 0);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 10);
+            conteudo.newLineAtOffset(margin + 10, currentY - 13);
+            conteudo.showText("TOTAL DE DESCONTOS");
+            conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
+            conteudo.showText(String.format("R$ %.2f", totalDescontos));
+            conteudo.endText();
+
+            currentY -= 40;
+            double salarioLiquido = funcionario.calcularSalario(totalProventos, totalDescontos);
+
+            conteudo.setNonStrokingColor(38, 70, 83);
+            conteudo.addRect(margin, currentY - 40, pageWidth - 2 * margin, 40);
+            conteudo.fill();
+
+            conteudo.beginText();
+            conteudo.setNonStrokingColor(255, 255, 255);
+            conteudo.setFont(PDType1Font.HELVETICA_BOLD, 14);
+            conteudo.newLineAtOffset(margin + 10, currentY - 15);
+            conteudo.showText("SALÁRIO LÍQUIDO: R$ " + String.format("%.2f", salarioLiquido));
+            conteudo.endText();
+
+            conteudo.beginText();
+            conteudo.setFont(PDType1Font.HELVETICA, 10);
+            conteudo.newLineAtOffset(margin + 10, currentY - 30);
+            conteudo.showText("Salário Base: R$ " + String.format("%.2f", funcionario.getSalarioBase()) +
+                    " | Proventos: R$ " + String.format("%.2f", totalProventos) +
+                    " | Descontos: R$ " + String.format("%.2f", totalDescontos));
+            conteudo.endText();
+
+            conteudo.beginText();
+            conteudo.setFont(PDType1Font.HELVETICA_OBLIQUE, 9);
+            conteudo.setNonStrokingColor(120, 120, 120);
+            conteudo.newLineAtOffset(margin, 30);
+            conteudo.showText("Holerite gerado automaticamente em " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                    " | " + funcionario.getNome() + " | Matrícula: " + funcionario.getMatricula());
+            conteudo.endText();
+
+            conteudo.close();
+            doc.save(arquivo);
+
+            mostrarAlertaSucesso("Holerite exportado em PDF com SUCESSO!\n" + arquivo.getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert erro = new Alert(Alert.AlertType.ERROR, "Erro ao gerar PDF: " + e.getMessage());
+            erro.showAndWait();
+        }
+    }
+    @FXML
+    private void fecharTela() {
+        Stage stage = (Stage) labelNome.getScene().getWindow();
+        stage.close();
+    }
+    private void mostrarAlertaSucesso(String mensagem) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoSucesso.png")));
+        alert.showAndWait();
     }
 }

@@ -7,21 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="637.0" prefWidth="500.0" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.DetalhesSalarioController">
+<AnchorPane prefHeight="685.0" prefWidth="551.0" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo.trabalho.DetalhesSalarioController">
 
     <children>
 
-        <!-- Título -->
-        <Label layoutX="100.0" layoutY="10.0" prefWidth="300.0" text="Detalhes do Salário">
+        <Label layoutX="126.0" layoutY="14.0" prefWidth="300.0" text="Detalhes do Salário">
             <font>
                 <Font size="32.0" />
             </font>
         </Label>
 
-        <!-- Nome do Funcionário -->
-        <Label fx:id="labelNome" layoutX="150.0" layoutY="70.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Nome do Funcionário" />
+        <Label fx:id="labelNome" layoutX="165.0" layoutY="68.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Nome do Funcionário" />
 
-        <!-- Campos de informação -->
         <Label layoutX="100.0" layoutY="130.0" text="Salário Base:" />
         <Label fx:id="labelSalarioBase" layoutX="250.0" layoutY="130.0" text="-" />
 
@@ -34,27 +31,20 @@
         <Label layoutX="100.0" layoutY="220.0" text="Salário Líquido:" />
         <Label fx:id="labelLiquido" layoutX="250.0" layoutY="220.0" style="-fx-font-weight: bold;" text="-" />
 
-        <!-- Botões -->
-        <HBox layoutX="50.0" layoutY="500.0" spacing="20.0" alignment="CENTER">
-            <children>
-                <Button fx:id="btnAdicionarProvento" onAction="#adicionarProvento" prefWidth="130.0" text="Adicionar Provento" />
-                <Button fx:id="btnAdicionarDesconto" onAction="#adicionarDesconto" prefWidth="130.0" text="Adicionar Desconto" />
-                <Button fx:id="btnExcluir" onAction="#excluirLancamento" prefWidth="130.0" text="Excluir Lançamento" />
-            </children>
-        </HBox>
+        <Button fx:id="btnSalvar" layoutX="118.0" layoutY="575.0" onAction="#salvarFuncionario" prefWidth="130.0" style="-fx-background-color: #2c3e50;" text="Salvar" textFill="WHITE" />
 
-        <!-- Botão Salvar separado -->
-        <Button fx:id="btnSalvar" layoutX="192.0" layoutY="580.0" prefWidth="130.0" onAction="#salvarFuncionario" text="Salvar" />
-
-        <TableView fx:id="tabelaLancamentos" layoutX="50.0" layoutY="280.0" prefHeight="200.0" prefWidth="414.0">
+        <TableView fx:id="tabelaLancamentos" layoutX="28.0" layoutY="280.0" prefHeight="200.0" prefWidth="499.0">
         <columns>
             <TableColumn fx:id="colTipo" prefWidth="92.0" text="Tipo" />
             <TableColumn fx:id="colDescricao" prefWidth="239.0" text="Descrição" />
             <TableColumn fx:id="colValor" prefWidth="82.0" text="Valor" />
         </columns>
       </TableView>
-
-
+          <Button fx:id="btnAdicionarProvento" layoutX="211.0" layoutY="513.0" onAction="#adicionarProvento" prefWidth="130.0" text="Adicionar Provento" />
+          <Button fx:id="btnAdicionarDesconto" layoutX="28.0" layoutY="513.0" onAction="#adicionarDesconto" prefWidth="130.0" text="Adicionar Desconto" />
+          <Button fx:id="btnExcluir" layoutX="397.0" layoutY="513.0" onAction="#excluirLancamento" prefWidth="130.0" text="Excluir Lançamento" />
+      <Button fx:id="btnGerarHolerite" layoutX="310.0" layoutY="575.0" onAction="#gerarHoleritePDF" prefHeight="31.0" prefWidth="130.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Gerar Holherite" />
+      <Button layoutX="397.0" layoutY="631.0" onAction="#fecharTela" prefWidth="130.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Voltar" />
 
     </children>
 </AnchorPane>

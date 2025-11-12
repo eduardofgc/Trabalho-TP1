@@ -14,10 +14,7 @@ public class Funcionario{
     private String cargo;
     private String departamento;
 
-    public Funcionario(String nome, String cpf, int matricula, LocalDate dataAdmissao, double salarioB,
-                       double salarioL, RegimeContratacao regime,
-                       StatusFuncionario status, String cargo, String departamento) {
-
+    public Funcionario(String nome, String cpf, int matricula, LocalDate dataAdmissao, double salarioB, double salarioL, RegimeContratacao regime, StatusFuncionario status, String cargo, String departamento) {
         this.nome = nome;
         this.cpf = cpf;
         this.matricula = matricula;
@@ -47,7 +44,7 @@ public class Funcionario{
 
     public double calcularSalario(double totalProventos, double totalDescontos) {
         double salarioLiquido = salarioBase + totalProventos - totalDescontos;
-        setSalarioLiquido(salarioLiquido); // atualiza o valor interno
+        setSalarioLiquido(salarioLiquido);
         return salarioLiquido;
     }
 
