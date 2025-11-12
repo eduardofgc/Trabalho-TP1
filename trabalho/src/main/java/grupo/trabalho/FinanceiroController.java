@@ -16,12 +16,14 @@ import java.io.IOException;
 import javafx.scene.image.Image;
 
 import java.nio.file.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.io.File;
 import java.io.FileWriter;
-
+import java.text.NumberFormat;
+import java.util.Locale;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -87,9 +89,9 @@ public class FinanceiroController {
         double total = 0;
 
         try {
-            System.out.println("Procurando arquivo em: " + Paths.get(CAMINHO_ARQUIVO).toAbsolutePath());
-
             List<String> linhas = Files.readAllLines(Paths.get(CAMINHO_ARQUIVO));
+            NumberFormat format = NumberFormat.getInstance(new Locale("pt", "BR"));
+
             for (String linha : linhas) {
                 String[] p = linha.split(";");
                 if (p.length == 10) {
@@ -97,28 +99,42 @@ public class FinanceiroController {
                     String cpf = p[1];
                     int matricula = Integer.parseInt(p[2]);
                     LocalDate dataAdmissao = LocalDate.parse(p[3]);
-                    double salarioBase = Double.parseDouble(p[4]);
-                    double salarioLiquido = Double.parseDouble(p[5]);
+
+                    double salarioBase = 0;
+                    double salarioLiquido = 0;
+                    try {
+                        salarioBase = format.parse(p[4].replaceAll("\\s","")).doubleValue();
+                        salarioLiquido = format.parse(p[5].replaceAll("\\s","")).doubleValue();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     RegimeContratacao regime = RegimeContratacao.valueOf(p[6].trim().toUpperCase());
                     StatusFuncionario status = StatusFuncionario.valueOf(p[7].trim().toUpperCase());
                     String cargo = p[8];
                     String departamento = p[9];
 
-                    if (status == StatusFuncionario.ATIVO) { // só haverá funcionários ATIVO na tabela
-                        Funcionario f = new Funcionario(nome, cpf, matricula, dataAdmissao, salarioBase,
-                                salarioLiquido, regime, status, cargo, departamento);
+                    if (status == StatusFuncionario.ATIVO) {
+                        Funcionario f = new Funcionario(nome, cpf, matricula, dataAdmissao,
+                                salarioBase, salarioLiquido, regime, status, cargo, departamento);
                         lista.add(f);
                         total += salarioLiquido;
                     }
                 }
             }
+
             tabelaFuncionarios.setItems(lista);
             labelTotal.setText(String.format("Total da folha: R$ %.2f", total));
 
         } catch (IOException e) {
-            System.err.println("Erro ao ler arquivo: " + e.getMessage());
+            e.printStackTrace();
+            mostrarAlertaErro("Erro ao ler o arquivo de funcionários: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            mostrarAlertaErro("Erro ao converter número: " + e.getMessage());
         }
     }
+
 
     @FXML
     public void initialize() {

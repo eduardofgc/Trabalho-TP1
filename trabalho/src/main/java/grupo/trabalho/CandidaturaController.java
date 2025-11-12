@@ -17,7 +17,7 @@ public class CandidaturaController {
     }
 
     @FXML
-    private Button cadastrarCandidatosButton;
+    private Button cadastrarCandidatosButton,cadafunc;
     @FXML
     private Button listarCandidatosButton;
     @FXML
@@ -25,6 +25,20 @@ public class CandidaturaController {
     @FXML
     private Button menuButton;
 
+    @FXML
+    private void goToCadaFunc() throws IOException {
+        Stage stage = (Stage) cadafunc.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/cadastroFunc-view.fxml"));
+        Parent root = loader.load();
+
+        CadastroFunc controller = loader.getController();
+        controller.setCandidaturaController(this);
+
+        stage.setScene(new Scene(root));
+        stage.setTitle("Cadastrar Funcionário");
+        stage.setResizable(false);
+        stage.show();
+    }
     @FXML
     private void goToCadastrar() throws IOException {
         Stage stage = (Stage) cadastrarCandidatosButton.getScene().getWindow();
