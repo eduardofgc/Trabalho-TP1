@@ -11,6 +11,11 @@ import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 
 public class CadastroFunc {
@@ -20,36 +25,33 @@ public class CadastroFunc {
     public void setCandidaturaController(CandidaturaController candidaturaController) {
         this.candidaturaController = candidaturaController;
     }
-
+    AlertHelper alertHelper = new AlertHelper();
     @FXML
     private TextField nomeField, cpfField, cargoField, salarioField, departamentoField, matriculaField;
-
     @FXML
     private DatePicker dataAdmissaoPicker;
-
     @FXML
     private ComboBox<RegimeContratacao> regimeCombo;
-
     @FXML
     private ComboBox<StatusFuncionario> statusCombo;
-
     @FXML
-    private Button salvarButton, financButton;
+    private Button salvarButton, financButton, botaoVoltar;
 
     @FXML
     public void initialize() {
         regimeCombo.getItems().setAll(RegimeContratacao.values());
         statusCombo.getItems().setAll(StatusFuncionario.values());
     }
-    /*
+
     @FXML
-    private void handleMenuButton() {
-        try {
-            ca.goBackFinanceiro(financButton);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
+    private void voltarPaginaAnterior() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("candidatura-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) botaoVoltar.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
 
     @FXML
     private void salvarFuncionario() {
@@ -63,8 +65,8 @@ public class CadastroFunc {
                     cpfField.getText(),
                     Integer.parseInt(matriculaField.getText()),
                     dataAdmissaoPicker.getValue(),
-                    salario,   // Salário base
-                    salario,   // Salário líquido
+                    salario,
+                    salario,
                     regimeCombo.getValue(),
                     statusCombo.getValue(),
                     cargoField.getText(),
@@ -89,30 +91,21 @@ public class CadastroFunc {
                 fw.write(linha + System.lineSeparator());
             }
 
-            mostrarAlerta("Sucesso", "Funcionário cadastrado com sucesso!");
+            alertHelper.mostrarAlerta("Sucesso", "Funcionário cadastrado com sucesso!");
             limparCampos();
 
         } catch (ParseException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Formato de salário inválido. Use vírgula ou ponto.");
+            alertHelper.mostrarAlerta("Erro", "Formato de salário inválido. Use vírgula ou ponto.");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Formato de número inválido. Verifique matrícula e salários.");
+            alertHelper.mostrarAlerta("Erro", "Formato de número inválido. Verifique matrícula e salários.");
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Verifique os dados informados.");
+            alertHelper.mostrarAlerta("Erro", "Verifique os dados informados.");
         }
     }
 
-
-
-    private void mostrarAlerta(String titulo, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
 
     private void limparCampos() {
         nomeField.clear();

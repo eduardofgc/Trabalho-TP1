@@ -36,7 +36,7 @@ public class FinanceiroController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
+    AlertHelper alertHelper = new AlertHelper();
     @FXML
     public void goBackFinanceiro(Button exitButton) throws IOException {
         Stage stage0 = (Stage) exitButton.getScene().getWindow();
@@ -128,10 +128,10 @@ public class FinanceiroController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlertaErro("Erro ao ler o arquivo de funcionários: " + e.getMessage());
+            alertHelper.mostrarAlerta("Erro","Erro ao ler o arquivo de funcionários");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            mostrarAlertaErro("Erro ao converter número: " + e.getMessage());
+            alertHelper.mostrarAlerta("Erro","Erro ao converter número");
         }
     }
 
@@ -287,7 +287,7 @@ public class FinanceiroController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlertaErro("Erro ao abrir relatório visual: " + e.getMessage());
+            alertHelper.mostrarAlerta("Erro","Erro ao abrir relatório visual");
         }
     }
     private void exportarRelatorioCSV() {
@@ -319,11 +319,11 @@ public class FinanceiroController {
                 }
                 writer.write(String.format("TOTAL;;;;;;;%.2f;\n", calcularTotalFolha()));
 
-                mostrarAlertaSucesso("Relatório CSV exportado com sucesso!\n" + file.getAbsolutePath());
+                alertHelper.mostrarAlerta("Sucesso","Relatório CSV exportado");
 
             } catch (IOException e) {
                 e.printStackTrace();
-                mostrarAlertaErro("Erro ao exportar CSV: " + e.getMessage());
+                alertHelper.mostrarAlerta("Erro","Erro ao exportar CSV");
             }
         }
         try {
@@ -490,38 +490,19 @@ public class FinanceiroController {
                 content.close();
                 document.save(file);
 
-                mostrarAlertaSucesso("Relatório PDF exportado com sucesso!\n" + file.getAbsolutePath());
+                alertHelper.mostrarAlerta("Sucesso","Relatório salvo em PDF");
 
             } catch (IOException e) {
                 e.printStackTrace();
-                mostrarAlertaErro("Erro ao exportar PDF: " + e.getMessage());
+                alertHelper.mostrarAlerta("Erro","Erro ao exportar PDF");
             }
         }
     }
     private double calcularTotalFolha() {
-
         double total = 0;
         for (Funcionario func : tabelaFuncionarios.getItems()) {
             total += func.getSalarioLiquido();
         }
         return total;
-    }
-    private void mostrarAlertaSucesso(String mensagem) {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucesso");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoSucesso.png")));
-        alert.showAndWait();
-    }
-    private void mostrarAlertaErro(String mensagem) {
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
     }
 }
