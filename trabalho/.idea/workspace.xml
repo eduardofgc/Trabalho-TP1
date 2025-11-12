@@ -8,14 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Relatorio_Usuarios.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Relatorio_Usuarios.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emailInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/emailInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entrevistasInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entrevistasInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/AdmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/AdmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/adm-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/adm-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/recrutamento-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/recrutamento-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usuariosInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/usuariosInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vagasInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vagasInfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
