@@ -53,40 +53,49 @@ public class ListarUsuariosController {
             AlertHelper.showInfo("Selecione um usuário para excluir.");
             return;
         }
+        
+        String nomeSelecionado = selected.split(" \\(")[0];
 
-        String nomeSelecionado = selected.split(" ")[0];
+        int indexToRemove = -1;
 
-        Iterator<Usuario> it = AdmClasses.usuariosArray.iterator();
-        int index = -1;
         for (int i = 0; i < AdmClasses.usuariosArray.size(); i++) {
-            Usuario u = AdmClasses.usuariosArray.get(i);
-            if (u.getLogin().equals(nomeSelecionado)) {
-                it = AdmClasses.usuariosArray.iterator();
-                index = i;
-                it.remove();
+            if (AdmClasses.usuariosArray.get(i).getLogin().equals(nomeSelecionado)) {
+                indexToRemove = i;
                 break;
             }
         }
+
+        if (indexToRemove == -1) {
+            AlertHelper.showInfo("Usuário não encontrado no sistema.");
+            return;
+        }
+
+        AdmClasses.usuariosArray.remove(indexToRemove);
 
         listaElementos.getItems().remove(selected);
 
         try {
             List<String> allLines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            List<String> updated = allLines.stream()
+            List<String> updatedUsers = allLines.stream()
                     .filter(line -> !line.startsWith(nomeSelecionado + ","))
                     .collect(Collectors.toList());
-            Files.write(Path.of("usuariosInfo.txt"), updated);
+            Files.write(Path.of("usuariosInfo.txt"), updatedUsers);
 
             List<String> allEmails = Files.readAllLines(Path.of("emailInfo.txt"));
-            if (index >= 0 && index < allEmails.size()) allEmails.remove(index);
+            if (indexToRemove < allEmails.size()) {
+                allEmails.remove(indexToRemove);
+            }
             Files.write(Path.of("emailInfo.txt"), allEmails);
 
         } catch (IOException e) {
             e.printStackTrace();
+            AlertHelper.showInfo("Erro ao atualizar os arquivos.");
+            return;
         }
 
         AlertHelper.showInfo("Usuário removido com sucesso!");
     }
+
 
     @FXML
     public void clickBotaoLimparTudo() {
