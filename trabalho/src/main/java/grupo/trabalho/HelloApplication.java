@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        AdmClasses.ensureAdminUser();
+        AdmClasses.ensureAdminUser(); //admin e admin123
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/hello-view.fxml"));
         Parent root = fxmlLoader.load();

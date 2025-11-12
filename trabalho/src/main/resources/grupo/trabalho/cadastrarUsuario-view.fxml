@@ -25,6 +25,6 @@
       <CheckBox fx:id="recrutadorCheckBox" layoutX="325.0" layoutY="229.0" text="Recrutador?" />
       <CheckBox fx:id="candidatoCheckBox" layoutX="434.0" layoutY="229.0" text="Candidato?" />
       <Label layoutX="166.0" layoutY="181.0" text="E-mail:" />
-      <TextField layoutX="262.0" layoutY="177.0" />
+      <TextField layoutX="262.0" layoutY="177.0" fx:id="emailTextField" />
    </children>
 </AnchorPane>

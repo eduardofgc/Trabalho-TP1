@@ -1,5 +1,6 @@
 package grupo.trabalho;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Recrutador extends Usuario {
@@ -13,7 +14,7 @@ public class Recrutador extends Usuario {
         return minhaContratacao;
     }
 
-    public Entrevista agendarEntrevista(Date dataMarcada, String meuAvaliador){ //candidatura: Candidatura
+    public Entrevista agendarEntrevista(LocalDate dataMarcada, String meuAvaliador){
         Entrevista minhaEntrevista = new Entrevista(dataMarcada, meuAvaliador);
         return minhaEntrevista;
     }
