@@ -73,7 +73,7 @@ public class CadastroFunc {
                     departamentoField.getText()
             );
 
-            String caminhoArquivo = "dados_Funcionarios.txt"; //dados_Funcionarios.txt PRA MIM
+            String caminhoArquivo = "trabalho/dados_Funcionarios.txt"; //dados_Funcionarios.txt PRA MIM
 
             String linha = String.format("%s;%s;%03d;%s;%.2f;%.2f;%s;%s;%s;%s",
                     f.getNome(),
