@@ -72,7 +72,8 @@ public class CadastroFunc {
                     cargoField.getText(),
                     departamentoField.getText()
             );
-            String caminhoArquivo = "trabalho/dados_Funcionarios.txt";
+
+            String caminhoArquivo = "dados_Funcionarios.txt"; //dados_Funcionarios.txt PRA MIM
 
             String linha = String.format("%s;%s;%03d;%s;%.2f;%.2f;%s;%s;%s;%s",
                     f.getNome(),
