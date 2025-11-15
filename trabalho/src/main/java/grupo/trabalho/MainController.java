@@ -71,7 +71,6 @@ public class MainController {
     }
 
 
-
     @FXML
     public void goBackMenu(Button exitButton) throws IOException {
         Stage prevStage = (Stage) exitButton.getScene().getWindow();
@@ -158,7 +157,7 @@ public class MainController {
     @FXML
     private void goToRecrutamento() throws IOException {
 
-        if (HelloController.currentUser != null && HelloController.currentUser.isRecrutador || HelloController.currentUser.isAdmin){
+        if (HelloController.currentUser != null && HelloController.currentUser.isRecrutador || HelloController.currentUser.isAdmin || HelloController.currentUser.isGestor){
             Stage prevStage = (Stage) recrutamentoButton.getScene().getWindow();
             prevStage.close();
 
@@ -186,20 +185,27 @@ public class MainController {
         Stage prevStage = (Stage) financeiroButton.getScene().getWindow();
         prevStage.close();
 
-        Stage financeiroStage = new Stage();
-        FXMLLoader financeiroFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
-        Parent financeiroRoot = financeiroFXMLLoader.load();
-        financeiroStage.getIcons().clear();
-        financeiroStage.getIcons().add(new Image(
-                getClass().getResourceAsStream("/images/logoFinanceiro.png")
-        ));
-        FinanceiroController financeiroController = financeiroFXMLLoader.getController();
-        financeiroController.setMainController(this);
+        if (HelloController.currentUser.isAdmin){
+            Stage financeiroStage = new Stage();
+            FXMLLoader financeiroFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
+            Parent financeiroRoot = financeiroFXMLLoader.load();
+            financeiroStage.getIcons().clear();
+            financeiroStage.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/images/logoFinanceiro.png")
+            ));
+            FinanceiroController financeiroController = financeiroFXMLLoader.getController();
+            financeiroController.setMainController(this);
 
-        Scene scene = new Scene(financeiroRoot);
-        financeiroStage.setTitle("Financeiro");
-        financeiroStage.setScene(scene);
-        financeiroStage.setResizable(false);
-        financeiroStage.show();
+            Scene scene = new Scene(financeiroRoot);
+            financeiroStage.setTitle("Financeiro");
+            financeiroStage.setScene(scene);
+            financeiroStage.setResizable(false);
+            financeiroStage.show();
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão pra isso.");
+        }
+
+
     }
 }
