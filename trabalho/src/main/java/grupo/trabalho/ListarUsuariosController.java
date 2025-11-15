@@ -53,7 +53,7 @@ public class ListarUsuariosController {
             AlertHelper.showInfo("Selecione um usuário para excluir.");
             return;
         }
-        
+
         String nomeSelecionado = selected.split(" \\(")[0];
 
         int indexToRemove = -1;

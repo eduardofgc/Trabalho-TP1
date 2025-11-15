@@ -14,7 +14,11 @@ import java.io.IOException;
 public class RecrutamentoController {
 
     @FXML
+    public Button listarVagasButton;
+    @FXML
     public Button cadastrarVagasButton;
+    @FXML
+    public Button agendarEntrevistaButton;
     @FXML
     public Button menuButton;
 
@@ -38,33 +42,50 @@ public class RecrutamentoController {
 
     @FXML
     private void showCadastrarVagas() {
-        loadSubView("/grupo/trabalho/cadastrarVaga-view.fxml");
+        if (HelloController.currentUser.isGestor){
+            loadSubView("/grupo/trabalho/cadastrarVaga-view.fxml");
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão de gestor.");
+        }
     }
 
     @FXML
-    private void showListarVagas() {
-        loadSubView("/grupo/trabalho/listarVagas-view.fxml");
+    private void showListarVagas(){
+        if (HelloController.currentUser.isGestor || HelloController.currentUser.isRecrutador){
+            loadSubView("/grupo/trabalho/listarVagas-view.fxml");
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão de gestor ou recrutador.");
+        }
     }
 
     @FXML
     private void showAgendarEntrevista() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/agendarEntrevista-view.fxml"));
-            Parent view = loader.load();
 
-            EntrevistaController controller = loader.getController();
-            controller.setRecrutamentoController(this);
+        if (HelloController.currentUser.isRecrutador){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/agendarEntrevista-view.fxml"));
+                Parent view = loader.load();
 
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(view);
-            AnchorPane.setTopAnchor(view, 0.0);
-            AnchorPane.setBottomAnchor(view, 0.0);
-            AnchorPane.setLeftAnchor(view, 0.0);
-            AnchorPane.setRightAnchor(view, 0.0);
+                EntrevistaController controller = loader.getController();
+                controller.setRecrutamentoController(this);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(view);
+                AnchorPane.setTopAnchor(view, 0.0);
+                AnchorPane.setBottomAnchor(view, 0.0);
+                AnchorPane.setLeftAnchor(view, 0.0);
+                AnchorPane.setRightAnchor(view, 0.0);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão de recrutador.");
+        }
+
     }
 
     private void loadSubView(String fxmlPath) {
