@@ -1,2 +1,10 @@
 admin,admin123,true,false,false,false
 admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false
+recrutador,recrutador123,false,false,false,true
+admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false
+gestor,gestor123,false,true,false,false
