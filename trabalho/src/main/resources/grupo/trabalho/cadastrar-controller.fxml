@@ -18,7 +18,8 @@
     <VBox alignment="CENTER" spacing="25"
           AnchorPane.leftAnchor="70.0"
           AnchorPane.rightAnchor="70.0"
-          AnchorPane.topAnchor="40.0">
+          AnchorPane.topAnchor="20.0"
+          AnchorPane.bottomAnchor="40.0">
 
         <!-- Título -->
         <Label text="Cadastrar Candidatos" style="-fx-text-fill: #2c3e50;">

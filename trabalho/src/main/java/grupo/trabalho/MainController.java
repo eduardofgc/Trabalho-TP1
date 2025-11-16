@@ -87,7 +87,6 @@ public class MainController {
         Parent candidaturaRoot = candidaturaFXMLLoader.load();
 
         CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
-        candidaturaController.setMainController(this);
 
         Scene scene = new Scene(candidaturaRoot);
         candidaturaStage.setTitle("Candidatura");

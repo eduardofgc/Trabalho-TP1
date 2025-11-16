@@ -9,11 +9,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CandidaturaController {
-    private MainController mainController;
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 
     @FXML
     private Button cadastrarCandidatosButton;
@@ -27,51 +22,28 @@ public class CandidaturaController {
     @FXML
     private void goToCadastrar() throws IOException {
         Stage stage = (Stage) cadastrarCandidatosButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/cadastrar-controller.fxml"));
-        Parent root = loader.load();
-
-        CadastrarController controller = loader.getController();
-        controller.setCandidaturaController(this);
-
+        Parent root = FXMLLoader.load(getClass().getResource("/grupo/trabalho/cadastrar-controller.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Cadastrar Candidato");
-        stage.setResizable(false);
-        stage.show();
     }
 
     @FXML
     private void goToListar() throws IOException {
         Stage stage = (Stage) listarCandidatosButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/listar.fxml"));
-        Parent root = loader.load();
-
-        // ❌ Removido: controller.setCandidaturaController(this);
-
+        Parent root = FXMLLoader.load(getClass().getResource("/grupo/trabalho/listar.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Listar Candidatos");
-        stage.setResizable(false);
-        stage.show();
     }
 
     @FXML
     private void goToStatus() throws IOException {
         Stage stage = (Stage) statusDaCandidaturaButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/status.fxml"));
-        Parent root = loader.load();
-
-        StatusController controller = loader.getController();
-        controller.setCandidaturaController(this);
-
+        Parent root = FXMLLoader.load(getClass().getResource("/grupo/trabalho/status.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Status da Candidatura");
-        stage.setResizable(false);
-        stage.show();
     }
 
     @FXML
     private void handleMenuButton() throws IOException {
-        if (mainController != null) {
-            mainController.goBackMenu(menuButton);
-        }
+        Stage stage = (Stage) menuButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/grupo/trabalho/second-view.fxml"));
+        stage.setScene(new Scene(root));
     }
 }

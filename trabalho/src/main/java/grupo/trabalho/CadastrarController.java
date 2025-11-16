@@ -64,7 +64,6 @@ public class CadastrarController {
         Parent root = loader.load();
 
         CandidaturaController candidaturaController = loader.getController();
-        candidaturaController.setMainController(null);
 
         Stage stage = new Stage();
         stage.setTitle("Candidatura");
