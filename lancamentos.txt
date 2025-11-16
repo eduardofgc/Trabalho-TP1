@@ -1,0 +1,5 @@
+
+12345678900;Provento;VT;60.0
+12345678900;Provento;VA;120.0
+12345678900;Desconto;Imposto;35.0
+11122233344;Provento;VA;60.0

@@ -20,6 +20,13 @@ public class Vaga {
         this.estaAberta = true;
     }
 
+    public String getCargo() { return cargo; }
+    public String getRequisitos() { return requisitos; }
+    public String getDepartamento() { return departamento; }
+    public String getStatus() { return status; }
+    public double getSalarioBase() { return salarioBase; }
+    public LocalDate getDataAbertura() { return dataAbertura; }
+
     public void fecharVaga(){
         this.estaAberta = false;
     }

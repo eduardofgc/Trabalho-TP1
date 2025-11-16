@@ -1,0 +1,3 @@
+Ana Souza;12345678900;1;Analista;Financeiro;4200,00;CLT
+João Lima;98765432100;2;Estagiário;TI;1500,00;ESTAGIO
+Carlos Mendes;11122233344;3;Consultor;RH;8000,00;PJ
