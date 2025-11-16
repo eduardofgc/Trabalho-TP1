@@ -7,17 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 public class ListarController {
-    private CandidaturaController candidaturaController;
-
-    public void setCandidaturaController(CandidaturaController candidaturaController){
-        this.candidaturaController = candidaturaController;
-    }
 
     @FXML
     private TableView<Candidato> tabela;
@@ -32,27 +27,73 @@ public class ListarController {
     private TableColumn<Candidato, String> colVaga;
 
     @FXML
+    private TableColumn<Candidato, Void> colExcluir;
+
+    @FXML
+    private Button voltarButton;
+
+    private ObservableList<Candidato> lista;
+
+    @FXML
     public void initialize() {
+        // Configura as colunas
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colVaga.setCellValueFactory(new PropertyValueFactory<>("vaga"));
 
-        ObservableList<Candidato> lista = CandidatoRepository.getCandidatos();
+        // Obtém a lista do repositório
+        lista = CandidatoRepository.getCandidatos();
         tabela.setItems(lista);
+
+        // Cria a coluna de exclusão com um botão em cada linha
+        adicionarColunaExcluir();
     }
 
-    public void voltarMenu(ActionEvent event) {
-        trocarTela(event, "candidatura-view.fxml");
+    private void adicionarColunaExcluir() {
+        colExcluir.setCellFactory(param -> new TableCell<>() {
+            private final Button btnExcluir = new Button("X");
+
+            {
+                btnExcluir.setStyle(
+                        "-fx-background-color: #e74c3c; " +
+                                "-fx-text-fill: white; " +
+                                "-fx-font-weight: bold; " +
+                                "-fx-background-radius: 8;"
+                );
+                btnExcluir.setOnAction(event -> {
+                    Candidato candidato = getTableView().getItems().get(getIndex());
+                    excluirCandidato(candidato);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnExcluir);
+                }
+            }
+        });
     }
 
-    private void trocarTela(ActionEvent event, String fxml) {
+    private void excluirCandidato(Candidato candidato) {
+        lista.remove(candidato);
+    }
+
+    @FXML
+    private void voltarMenu(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
+            Parent root = loader.load();
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Candidatura");
+            stage.setResizable(false);
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
