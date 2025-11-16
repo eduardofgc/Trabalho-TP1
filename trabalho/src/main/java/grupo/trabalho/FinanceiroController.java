@@ -19,6 +19,7 @@ import java.nio.file.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.io.FileWriter;
@@ -53,6 +54,7 @@ public class FinanceiroController {
         stage1.setResizable(false);
         stage1.show();
     }
+    @FXML public Button deletarFuncionarioButton;
 
     @FXML private Button menuButton;
     @FXML private TableView<Funcionario> tabelaFuncionarios;
@@ -81,7 +83,7 @@ public class FinanceiroController {
         }
     }
 
-    private final String CAMINHO_ARQUIVO = "trabalho/dados_Funcionarios.txt";
+    private final String CAMINHO_ARQUIVO = "trabalho/dados_Funcionarios.txt"; //dados_Funcionarios.txt PRA MIM
 
     @FXML
     public void atualizarTabela() {
@@ -162,6 +164,8 @@ public class FinanceiroController {
                 }
             }
         });
+
+        atualizarTabela();
     }
 
     @FXML
@@ -504,5 +508,26 @@ public class FinanceiroController {
             total += func.getSalarioLiquido();
         }
         return total;
+    }
+
+    @FXML
+    public void handleDeletarFuncionarioButton() throws IOException {
+        String selected = tabelaFuncionarios.getSelectionModel().toString();
+        int index = tabelaFuncionarios.getSelectionModel().getSelectedIndex();
+
+        if (selected == null){
+            AlertHelper.showInfo("Selecione uma linha para excluir");
+        }
+        else{
+            tabelaFuncionarios.getItems().remove(index);
+
+            List<String> linhas = new ArrayList<String>(Files.readAllLines(Paths.get(CAMINHO_ARQUIVO)));
+
+            if (index >= 0 && index < linhas.size()) {
+                linhas.remove(index);
+            }
+
+            Files.write(Paths.get(CAMINHO_ARQUIVO), linhas);
+        }
     }
 }
