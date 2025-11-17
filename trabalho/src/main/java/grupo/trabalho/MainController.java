@@ -131,6 +131,8 @@ public class MainController {
 
     @FXML
     private void goToCandidatura() throws IOException {
+        Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
+        prevStage.close();
 
         Stage candidaturaStage = new Stage();
         FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
