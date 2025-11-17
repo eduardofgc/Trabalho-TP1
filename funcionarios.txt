@@ -74,3 +74,161 @@ Descontos:
 Total Proventos: 60.0
 Total Descontos: 0.0
 
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;60,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 120.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;60,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 120.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;60,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 120.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;60,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 120.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;60,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 120.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024.00;VA;600.00
+8024.00;VT;600.00
+Descontos:
+Total Proventos: 1200.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+Descontos:
+Total Proventos: 0.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024.00;VA;300.00
+8024.00;VT;90.00
+Descontos:
+Total Proventos: 390.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024.00;VA;300.00
+8024.00;VT;90.00
+Descontos:
+Total Proventos: 390.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+Descontos:
+Total Proventos: 0.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;50,00
+Descontos:
+Total Proventos: 50.0
+Total Descontos: 0.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;600,00
+4000,00;VA;1200,00
+Descontos:
+4000,00;Imposto;350,00
+Total Proventos: 1800.0
+Total Descontos: 350.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;600,00
+4000,00;VA;1200,00
+Descontos:
+4000,00;Imposto;350,00
+Total Proventos: 1800.0
+Total Descontos: 350.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;600,00
+4000,00;VA;1200,00
+4000,00;a;5,20
+Descontos:
+4000,00;Imposto;350,00
+Total Proventos: 1805.2
+Total Descontos: 350.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;600,00
+4000,00;VA;1200,00
+Descontos:
+4000,00;Imposto;350,00
+Total Proventos: 1800.0
+Total Descontos: 350.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;50,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 110.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;50,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 110.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;50,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 110.0
+Total Descontos: 0.0
+
+Nome: Carlos Mendes
+Proventos:
+8024,00;VA;50,00
+8024,00;VT;60,00
+Descontos:
+Total Proventos: 110.0
+Total Descontos: 0.0
+
+Nome: Marina Vladez
+Proventos:
+Descontos:
+Total Proventos: 0.0
+Total Descontos: 0.0
+
