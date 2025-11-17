@@ -36,16 +36,14 @@ public class ListarController {
 
     @FXML
     public void initialize() {
-        // Configura as colunas
+
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colVaga.setCellValueFactory(new PropertyValueFactory<>("vaga"));
 
-        // Obtém a lista do repositório
         lista = CandidatoRepository.getCandidatos();
         tabela.setItems(lista);
 
-        // Cria a coluna de exclusão com um botão em cada linha
         adicionarColunaExcluir();
     }
 
@@ -79,7 +77,7 @@ public class ListarController {
     }
 
     private void excluirCandidato(Candidato candidato) {
-        lista.remove(candidato);
+        CandidatoRepository.removerCandidato(candidato);
     }
 
     @FXML
