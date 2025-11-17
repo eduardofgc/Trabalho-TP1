@@ -9,12 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+
 public class StatusController {
     private CandidaturaController candidaturaController;
 
     public void setCandidaturaController(CandidaturaController candidaturaController){
         this.candidaturaController = candidaturaController;
     }
+
     @FXML
     private Label lblStatus;
 
@@ -28,20 +32,36 @@ public class StatusController {
         }
     }
 
-    public void voltarMenu(ActionEvent event) {
-        trocarTela(event, "/grupo/trabalho/candidatura-view.fxml");
-    }
+    @FXML
+    private void voltarMenu(ActionEvent event) {
+        // caminho esperado do FXML de candidatura — ajuste aqui caso seu arquivo tenha outro nome
+        String caminho = "/grupo/trabalho/candidatura-view.fxml";
 
-    private void trocarTela(ActionEvent event, String fxml) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            URL resource = getClass().getResource(caminho);
+            if (resource == null) {
+                System.err.println("❌ FXML não encontrado em: " + caminho + " (verifique nome/pasta)");
+                return;
+            }
+
+            Parent root = FXMLLoader.load(resource);
             Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+            // tenta aplicar style.css se existir (opcional)
+            URL css = getClass().getResource("/grupo/trabalho/style.css");
+            if (css != null) {
+                scene.getStylesheets().add(css.toExternalForm());
+            }
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar a tela de candidatura:");
             e.printStackTrace();
+        } catch (Exception ex) {
+            System.err.println("Erro inesperado ao voltar para candidatura:");
+            ex.printStackTrace();
         }
     }
 }

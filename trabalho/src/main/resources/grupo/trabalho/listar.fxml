@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="420" prefWidth="600"
@@ -15,38 +11,39 @@
             fx:controller="grupo.trabalho.ListarController">
 
     <children>
-        <VBox alignment="CENTER" spacing="20.0"
-              AnchorPane.leftAnchor="50.0"
-              AnchorPane.rightAnchor="50.0"
+        <VBox alignment="CENTER" spacing="15.0"
+              AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0"
               AnchorPane.topAnchor="40.0">
 
             <!-- Título -->
-            <Label text="Lista de Candidatos"
-                   style="-fx-text-fill: #2c3e50;">
+            <Label text="Lista de Candidatos" style="-fx-text-fill: #2c3e50;">
                 <font>
-                    <Font name="Segoe UI Semibold" size="26" />
+                    <Font name="Segoe UI Semibold" size="28" />
                 </font>
             </Label>
 
             <!-- Tabela -->
-            <TableView fx:id="tabela"
-                       prefHeight="220" prefWidth="500"
-                       style="-fx-background-radius: 8; -fx-border-radius: 8;">
+            <TableView fx:id="tabela" prefHeight="250.0" prefWidth="520.0"
+                       style="-fx-background-color: white; -fx-background-radius: 8;">
                 <columns>
-                    <TableColumn fx:id="colNome" text="Nome" prefWidth="150" />
-                    <TableColumn fx:id="colEmail" text="Email" prefWidth="200" />
-                    <TableColumn fx:id="colVaga" text="Vaga" prefWidth="150" />
+                    <TableColumn fx:id="colNome" text="Nome" prefWidth="170.0"/>
+                    <TableColumn fx:id="colEmail" text="Email" prefWidth="180.0"/>
+                    <TableColumn fx:id="colVaga" text="Vaga" prefWidth="130.0"/>
+                    <TableColumn fx:id="colExcluir" text="Excluir" prefWidth="70.0"/>
                 </columns>
             </TableView>
 
-            <!-- Botão Voltar -->
-            <Button fx:id="btnVoltar"
-                    text="Voltar ao Menu Principal"
-                    onAction="#voltarMenu"
-                    style="-fx-background-color: #2c3e50; -fx-text-fill: white;
-                           -fx-font-size: 14px; -fx-padding: 10 20 10 20;
-                           -fx-background-radius: 8;"
-                    prefWidth="220" prefHeight="42" />
+            <!-- Botões -->
+            <HBox alignment="CENTER" spacing="20">
+                <Button fx:id="voltarButton"
+                        onAction="#voltarMenu"
+                        text="Voltar"
+                        style="-fx-background-color: #2c3e50;
+                               -fx-text-fill: white;
+                               -fx-font-size: 14px;
+                               -fx-padding: 10 20 10 20;
+                               -fx-background-radius: 8;"/>
+            </HBox>
         </VBox>
     </children>
 </AnchorPane>

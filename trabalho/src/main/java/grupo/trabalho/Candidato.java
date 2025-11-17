@@ -1,6 +1,10 @@
 package grupo.trabalho;
 
-public class Candidato {
+import java.io.Serializable;
+
+public class Candidato implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nome;
     private String email;
     private String vaga;
@@ -11,12 +15,27 @@ public class Candidato {
         this.vaga = vaga;
     }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getNome() {
+        return nome;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public String getVaga() { return vaga; }
-    public void setVaga(String vaga) { this.vaga = vaga; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVaga() {
+        return vaga;
+    }
+
+    public void setVaga(String vaga) {
+        this.vaga = vaga;
+    }
 }

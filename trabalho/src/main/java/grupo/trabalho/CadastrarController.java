@@ -1,39 +1,38 @@
 package grupo.trabalho;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class CadastrarController {
+
+    @FXML
+    private TextField txtNome;
+
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private ComboBox<String> comboVaga;
+
     private CandidaturaController candidaturaController;
 
-    public void setCandidaturaController(CandidaturaController candidaturaController){
+    public void setCandidaturaController(CandidaturaController candidaturaController) {
         this.candidaturaController = candidaturaController;
     }
 
     @FXML
-    private TextField txtNome;
-    @FXML
-    private TextField txtEmail;
-    @FXML
-    private ComboBox<String> comboVaga;
-    @FXML
-    private Button btnSalvar;
-    @FXML
-    private Button btnVoltar;
-    @FXML
-    public void initialize() {
-        comboVaga.getItems().addAll("Analista", "Desenvolvedor", "Gerente", "Estagiário");
+    private void initialize() {
+        comboVaga.getItems().addAll("Desenvolvedor", "Analista", "Designer", "Gerente de Projetos");
     }
 
-    public void salvarCandidato(ActionEvent event) {
+    @FXML
+    private void salvarCandidato() {
         String nome = txtNome.getText();
         String email = txtEmail.getText();
         String vaga = comboVaga.getValue();
@@ -43,30 +42,33 @@ public class CadastrarController {
             return;
         }
 
-        Candidato candidato = new Candidato(nome, email, vaga);
-        CandidatoRepository.adicionarCandidato(candidato);
+        Candidato novo = new Candidato(nome, email, vaga);
+        CandidatoRepository.adicionarCandidato(novo);
 
-        System.out.println("Candidato cadastrado: " + nome);
+        System.out.println("Candidato salvo com sucesso!");
+        System.out.println("Nome: " + nome);
+        System.out.println("Email: " + email);
+        System.out.println("Vaga: " + vaga);
 
         txtNome.clear();
         txtEmail.clear();
         comboVaga.setValue(null);
     }
 
-    public void voltarMenu(){
+    @FXML
+    private void voltarMenu() throws IOException {
+        Stage stageAtual = (Stage) txtNome.getScene().getWindow();
+        stageAtual.close();
 
-    }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
+        Parent root = loader.load();
 
-    private void trocarTela(ActionEvent event, String fxml) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        CandidaturaController candidaturaController = loader.getController();
+
+        Stage stage = new Stage();
+        stage.setTitle("Candidatura");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
     }
 }
