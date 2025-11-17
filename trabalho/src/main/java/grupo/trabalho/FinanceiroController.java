@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Optional;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -73,6 +75,7 @@ public class FinanceiroController {
     @FXML private ComboBox<String> comboStatus;
     @FXML private ComboBox<String> comboDepartamento;
     @FXML private Button exportarButton;
+
 
     @FXML
     private void handleMenuButton() throws IOException {
@@ -183,8 +186,8 @@ public class FinanceiroController {
                     String cpf = p[1];
                     int matricula = Integer.parseInt(p[2]);
                     LocalDate dataAdmissao = LocalDate.parse(p[3]);
-                    double salarioBase = Double.parseDouble(p[4]);
-                    double salarioLiquido = Double.parseDouble(p[5]);
+                    double salarioBase = Double.parseDouble(p[4].replace(",", "."));
+                    double salarioLiquido = Double.parseDouble(p[5].replace(",", "."));
                     RegimeContratacao regime = RegimeContratacao.valueOf(p[6].trim().toUpperCase());
                     StatusFuncionario status = StatusFuncionario.valueOf(p[7].trim().toUpperCase());
                     String cargo = p[8];
@@ -516,18 +519,22 @@ public class FinanceiroController {
         int index = tabelaFuncionarios.getSelectionModel().getSelectedIndex();
 
         if (selected == null){
-            AlertHelper.showInfo("Selecione uma linha para excluir");
+            alertHelper.mostrarAlerta("Aviso","Selecione uma linha para excluir");
         }
         else{
-            tabelaFuncionarios.getItems().remove(index);
-
-            List<String> linhas = new ArrayList<String>(Files.readAllLines(Paths.get(CAMINHO_ARQUIVO)));
-
-            if (index >= 0 && index < linhas.size()) {
-                linhas.remove(index);
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,"Deseja realmente excluir o lançamento selecionado?", ButtonType.YES, ButtonType.NO);
+            Stage stage = (Stage) confirm.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoAlerta.png")));
+            Optional<ButtonType> resultado = confirm.showAndWait();
+            if (resultado.isPresent() && resultado.get() == ButtonType.YES) {
+                tabelaFuncionarios.getItems().remove(index);
+                List<String> linhas = new ArrayList<String>(Files.readAllLines(Paths.get(CAMINHO_ARQUIVO)));
+                if (index >= 0 && index < linhas.size()) {
+                    linhas.remove(index);
+                }
+                Files.write(Paths.get(CAMINHO_ARQUIVO), linhas);
             }
 
-            Files.write(Paths.get(CAMINHO_ARQUIVO), linhas);
         }
     }
 }

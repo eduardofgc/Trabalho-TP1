@@ -1,7 +1,6 @@
 package grupo.trabalho;
 
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
@@ -35,9 +34,11 @@ import javafx.scene.control.ButtonType;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.io.File;
+import java.util.Locale;
 
 public class DetalhesSalarioController {
-
+    AlertHelper alertHelper = new AlertHelper();
+    @FXML private Button btnAlterarStatus;
     @FXML private Label labelNome;
     @FXML private Label labelSalarioBase;
     @FXML private Label labelSalarioLiquido;
@@ -49,7 +50,7 @@ public class DetalhesSalarioController {
     @FXML private TableColumn<LancamentoTabela, String> colDescricao;
     @FXML private TableColumn<LancamentoTabela, Double> colValor;
     private static final String CAMINHO_LANCAMENTOS = "lancamentos.txt";
-    private static final String CAMINHO_FUNCIONARIOS = "dados_Funcionarios.txt";
+    private static final String CAMINHO_FUNCIONARIOS = "trabalho/dados_Funcionarios.txt";
     private Funcionario funcionario;
 
     private List<Lancamento> proventos = new ArrayList<>();
@@ -58,17 +59,19 @@ public class DetalhesSalarioController {
 
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         colValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         tabelaLancamentos.setItems(listaTabela);
     }
 
+
     public void setFuncionario(Funcionario f) {
         this.funcionario = f;
         carregarLancamentos();
         atualizarTela();
+        btnAlterarStatus.setText("Status: " + funcionario.getStatus());
     }
     private void carregarLancamentos() {
         proventos.clear();
@@ -76,6 +79,7 @@ public class DetalhesSalarioController {
         listaTabela.clear();
 
         try {
+            if (!Files.exists(Paths.get(CAMINHO_LANCAMENTOS))) return;
             List<String> linhas = Files.readAllLines(Paths.get(CAMINHO_LANCAMENTOS));
 
             for (String linha : linhas) {
@@ -84,7 +88,7 @@ public class DetalhesSalarioController {
                     String cpf = p[0];
                     String tipo = p[1];
                     String descricao = p[2];
-                    double valor = Double.parseDouble(p[3]);
+                    double valor = parseDoubleComVirgula(p[3]);
 
                     if (cpf.equals(funcionario.getCpf())) {
                         Lancamento l = new Lancamento(descricao, valor);
@@ -120,11 +124,10 @@ public class DetalhesSalarioController {
                     String cpfLinha = p[1].trim();
 
                     if (cpfLinha.equals(funcionario.getCpf().trim())) {
-                        p[5] = String.format(Locale.US, "%.2f", novoSalario);
+                        p[5] = String.format(new Locale("pt","BR"), "%.2f", novoSalario);
                         funcionario.setSalarioLiquido(novoSalario);
                         linha = String.join(";", p);
                         atualizado = true;
-                        System.out.println("Salário atualizado para " + funcionario.getNome() + ": R$ " + novoSalario);
                     }
                 }
                 novasLinhas.add(linha);
@@ -133,10 +136,7 @@ public class DetalhesSalarioController {
             if (!atualizado) {
                 System.err.println("Funcionário não encontrado no arquivo: " + funcionario.getNome() + " (" + funcionario.getCpf() + ")");
             }
-
             Files.write(caminho, novasLinhas);
-            System.out.println("Arquivo atualizado com sucesso em: " + caminho.toAbsolutePath());
-
         } catch (IOException e) {
             System.err.println("Erro ao atualizar salário: " + e.getMessage());
         }
@@ -152,10 +152,10 @@ public class DetalhesSalarioController {
                     .filter(l -> !l.startsWith(funcionario.getCpf() + ";"))
                     .collect(Collectors.toList());
             for (Lancamento p : proventos) {
-                linhasExistentes.add(funcionario.getCpf() + ";Provento;" + p.getDescricao() + ";" + p.getValor());
+                linhasExistentes.add(funcionario.getCpf() + ";Provento;" + p.getDescricao() + ";" + String.format(new Locale("pt","BR"), "%.2f", p.getValor()));
             }
             for (Lancamento d : descontos) {
-                linhasExistentes.add(funcionario.getCpf() + ";Desconto;" + d.getDescricao() + ";" + d.getValor());
+                linhasExistentes.add(funcionario.getCpf() + ";Desconto;" + d.getDescricao() + ";" + String.format(new Locale("pt","BR"), "%.2f", d.getValor()));
             }
 
             Files.write(Paths.get(CAMINHO_LANCAMENTOS), linhasExistentes);
@@ -202,8 +202,7 @@ public class DetalhesSalarioController {
     private void excluirLancamento() {
         LancamentoTabela selecionado = tabelaLancamentos.getSelectionModel().getSelectedItem();
         if (selecionado == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Selecione um lançamento para excluir.", ButtonType.OK);
-            alert.showAndWait();
+            alertHelper.mostrarAlerta("Aviso","Selecione um lançamento para excluir.");
             return;
         }
 
@@ -213,10 +212,10 @@ public class DetalhesSalarioController {
             listaTabela.remove(selecionado);
             if (selecionado.getTipo().equalsIgnoreCase("Provento")) {
                 proventos.removeIf(p -> p.getDescricao().equals(selecionado.getDescricao()) &&
-                        p.getValor() == selecionado.getValor());
+                        Double.compare(p.getValor(), selecionado.getValor()) == 0);
             } else {
                 descontos.removeIf(d -> d.getDescricao().equals(selecionado.getDescricao()) &&
-                        d.getValor() == selecionado.getValor());
+                        Double.compare(d.getValor(), selecionado.getValor()) == 0);
             }
             salvarLancamentos();
             atualizarTela();
@@ -248,16 +247,15 @@ public class DetalhesSalarioController {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.OK) {
                 try {
-                    double valor = Double.parseDouble(valorField.getText());
+                    double valor = parseDoubleComVirgula(valorField.getText());
                     return new Lancamento(descricaoField.getText(), valor);
                 } catch (NumberFormatException e) {
-                    System.err.println("Valor inválido!");
+                    alertHelper.mostrarAlerta("Aviso","Valor inválido! Use apenas números");
                     return null;
                 }
             }
             return null;
         });
-
         return dialog.showAndWait();
     }
     @FXML
@@ -268,11 +266,11 @@ public class DetalhesSalarioController {
 
             pw.println("Proventos:");
             for (Lancamento p : proventos) {
-                pw.printf("%.2f;%s;%.2f%n", funcionario.getSalarioBase(), p.getDescricao(), p.getValor());
+                pw.printf(new Locale("pt","BR"), "%.2f;%s;%.2f%n", funcionario.getSalarioBase(), p.getDescricao(), p.getValor());
             }
             pw.println("Descontos:");
             for (Lancamento d : descontos) {
-                pw.printf("%.2f;%s;%.2f%n", funcionario.getSalarioBase(), d.getDescricao(), d.getValor());
+                pw.printf(new Locale("pt","BR"), "%.2f;%s;%.2f%n", funcionario.getSalarioBase(), d.getDescricao(), d.getValor());
             }
 
             double totalP = proventos.stream().mapToDouble(Lancamento::getValor).sum();
@@ -282,12 +280,64 @@ public class DetalhesSalarioController {
             pw.println("Total Descontos: " + totalD);
             pw.println();
 
-            System.out.println("Dados salvos com sucesso!");
+            alertHelper.mostrarAlerta("Sucesso","Dados salvos com sucesso!");
 
         } catch (IOException e) {
-            System.err.println("Erro ao salvar dados: " + e.getMessage());
+            alertHelper.mostrarAlerta("Erro","Erro ao salvar dados: " + e.getMessage());
         }
     }
+    @FXML
+    private TableView<Funcionario> tabelaFuncionarios;
+
+    @FXML
+    private void alterarStatusFuncionario() {
+
+        if (funcionario.getStatus() == StatusFuncionario.ATIVO) {
+            funcionario.setStatus(StatusFuncionario.INATIVO);
+        } else {
+            funcionario.setStatus(StatusFuncionario.ATIVO);
+        }
+
+        btnAlterarStatus.setText("Status: " + funcionario.getStatus());
+
+        salvarStatusNoArquivo(funcionario);
+
+        alertHelper.mostrarAlerta("Sucesso", "Status alterado para: " + funcionario.getStatus());
+    }
+
+
+    private void salvarStatusNoArquivo(Funcionario funcionarioAtualizado) {
+        try {
+            File arquivo = new File(CAMINHO_FUNCIONARIOS);
+
+            if (!arquivo.exists()) return;
+
+            List<String> linhas = Files.readAllLines(arquivo.toPath());
+            List<String> novasLinhas = new ArrayList<>();
+
+            for (String linha : linhas) {
+                String[] campos = linha.split(";");
+
+                if (campos[1].equals(funcionarioAtualizado.getCpf())) {
+                    linha = campos[0] +";"+
+                            campos[1] +";"+
+                            campos[2] +";"+
+                            campos[3] +";"+
+                            campos[4] +";"+
+                            campos[5] +";"+
+                            campos[6] +";"+
+                            funcionarioAtualizado.getStatus() +";"+
+                            campos[8] +";"+
+                            campos[9];
+                }
+                novasLinhas.add(linha);
+            }
+            Files.write(arquivo.toPath(), novasLinhas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void gerarHoleritePDF() {
         if (funcionario == null) {
@@ -399,7 +449,7 @@ public class DetalhesSalarioController {
                 conteudo.newLineAtOffset(margin + 10, currentY - 10);
                 conteudo.showText(p.getDescricao());
                 conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
-                conteudo.showText(String.format("R$ %.2f", p.getValor()));
+                conteudo.showText(String.format(new Locale("pt","BR"), "R$ %.2f", p.getValor()));
                 conteudo.endText();
 
                 totalProventos += p.getValor();
@@ -417,7 +467,7 @@ public class DetalhesSalarioController {
             conteudo.newLineAtOffset(margin + 10, currentY - 13);
             conteudo.showText("TOTAL DE PROVENTOS");
             conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
-            conteudo.showText(String.format("R$ %.2f", totalProventos));
+            conteudo.showText(String.format(new Locale("pt","BR"), "R$ %.2f", totalProventos));
             conteudo.endText();
 
             currentY -= 40;
@@ -452,8 +502,6 @@ public class DetalhesSalarioController {
                     conteudo = new PDPageContentStream(doc, pagina);
                     currentY = pagina.getMediaBox().getHeight() - margin;
                 }
-
-                // Fundo alternado
                 if (descontos.indexOf(d) % 2 == 0) {
                     conteudo.setNonStrokingColor(250, 250, 250);
                 } else {
@@ -468,7 +516,7 @@ public class DetalhesSalarioController {
                 conteudo.newLineAtOffset(margin + 10, currentY - 10);
                 conteudo.showText(d.getDescricao());
                 conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
-                conteudo.showText(String.format("R$ %.2f", d.getValor()));
+                conteudo.showText(String.format(new Locale("pt","BR"), "R$ %.2f", d.getValor()));
                 conteudo.endText();
 
                 totalDescontos += d.getValor();
@@ -486,7 +534,7 @@ public class DetalhesSalarioController {
             conteudo.newLineAtOffset(margin + 10, currentY - 13);
             conteudo.showText("TOTAL DE DESCONTOS");
             conteudo.newLineAtOffset(pageWidth - 2 * margin - 110, 0);
-            conteudo.showText(String.format("R$ %.2f", totalDescontos));
+            conteudo.showText(String.format(new Locale("pt","BR"), "R$ %.2f", totalDescontos));
             conteudo.endText();
 
             currentY -= 40;
@@ -500,15 +548,15 @@ public class DetalhesSalarioController {
             conteudo.setNonStrokingColor(255, 255, 255);
             conteudo.setFont(PDType1Font.HELVETICA_BOLD, 14);
             conteudo.newLineAtOffset(margin + 10, currentY - 15);
-            conteudo.showText("SALÁRIO LÍQUIDO: R$ " + String.format("%.2f", salarioLiquido));
+            conteudo.showText("SALÁRIO LÍQUIDO: R$ " + String.format(new Locale("pt","BR"), "%.2f", salarioLiquido));
             conteudo.endText();
 
             conteudo.beginText();
             conteudo.setFont(PDType1Font.HELVETICA, 10);
             conteudo.newLineAtOffset(margin + 10, currentY - 30);
-            conteudo.showText("Salário Base: R$ " + String.format("%.2f", funcionario.getSalarioBase()) +
-                    " | Proventos: R$ " + String.format("%.2f", totalProventos) +
-                    " | Descontos: R$ " + String.format("%.2f", totalDescontos));
+            conteudo.showText("Salário Base: R$ " + String.format(new Locale("pt","BR"), "%.2f", funcionario.getSalarioBase()) +
+                    " | Proventos: R$ " + String.format(new Locale("pt","BR"), "%.2f", totalProventos) +
+                    " | Descontos: R$ " + String.format(new Locale("pt","BR"), "%.2f", totalDescontos));
             conteudo.endText();
 
             conteudo.beginText();
@@ -523,12 +571,11 @@ public class DetalhesSalarioController {
             conteudo.close();
             doc.save(arquivo);
 
-            mostrarAlertaSucesso("Holerite exportado em PDF com SUCESSO!\n" + arquivo.getAbsolutePath());
+            alertHelper.mostrarAlerta("Sucesso","Holerite exportado em PDF com SUCESSO!\n" + arquivo.getAbsolutePath());
 
         } catch (IOException e) {
             e.printStackTrace();
-            Alert erro = new Alert(Alert.AlertType.ERROR, "Erro ao gerar PDF: " + e.getMessage());
-            erro.showAndWait();
+            alertHelper.mostrarAlerta("Erro","Erro ao gerar PDF: " + e.getMessage());
         }
     }
     @FXML
@@ -536,14 +583,11 @@ public class DetalhesSalarioController {
         Stage stage = (Stage) labelNome.getScene().getWindow();
         stage.close();
     }
-    private void mostrarAlertaSucesso(String mensagem) {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucesso");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoSucesso.png")));
-        alert.showAndWait();
+    private double parseDoubleComVirgula(String s) {
+        if (s == null) throw new NumberFormatException("null");
+        String t = s.trim().replace("\\u00A0", "").replace(" ", "");
+        t = t.replace(".", "");
+        t = t.replace(',', '.');
+        return Double.parseDouble(t);
     }
 }

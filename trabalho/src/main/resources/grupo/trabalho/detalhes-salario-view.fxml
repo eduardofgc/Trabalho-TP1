@@ -40,7 +40,8 @@
             <TableColumn fx:id="colValor" prefWidth="82.0" text="Valor" />
         </columns>
       </TableView>
-          <Button fx:id="btnAdicionarProvento" layoutX="211.0" layoutY="513.0" onAction="#adicionarProvento" prefWidth="130.0" text="Adicionar Provento" />
+        <Button fx:id="btnAlterarStatus" layoutX="390.0" layoutY="175.0" onAction="#alterarStatusFuncionario" prefHeight="31.0" prefWidth="122.0" text="Status" />
+        <Button fx:id="btnAdicionarProvento" layoutX="211.0" layoutY="513.0" onAction="#adicionarProvento" prefWidth="130.0" text="Adicionar Provento" />
           <Button fx:id="btnAdicionarDesconto" layoutX="28.0" layoutY="513.0" onAction="#adicionarDesconto" prefWidth="130.0" text="Adicionar Desconto" />
           <Button fx:id="btnExcluir" layoutX="397.0" layoutY="513.0" onAction="#excluirLancamento" prefWidth="130.0" text="Excluir Lançamento" />
       <Button fx:id="btnGerarHolerite" layoutX="310.0" layoutY="575.0" onAction="#gerarHoleritePDF" prefHeight="31.0" prefWidth="130.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Gerar Holherite" />
