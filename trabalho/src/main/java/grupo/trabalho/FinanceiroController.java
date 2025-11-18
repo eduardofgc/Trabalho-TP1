@@ -522,7 +522,7 @@ public class FinanceiroController {
             alertHelper.mostrarAlerta("Aviso","Selecione uma linha para excluir");
         }
         else{
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,"Deseja realmente excluir o lançamento selecionado?", ButtonType.YES, ButtonType.NO);
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,"Deseja realmente excluir os dados desse funcionário?", ButtonType.YES, ButtonType.NO);
             Stage stage = (Stage) confirm.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoAlerta.png")));
             Optional<ButtonType> resultado = confirm.showAndWait();

@@ -232,3 +232,39 @@ Descontos:
 Total Proventos: 0.0
 Total Descontos: 0.0
 
+Nome: Ana Souza
+Proventos:
+4000,00;VT;600,00
+4000,00;VA;1200,00
+Descontos:
+4000,00;Imposto;350,00
+Total Proventos: 1800.0
+Total Descontos: 350.0
+
+Nome: Ana Souza
+Proventos:
+Descontos:
+Total Proventos: 0.0
+Total Descontos: 0.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;60,00
+Descontos:
+Total Proventos: 60.0
+Total Descontos: 0.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;60,00
+Descontos:
+Total Proventos: 60.0
+Total Descontos: 0.0
+
+Nome: Ana Souza
+Proventos:
+4000,00;VT;60,00
+Descontos:
+Total Proventos: 60.0
+Total Descontos: 0.0
+

@@ -131,20 +131,28 @@ public class MainController {
 
     @FXML
     private void goToCandidatura() throws IOException {
-        Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
-        prevStage.close();
 
-        Stage candidaturaStage = new Stage();
-        FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
-        Parent candidaturaRoot = candidaturaFXMLLoader.load();
+        if (!HelloController.currentUser.isCandidato){
+            Stage prevStage = (Stage) candidaturaButton.getScene().getWindow();
+            prevStage.close();
 
-        CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
+            Stage candidaturaStage = new Stage();
+            FXMLLoader candidaturaFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
+            Parent candidaturaRoot = candidaturaFXMLLoader.load();
 
-        Scene scene = new Scene(candidaturaRoot);
-        candidaturaStage.setTitle("Candidatura");
-        candidaturaStage.setScene(scene);
-        candidaturaStage.setResizable(false);
-        candidaturaStage.show();
+            CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
+
+            Scene scene = new Scene(candidaturaRoot);
+            candidaturaStage.setTitle("Candidatura");
+            candidaturaStage.setScene(scene);
+            candidaturaStage.setResizable(false);
+            candidaturaStage.show();
+        }
+        else{
+            AlertHelper.showInfo("Erro: você não tem permissão pra isso.");
+        }
+
+
     }
 
     @FXML
@@ -175,10 +183,9 @@ public class MainController {
     @FXML
     private void goToFinanceiro() throws IOException{
 
-        Stage prevStage = (Stage) financeiroButton.getScene().getWindow();
-        prevStage.close();
-
         if (HelloController.currentUser.isAdmin){
+            Stage prevStage = (Stage) financeiroButton.getScene().getWindow();
+            prevStage.close();
             Stage financeiroStage = new Stage();
             FXMLLoader financeiroFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/financeiro-view.fxml"));
             Parent financeiroRoot = financeiroFXMLLoader.load();
