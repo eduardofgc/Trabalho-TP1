@@ -17,13 +17,30 @@ public class ListarUsuariosController {
     @FXML private TableColumn<UsuarioLinha, String> colNome;
     @FXML private TableColumn<UsuarioLinha, String> colEmail;
     @FXML private TableColumn<UsuarioLinha, String> colRoles;
+    private javafx.collections.transformation.FilteredList<UsuarioLinha> filteredData;
+
+
+    @FXML private TextField campoBusca;
 
     @FXML
     public void initialize() {
         colNome.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNome()));
         colEmail.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail()));
         colRoles.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRoles()));
+
+        campoBusca.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (filteredData == null) return;
+
+            filteredData.setPredicate(usuario -> {
+                if (newValue == null || newValue.isBlank()) return true;
+
+                String search = newValue.toLowerCase();
+
+                return usuario.getNome().toLowerCase().contains(search);
+            });
+        });
     }
+
 
     @FXML
     private ListView<String> listaElementos;
@@ -33,7 +50,8 @@ public class ListarUsuariosController {
     private Button botaoLimparTudo;
 
     public void loadUsuarios(List<String> lines) {
-        tabelaUsuarios.getItems().clear();
+        javafx.collections.ObservableList<UsuarioLinha> listaOriginal =
+                javafx.collections.FXCollections.observableArrayList();
 
         for (int i = 0; i < lines.size(); i++) {
             String[] parts = lines.get(i).split(",");
@@ -54,12 +72,14 @@ public class ListarUsuariosController {
                 if (candidato) roles.append("Candidato ");
                 if (recrutador) roles.append("Recrutador ");
 
-                tabelaUsuarios.getItems().add(
-                        new UsuarioLinha(nome, email, roles.toString().trim())
-                );
+                listaOriginal.add(new UsuarioLinha(nome, email, roles.toString().trim()));
             }
         }
+
+        filteredData = new javafx.collections.transformation.FilteredList<>(listaOriginal, p -> true);
+        tabelaUsuarios.setItems(filteredData);
     }
+
 
 
     @FXML
@@ -73,38 +93,33 @@ public class ListarUsuariosController {
 
         String nomeSelecionado = selected.getNome();
 
+        AdmClasses.usuariosArray.removeIf(u -> u.getLogin().equals(nomeSelecionado));
 
-        int indexToRemove = -1;
-
-        for (int i = 0; i < AdmClasses.usuariosArray.size(); i++) {
-            if (AdmClasses.usuariosArray.get(i).getLogin().equals(nomeSelecionado)) {
-                indexToRemove = i;
-                break;
-            }
+        if (filteredData != null) {
+            filteredData.getSource().remove(selected);
         }
-
-        if (indexToRemove == -1) {
-            AlertHelper.showInfo("Usuário não encontrado no sistema.");
-            return;
-        }
-
-        AdmClasses.usuariosArray.remove(indexToRemove);
-
-        indexToRemove = tabelaUsuarios.getSelectionModel().getSelectedIndex();
-        tabelaUsuarios.getItems().remove(indexToRemove);
-
 
         try {
-            List<String> allLines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            List<String> updatedUsers = allLines.stream()
-                    .filter(line -> !line.startsWith(nomeSelecionado + ","))
-                    .collect(Collectors.toList());
-            Files.write(Path.of("usuariosInfo.txt"), updatedUsers);
+            List<String> allUsers = new java.util.ArrayList<>(Files.readAllLines(Path.of("usuariosInfo.txt")));
+            List<String> allEmails = new java.util.ArrayList<>(Files.readAllLines(Path.of("emailInfo.txt")));
 
-            List<String> allEmails = Files.readAllLines(Path.of("emailInfo.txt"));
-            if (indexToRemove < allEmails.size()) {
-                allEmails.remove(indexToRemove);
+            int indexToRemove = -1;
+            for (int i = 0; i < allUsers.size(); i++) {
+                String[] parts = allUsers.get(i).split(",");
+                if (parts.length >= 1 && parts[0].equals(nomeSelecionado)) {
+                    indexToRemove = i;
+                    break;
+                }
             }
+
+            if (indexToRemove != -1) {
+                allUsers.remove(indexToRemove);
+                if (indexToRemove < allEmails.size()) {
+                    allEmails.remove(indexToRemove);
+                }
+            }
+
+            Files.write(Path.of("usuariosInfo.txt"), allUsers);
             Files.write(Path.of("emailInfo.txt"), allEmails);
 
         } catch (IOException e) {
@@ -115,6 +130,8 @@ public class ListarUsuariosController {
 
         AlertHelper.showInfo("Usuário removido com sucesso!");
     }
+
+
 
 
     @FXML
@@ -129,15 +146,15 @@ public class ListarUsuariosController {
 
                 AdmClasses.usuariosArray.clear();
 
-                if (tabelaUsuarios != null) {
-                    tabelaUsuarios.getItems().clear();
+                if (filteredData != null) {
+                    filteredData.getSource().clear();
                 }
+                tabelaUsuarios.getItems().clear();
 
-                try (FileWriter fw = new FileWriter("usuariosInfo.txt", false);
-                     FileWriter emailFw = new FileWriter("emailInfo.txt", false)) {
+                try {
+                    Files.write(Path.of("usuariosInfo.txt"), new java.util.ArrayList<>());
+                    Files.write(Path.of("emailInfo.txt"), new java.util.ArrayList<>());
 
-                    fw.write("");
-                    emailFw.write("");
                 } catch (IOException e) {
                     e.printStackTrace();
                     AlertHelper.showInfo("Erro ao limpar os arquivos: " + e.getMessage());
@@ -148,5 +165,6 @@ public class ListarUsuariosController {
             }
         });
     }
+
 
 }

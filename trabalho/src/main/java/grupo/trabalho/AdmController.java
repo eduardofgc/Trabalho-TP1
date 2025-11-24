@@ -172,10 +172,12 @@ public class AdmController {
         String novoLogin = loginTextField.getText();
         String novoEmail = emailTextField.getText();
         String permissions = null;
+
         if (novaSenha.isEmpty() || novoLogin.isEmpty() || novoEmail.isEmpty()){
             AlertHelper.showInfo("Erro: por favor, preencha todos os campos.");
             return;
         }
+
         Usuario novoUsuario = new Usuario(novoEmail, novoLogin, novaSenha);
         novoUsuario.isAdmin = adminCheckBox.isSelected();
         novoUsuario.isGestor = gestorCheckBox.isSelected();

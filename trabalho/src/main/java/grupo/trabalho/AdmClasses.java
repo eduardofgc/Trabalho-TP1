@@ -16,7 +16,7 @@ public class AdmClasses {
         for (Usuario u : usuariosArray) {
             if (u.isAdmin) {
                 adminExists = true;
-                break;
+                return;
             }
         }
         if (!adminExists) {
