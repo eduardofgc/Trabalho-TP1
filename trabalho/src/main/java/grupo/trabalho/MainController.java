@@ -98,7 +98,7 @@ public class MainController {
         Stage mainStage = new Stage();
         FXMLLoader loginFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/second-view.fxml"));
         Parent loginRoot = loginFXMLLoader.load();
-
+        mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
         Scene scene = new Scene(loginRoot);
         mainStage.setTitle("Gestão de RH - Menu Principal");
         mainStage.setScene(scene);
@@ -160,6 +160,7 @@ public class MainController {
             Parent candidaturaRoot = candidaturaFXMLLoader.load();
 
             CandidaturaController candidaturaController = candidaturaFXMLLoader.getController();
+            candidaturaController.setMainController(this);
 
             Scene scene = new Scene(candidaturaRoot);
             candidaturaStage.setTitle("Candidatura");
