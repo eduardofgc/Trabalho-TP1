@@ -11,14 +11,12 @@ import java.io.IOException;
 public class CandidaturaController {
 
     @FXML
-    private Button cadastrarCandidatosButton,cadafunc;
-    @FXML
-    private Button listarCandidatosButton;
-    @FXML
-    private Button statusDaCandidaturaButton;
-    @FXML
-    private Button menuButton;
+    private Button cadastrarCandidatosButton,cadafunc,menuButton,statusDaCandidaturaButton,listarCandidatosButton;
 
+    private MainController mainController;
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
     @FXML
     private void goToCadaFunc() throws IOException {
         Stage stage = (Stage) cadafunc.getScene().getWindow();
@@ -56,8 +54,10 @@ public class CandidaturaController {
 
     @FXML
     private void handleMenuButton() throws IOException {
-        Stage stage = (Stage) menuButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/grupo/trabalho/second-view.fxml"));
-        stage.setScene(new Scene(root));
+        if (mainController != null) {
+            mainController.goBackMenu(menuButton);
+        } else {
+            System.err.println("MainController não foi configurado!");
+        }
     }
 }

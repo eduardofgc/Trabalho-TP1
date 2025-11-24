@@ -56,6 +56,7 @@ public class HelloController {
             FXMLLoader mainScreenFXML = new FXMLLoader(getClass().getResource("second-view.fxml"));
             Parent mainRoot = mainScreenFXML.load();
             Stage mainStage = new Stage();
+            mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
             mainStage.setScene(new Scene(mainRoot));
             mainStage.setResizable(false);
             mainStage.setTitle("Gestão de RH - Menu Principal");
