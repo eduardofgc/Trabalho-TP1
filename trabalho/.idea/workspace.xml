@@ -7,12 +7,11 @@
     <list default="true" id="1c33ea94-f601-40ce-8bdf-119d8526690e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emailInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/emailInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/AdmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/AdmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grupo/trabalho/CadastrarEntrevistaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grupo/trabalho/CadastrarEntrevistaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/cadastrarUsuario-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/cadastrarUsuario-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/second-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/cadastrarVaga-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/grupo/trabalho/cadastrarVaga-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usuariosInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/usuariosInfo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vagasInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vagasInfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
