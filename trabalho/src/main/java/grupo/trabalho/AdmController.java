@@ -124,9 +124,11 @@ public class AdmController {
     public Object loadUI(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+
             AnchorPane pane = loader.load();
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
+
             return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
