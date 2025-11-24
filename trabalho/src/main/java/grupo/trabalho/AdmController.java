@@ -195,14 +195,19 @@ public class AdmController {
             permissions = "false,false,false,true";
         }
 
-        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
-            FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
-            writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
-            emailWriter.write(novoEmail + System.lineSeparator());
-            AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
-        } catch (IOException e){
-            AlertHelper.showInfo("Erro cadastrando usuário.");
-            e.printStackTrace();
+        if (novoUsuario.isAdmin && novoUsuario.isCandidato || novoUsuario.isAdmin && novoUsuario.isGestor || novoUsuario.isAdmin && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isCandidato || novoUsuario.isRecrutador && novoUsuario.isCandidato){
+            AlertHelper.showInfo("Erro: permissões conflitantes.");
+        }
+        else{
+            try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
+                FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
+                writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
+                emailWriter.write(novoEmail + System.lineSeparator());
+                AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
+            } catch (IOException e){
+                AlertHelper.showInfo("Erro cadastrando usuário.");
+                e.printStackTrace();
+            }
         }
     }
 }

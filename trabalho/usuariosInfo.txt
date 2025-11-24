@@ -3,3 +3,4 @@ gestor,gestor123,false,true,false,false
 candidato,candidato123,false,false,true,false
 administrador,admin123,true,false,false,false
 admin,admin123,true,false,false,false
+admin,admin123,true,false,false,false

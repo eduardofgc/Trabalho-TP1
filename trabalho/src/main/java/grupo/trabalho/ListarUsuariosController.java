@@ -25,8 +25,6 @@ public class ListarUsuariosController {
         colRoles.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRoles()));
     }
 
-
-
     @FXML
     private ListView<String> listaElementos;
     @FXML
