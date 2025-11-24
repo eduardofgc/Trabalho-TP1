@@ -13,6 +13,35 @@ import java.util.stream.Collectors;
 
 public class ListarUsuariosController {
 
+    @FXML private TableView<UsuarioLinha> tabelaUsuarios;
+    @FXML private TableColumn<UsuarioLinha, String> colNome;
+    @FXML private TableColumn<UsuarioLinha, String> colEmail;
+    @FXML private TableColumn<UsuarioLinha, String> colRoles;
+    private javafx.collections.transformation.FilteredList<UsuarioLinha> filteredData;
+
+
+    @FXML private TextField campoBusca;
+
+    @FXML
+    public void initialize() {
+        colNome.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNome()));
+        colEmail.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail()));
+        colRoles.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRoles()));
+
+        campoBusca.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (filteredData == null) return;
+
+            filteredData.setPredicate(usuario -> {
+                if (newValue == null || newValue.isBlank()) return true;
+
+                String search = newValue.toLowerCase();
+
+                return usuario.getNome().toLowerCase().contains(search);
+            });
+        });
+    }
+
+
     @FXML
     private ListView<String> listaElementos;
     @FXML
@@ -41,10 +70,13 @@ public class ListarUsuariosController {
     }
 
     public void loadUsuarios(List<String> lines) {
-        listaElementos.getItems().clear();
+        javafx.collections.ObservableList<UsuarioLinha> listaOriginal =
+                javafx.collections.FXCollections.observableArrayList();
+
         for (int i = 0; i < lines.size(); i++) {
             String[] parts = lines.get(i).split(",");
-            if (parts.length >= 6){
+
+            if (parts.length >= 6) {
                 String nome = parts[0];
                 String email = "";
                 try {
@@ -56,15 +88,19 @@ public class ListarUsuariosController {
                 boolean gestor = Boolean.parseBoolean(parts[3]);
                 boolean candidato = Boolean.parseBoolean(parts[4]);
                 boolean recrutador = Boolean.parseBoolean(parts[5]);
+
                 StringBuilder roles = new StringBuilder();
                 if (admin) roles.append("Admin ");
                 if (gestor) roles.append("Gestor ");
                 if (candidato) roles.append("Candidato ");
                 if (recrutador) roles.append("Recrutador ");
-                String formatted = String.format("%s (%s) — %s", nome, email, roles.toString().trim());
-                listaElementos.getItems().add(formatted);
+
+                listaOriginal.add(new UsuarioLinha(nome, email, roles.toString().trim()));
             }
         }
+
+        filteredData = new javafx.collections.transformation.FilteredList<>(listaOriginal, p -> true);
+        tabelaUsuarios.setItems(filteredData);
     }
 
     private void loadAllUsers() {
@@ -107,43 +143,42 @@ public class ListarUsuariosController {
 
     @FXML
     public void clickBotaoExcluir() {
-        String selected = listaElementos.getSelectionModel().getSelectedItem();
+        UsuarioLinha selected = tabelaUsuarios.getSelectionModel().getSelectedItem();
+
         if (selected == null) {
             AlertHelper.showInfo("Selecione um usuário para excluir.");
             return;
         }
 
-        String nomeSelecionado = selected.split(" \\(")[0];
+        String nomeSelecionado = selected.getNome();
 
-        int indexToRemove = -1;
+        AdmClasses.usuariosArray.removeIf(u -> u.getLogin().equals(nomeSelecionado));
 
-        for (int i = 0; i < AdmClasses.usuariosArray.size(); i++) {
-            if (AdmClasses.usuariosArray.get(i).getLogin().equals(nomeSelecionado)) {
-                indexToRemove = i;
-                break;
-            }
+        if (filteredData != null) {
+            filteredData.getSource().remove(selected);
         }
-
-        if (indexToRemove == -1) {
-            AlertHelper.showInfo("Usuário não encontrado no sistema.");
-            return;
-        }
-
-        AdmClasses.usuariosArray.remove(indexToRemove);
-
-        listaElementos.getItems().remove(selected);
 
         try {
-            List<String> allLines = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            List<String> updatedUsers = allLines.stream()
-                    .filter(line -> !line.startsWith(nomeSelecionado + ","))
-                    .collect(Collectors.toList());
-            Files.write(Path.of("usuariosInfo.txt"), updatedUsers);
+            List<String> allUsers = new java.util.ArrayList<>(Files.readAllLines(Path.of("usuariosInfo.txt")));
+            List<String> allEmails = new java.util.ArrayList<>(Files.readAllLines(Path.of("emailInfo.txt")));
 
-            List<String> allEmails = Files.readAllLines(Path.of("emailInfo.txt"));
-            if (indexToRemove < allEmails.size()) {
-                allEmails.remove(indexToRemove);
+            int indexToRemove = -1;
+            for (int i = 0; i < allUsers.size(); i++) {
+                String[] parts = allUsers.get(i).split(",");
+                if (parts.length >= 1 && parts[0].equals(nomeSelecionado)) {
+                    indexToRemove = i;
+                    break;
+                }
             }
+
+            if (indexToRemove != -1) {
+                allUsers.remove(indexToRemove);
+                if (indexToRemove < allEmails.size()) {
+                    allEmails.remove(indexToRemove);
+                }
+            }
+
+            Files.write(Path.of("usuariosInfo.txt"), allUsers);
             Files.write(Path.of("emailInfo.txt"), allEmails);
 
             loadAllUsers();
@@ -163,18 +198,33 @@ public class ListarUsuariosController {
         confirm.setTitle("Confirmar limpeza");
         confirm.setHeaderText("Tem certeza?");
         confirm.setContentText("Isso vai remover TODOS os usuários.");
-        if (confirm.showAndWait().get() == ButtonType.OK) {
-            AdmClasses.usuariosArray.clear();
-            listaElementos.getItems().clear();
-            try (FileWriter fw = new FileWriter("usuariosInfo.txt", false);
-                 FileWriter emailFw = new FileWriter("emailInfo.txt", false)) {
-                fw.write("");
-                emailFw.write("");
-            } catch (IOException e) {
-                e.printStackTrace();
+
+        confirm.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+
+                AdmClasses.usuariosArray.clear();
+
+                if (filteredData != null) {
+                    filteredData.getSource().clear();
+                }
+                tabelaUsuarios.getItems().clear();
+
+                try {
+                    Files.write(Path.of("usuariosInfo.txt"), new java.util.ArrayList<>());
+                    Files.write(Path.of("emailInfo.txt"), new java.util.ArrayList<>());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    AlertHelper.showInfo("Erro ao limpar os arquivos: " + e.getMessage());
+                    return;
+                }
+
+                AlertHelper.showInfo("Todos os usuários foram removidos.");
             }
             AlertHelper.showInfo("Todos os usuários foram removidos.");
             loadAllUsers();
         }
     }
+
+
 }

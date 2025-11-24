@@ -124,9 +124,11 @@ public class AdmController {
     public Object loadUI(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+
             AnchorPane pane = loader.load();
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
+
             return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,10 +172,12 @@ public class AdmController {
         String novoLogin = loginTextField.getText();
         String novoEmail = emailTextField.getText();
         String permissions = null;
+
         if (novaSenha.isEmpty() || novoLogin.isEmpty() || novoEmail.isEmpty()){
             AlertHelper.showInfo("Erro: por favor, preencha todos os campos.");
             return;
         }
+
         Usuario novoUsuario = new Usuario(novoEmail, novoLogin, novaSenha);
         novoUsuario.isAdmin = adminCheckBox.isSelected();
         novoUsuario.isGestor = gestorCheckBox.isSelected();
@@ -195,14 +199,19 @@ public class AdmController {
             permissions = "false,false,false,true";
         }
 
-        try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
-            FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
-            writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
-            emailWriter.write(novoEmail + System.lineSeparator());
-            AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
-        } catch (IOException e){
-            AlertHelper.showInfo("Erro cadastrando usuário.");
-            e.printStackTrace();
+        if (novoUsuario.isAdmin && novoUsuario.isCandidato || novoUsuario.isAdmin && novoUsuario.isGestor || novoUsuario.isAdmin && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isCandidato || novoUsuario.isRecrutador && novoUsuario.isCandidato){
+            AlertHelper.showInfo("Erro: permissões conflitantes.");
+        }
+        else{
+            try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
+                FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
+                writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
+                emailWriter.write(novoEmail + System.lineSeparator());
+                AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
+            } catch (IOException e){
+                AlertHelper.showInfo("Erro cadastrando usuário.");
+                e.printStackTrace();
+            }
         }
     }
 }
