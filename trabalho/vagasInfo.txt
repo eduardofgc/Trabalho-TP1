@@ -1,0 +1,2 @@
+cargoX,asdasdm,MAT,Ativa,2222.0,2025-11-12
+VAGA@,sadasd,DEPEX,INATIVA,3000.0,2025-11-20

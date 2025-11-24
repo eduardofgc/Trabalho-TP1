@@ -27,9 +27,21 @@ public class CadastrarEntrevistaController {
 
     @FXML
     private void clickCadastrar() {
+
         LocalDate data = dataPicker.getValue();
         String avaliador = avaliadorField.getText();
         String parecer = parecerField.getText();
+
+        if (data == null) {
+            AlertHelper.showInfo("Por favor, escolha uma data.");
+            return;
+        }
+
+        if (avaliador.isEmpty() || parecer.isEmpty()) {
+            AlertHelper.showInfo("Por favor, preencha todos os campos.");
+            return;
+        }
+
         double nota;
 
         try {
@@ -49,4 +61,3 @@ public class CadastrarEntrevistaController {
         stage.close();
     }
 }
-

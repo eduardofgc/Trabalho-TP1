@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -15,6 +16,10 @@ public class MainController {
     private HelloController helloController;
 
     @FXML
+    public Label currentUserLabel;
+    @FXML
+    public Label currentCargoLabel;
+    @FXML
     private Button logoutButton;
     @FXML
     private Button admButton;
@@ -24,6 +29,20 @@ public class MainController {
     private Button recrutamentoButton;
     @FXML
     private Button financeiroButton;
+
+    public void setUserInfo(String nome, String cargo) {
+        currentUserLabel.setText(nome);
+        currentCargoLabel.setText(cargo);
+    }
+
+    @FXML
+    public void initialize(){
+        setUserInfo(
+                HelloController.currentUser.getLogin(),
+                HelloController.currentUser.getCargo()
+        );
+    }
+
 
     @FXML
     public void onHover(javafx.scene.input.MouseEvent e) {
