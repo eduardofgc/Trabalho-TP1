@@ -51,6 +51,21 @@ public class Usuario {
         return this.email;
     }
 
+    public String getCargo(){
+        if (isAdmin){
+            return "Administrador";
+        }
+        else if (isRecrutador){
+            return "Recrutador";
+        }
+        else if (isCandidato){
+            return "Candidato";
+        }
+        else{
+            return "Gestor";
+        }
+    }
+
     public boolean fazerLogin(String loginTentado, String senhaTentada) {
         return loginTentado.equals(this.login) && senhaTentada.equals(this.senha);
     }
