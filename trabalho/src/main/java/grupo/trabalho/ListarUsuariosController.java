@@ -2,12 +2,12 @@ package grupo.trabalho;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +48,26 @@ public class ListarUsuariosController {
     private Button botaoExcluir;
     @FXML
     private Button botaoLimparTudo;
+    @FXML
+    private TextField campoBusca;
+
+    private List<String> originalUsersData;
+    private List<String> originalEmailsData;
+
+    @FXML
+    public void initialize() {
+        loadAllUsers();
+
+        campoBusca.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleBusca();
+        });
+
+        campoBusca.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleBusca();
+            }
+        });
+    }
 
     public void loadUsuarios(List<String> lines) {
         javafx.collections.ObservableList<UsuarioLinha> listaOriginal =
@@ -59,8 +79,11 @@ public class ListarUsuariosController {
             if (parts.length >= 6) {
                 String nome = parts[0];
                 String email = "";
-                try { email = Files.readAllLines(Path.of("emailInfo.txt")).get(i); } catch (IOException ignored) {}
-
+                try {
+                    if (i < originalEmailsData.size()) {
+                        email = originalEmailsData.get(i);
+                    }
+                } catch (Exception ignored) {}
                 boolean admin = Boolean.parseBoolean(parts[2]);
                 boolean gestor = Boolean.parseBoolean(parts[3]);
                 boolean candidato = Boolean.parseBoolean(parts[4]);
@@ -80,7 +103,43 @@ public class ListarUsuariosController {
         tabelaUsuarios.setItems(filteredData);
     }
 
+    private void loadAllUsers() {
+        try {
+            originalUsersData = Files.readAllLines(Path.of("usuariosInfo.txt"));
+            originalEmailsData = Files.readAllLines(Path.of("emailInfo.txt"));
+            loadUsuarios(originalUsersData);
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertHelper.showInfo("Erro ao carregar usuários.");
+        }
+    }
 
+    @FXML
+    public void handleBusca() {
+        String searchTerm = campoBusca.getText().trim().toLowerCase();
+
+        if (searchTerm.isEmpty()) {
+            loadUsuarios(originalUsersData);
+            return;
+        }
+
+        List<String> filteredUsers = originalUsersData.stream()
+                .filter(line -> {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 6) {
+                        String nome = parts[0].toLowerCase();
+                        return nome.contains(searchTerm);
+                    }
+                    return false;
+                })
+                .collect(Collectors.toList());
+
+        loadUsuarios(filteredUsers);
+
+        if (filteredUsers.isEmpty()) {
+            AlertHelper.showInfo("Nenhum usuário encontrado com o nome: " + searchTerm);
+        }
+    }
 
     @FXML
     public void clickBotaoExcluir() {
@@ -122,6 +181,8 @@ public class ListarUsuariosController {
             Files.write(Path.of("usuariosInfo.txt"), allUsers);
             Files.write(Path.of("emailInfo.txt"), allEmails);
 
+            loadAllUsers();
+
         } catch (IOException e) {
             e.printStackTrace();
             AlertHelper.showInfo("Erro ao atualizar os arquivos.");
@@ -130,9 +191,6 @@ public class ListarUsuariosController {
 
         AlertHelper.showInfo("Usuário removido com sucesso!");
     }
-
-
-
 
     @FXML
     public void clickBotaoLimparTudo() {
@@ -163,7 +221,9 @@ public class ListarUsuariosController {
 
                 AlertHelper.showInfo("Todos os usuários foram removidos.");
             }
-        });
+            AlertHelper.showInfo("Todos os usuários foram removidos.");
+            loadAllUsers();
+        }
     }
 
 
