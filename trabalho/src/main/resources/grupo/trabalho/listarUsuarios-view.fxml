@@ -6,7 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 
+
+<?import javafx.scene.control.TableView?>
 <AnchorPane prefHeight="332.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/24.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -16,7 +20,14 @@
           AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
 
         <TextField fx:id="campoBusca" promptText="Pesquisar..." />
-        <ListView fx:id="listaElementos" prefHeight="250.0" />
+        <TableView fx:id="tabelaUsuarios" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="colNome" text="Nome" prefWidth="200"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                <TableColumn fx:id="colRoles" text="Funções" prefWidth="200"/>
+            </columns>
+        </TableView>
+
 
         <HBox spacing="10.0" alignment="CENTER_RIGHT">
             <Button fx:id="botaoExcluir" onAction="#clickBotaoExcluir" text="Deletar usuário" />

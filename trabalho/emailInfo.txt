@@ -1,7 +1,5 @@
-admin@admin.com
-gestor@gmail.com
-admin@admin.com
-recrutador@gmail.com
-admin@admin.com
-admin@admin.com
+rec@gmail.com
+gest@gmail.com
+cand@gmail.com
+admin@gmail.com
 admin@admin.com
