@@ -59,7 +59,10 @@ public class CadastrarVagaController {
 
         Vaga novaVaga = new Vaga(cargo, requisitos, departamento, status, salario, dataAbertura);
         vagasArray.add(novaVaga);
-        saveVagasToFile();
+
+        vagasArray.add(novaVaga);
+        saveVagasToFile(novaVaga);
+
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Vaga cadastrada");
@@ -75,16 +78,15 @@ public class CadastrarVagaController {
         dataAberturaDataPicker.setValue(null);
     }
 
-    private void saveVagasToFile() {
-        try (FileWriter writer = new FileWriter("vagasInfo.txt")) {
-            for (Vaga v : vagasArray) {
-                writer.write(v.getCargo() + "," + v.getRequisitos() + "," + v.getDepartamento() + "," +
-                        v.getStatus() + "," + v.getSalarioBase() + "," + v.getDataAbertura() + System.lineSeparator());
-            }
+    private void saveVagasToFile(Vaga v) {
+        try (FileWriter writer = new FileWriter("vagasInfo.txt", true)) {
+            writer.write(v.getCargo() + "," + v.getRequisitos() + "," + v.getDepartamento() + "," +
+                    v.getStatus() + "," + v.getSalarioBase() + "," + v.getDataAbertura() + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     public static void fetchVagasFromFile() {
         vagasArray.clear();
