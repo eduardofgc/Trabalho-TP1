@@ -156,7 +156,7 @@ public class FinanceiroController {
         comboStatus.setItems(FXCollections.observableArrayList("ATIVO", "INATIVO"));
         comboCargo.setItems(FXCollections.observableArrayList("Analista", "Estagiário", "Consultor", "Secretária"));
         comboDepartamento.setItems(FXCollections.observableArrayList("Financeiro", "TI", "RH", "Administração"));
-
+        configurarComboBoxParaPromptText();
         atualizarTabela();
 
         tabelaFuncionarios.setOnMouseClicked(event -> {
@@ -170,7 +170,53 @@ public class FinanceiroController {
 
         atualizarTabela();
     }
+    private void configurarComboBoxParaPromptText() {
+        comboCargo.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Cargo");
+                } else {
+                    setText(item);
+                }
+            }
+        });
 
+        comboRegime.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Regime");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+        comboStatus.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Status");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+        comboDepartamento.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Departamento");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+    }
     @FXML
     private void filtrarFuncionarios() {
         ObservableList<Funcionario> listaFiltrada = FXCollections.observableArrayList();
@@ -225,10 +271,10 @@ public class FinanceiroController {
     @FXML
     private void limparFiltros() {
 
-        comboCargo.setValue(null);
-        comboRegime.setValue(null);
-        comboStatus.setValue(null);
-        comboDepartamento.setValue(null);
+        comboCargo.getSelectionModel().clearSelection();
+        comboRegime.getSelectionModel().clearSelection();
+        comboStatus.getSelectionModel().clearSelection();
+        comboDepartamento.getSelectionModel().clearSelection();
         atualizarTabela();
     }
     @FXML
@@ -515,26 +561,48 @@ public class FinanceiroController {
 
     @FXML
     public void handleDeletarFuncionarioButton() throws IOException {
-        String selected = tabelaFuncionarios.getSelectionModel().toString();
-        int index = tabelaFuncionarios.getSelectionModel().getSelectedIndex();
+        Funcionario selected = tabelaFuncionarios.getSelectionModel().getSelectedItem();
 
-        if (selected == null){
-            alertHelper.mostrarAlerta("Aviso","Selecione uma linha para excluir");
+        if (selected == null) {
+            alertHelper.mostrarAlerta("Aviso", "Selecione uma linha para excluir");
+            return;
         }
-        else{
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,"Deseja realmente excluir os dados desse funcionário?", ButtonType.YES, ButtonType.NO);
-            Stage stage = (Stage) confirm.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoAlerta.png")));
-            Optional<ButtonType> resultado = confirm.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.YES) {
-                tabelaFuncionarios.getItems().remove(index);
-                List<String> linhas = new ArrayList<String>(Files.readAllLines(Paths.get(CAMINHO_ARQUIVO)));
-                if (index >= 0 && index < linhas.size()) {
-                    linhas.remove(index);
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                "Deseja realmente excluir os dados do funcionário: " + selected.getNome() + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        Stage stage = (Stage) confirm.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoAlerta.png")));
+
+        Optional<ButtonType> resultado = confirm.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.YES) {
+            List<String> linhas = new ArrayList<>(Files.readAllLines(Paths.get(CAMINHO_ARQUIVO)));
+
+            boolean removido = false;
+            for (int i = 0; i < linhas.size(); i++) {
+                String linha = linhas.get(i);
+                String[] partes = linha.split(";");
+                if (partes.length >= 2) {
+                    String cpfArquivo = partes[1];
+
+                    if (cpfArquivo.equals(selected.getCpf())) {
+                        linhas.remove(i);
+                        removido = true;
+                        break;
+                    }
                 }
-                Files.write(Paths.get(CAMINHO_ARQUIVO), linhas);
             }
 
+            if (removido) {
+                Files.write(Paths.get(CAMINHO_ARQUIVO), linhas);
+
+                atualizarTabela();
+
+                alertHelper.mostrarAlerta("Sucesso", "Funcionário excluído com sucesso!");
+            } else {
+                alertHelper.mostrarAlerta("Erro", "Funcionário não encontrado no arquivo");
+            }
         }
     }
 }

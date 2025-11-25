@@ -34,27 +34,27 @@ public class StatusController {
 
     @FXML
     private void voltarMenu(ActionEvent event) {
-        // caminho esperado do FXML de candidatura — ajuste aqui caso seu arquivo tenha outro nome
         String caminho = "/grupo/trabalho/candidatura-view.fxml";
 
         try {
             URL resource = getClass().getResource(caminho);
             if (resource == null) {
-                System.err.println("❌ FXML não encontrado em: " + caminho + " (verifique nome/pasta)");
+                System.err.println(" FXML não encontrado em: " + caminho + " (verifique nome/pasta)");
                 return;
             }
 
             Parent root = FXMLLoader.load(resource);
             Scene scene = new Scene(root, 600, 400);
 
-            // tenta aplicar style.css se existir (opcional)
             URL css = getClass().getResource("/grupo/trabalho/style.css");
             if (css != null) {
                 scene.getStylesheets().add(css.toExternalForm());
             }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Candidatura");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             System.err.println("Erro ao carregar a tela de candidatura:");
