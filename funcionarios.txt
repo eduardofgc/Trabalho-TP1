@@ -268,3 +268,9 @@ Descontos:
 Total Proventos: 60.0
 Total Descontos: 0.0
 
+Nome: qwertyui
+Proventos:
+Descontos:
+Total Proventos: 0.0
+Total Descontos: 0.0
+

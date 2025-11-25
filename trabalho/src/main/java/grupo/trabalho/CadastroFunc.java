@@ -41,14 +41,24 @@ public class CadastroFunc {
     public void initialize() {
         regimeCombo.getItems().setAll(RegimeContratacao.values());
         statusCombo.getItems().setAll(StatusFuncionario.values());
+        configurarComboBoxParaPromptText();
     }
 
     @FXML
     private void voltarPaginaAnterior() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("candidatura-view.fxml"));
+
+        Stage stageAtual = (Stage) botaoVoltar.getScene().getWindow();
+        stageAtual.close();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/candidatura-view.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage) botaoVoltar.getScene().getWindow();
+
+        CandidaturaController candidaturaController = loader.getController();
+
+        Stage stage = new Stage();
+        stage.setTitle("Candidatura");
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -106,7 +116,31 @@ public class CadastroFunc {
             alertHelper.mostrarAlerta("Erro", "Verifique os dados informados.");
         }
     }
+    private void configurarComboBoxParaPromptText() {
+        regimeCombo.setButtonCell(new ListCell<RegimeContratacao>() {
+            @Override
+            protected void updateItem(RegimeContratacao item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Regime");
+                } else {
+                    setText(item.toString());
+                }
+            }
+        });
 
+        statusCombo.setButtonCell(new ListCell<StatusFuncionario>() {
+            @Override
+            protected void updateItem(StatusFuncionario item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Status");
+                } else {
+                    setText(item.toString());
+                }
+            }
+        });
+    }
 
     private void limparCampos() {
         nomeField.clear();
@@ -116,7 +150,7 @@ public class CadastroFunc {
         salarioField.clear();
         matriculaField.clear();
         dataAdmissaoPicker.setValue(null);
-        regimeCombo.setValue(null);
-        statusCombo.setValue(null);
+        regimeCombo.getSelectionModel().clearSelection();
+        statusCombo.getSelectionModel().clearSelection();
     }
 }

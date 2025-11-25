@@ -17,10 +17,14 @@ public class ListarUsuariosController {
     @FXML private TableColumn<UsuarioLinha, String> colNome;
     @FXML private TableColumn<UsuarioLinha, String> colEmail;
     @FXML private TableColumn<UsuarioLinha, String> colRoles;
-    private javafx.collections.transformation.FilteredList<UsuarioLinha> filteredData;
-
-
     @FXML private TextField campoBusca;
+    @FXML private ListView<String> listaElementos;
+    @FXML private Button botaoExcluir;
+    @FXML private Button botaoLimparTudo;
+
+    private javafx.collections.transformation.FilteredList<UsuarioLinha> filteredData;
+    private List<String> originalUsersData;
+    private List<String> originalEmailsData;
 
     @FXML
     public void initialize() {
@@ -29,36 +33,6 @@ public class ListarUsuariosController {
         colRoles.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getRoles()));
 
         campoBusca.textProperty().addListener((obs, oldValue, newValue) -> {
-            if (filteredData == null) return;
-
-            filteredData.setPredicate(usuario -> {
-                if (newValue == null || newValue.isBlank()) return true;
-
-                String search = newValue.toLowerCase();
-
-                return usuario.getNome().toLowerCase().contains(search);
-            });
-        });
-    }
-
-
-    @FXML
-    private ListView<String> listaElementos;
-    @FXML
-    private Button botaoExcluir;
-    @FXML
-    private Button botaoLimparTudo;
-    @FXML
-    private TextField campoBusca;
-
-    private List<String> originalUsersData;
-    private List<String> originalEmailsData;
-
-    @FXML
-    public void initialize() {
-        loadAllUsers();
-
-        campoBusca.textProperty().addListener((observable, oldValue, newValue) -> {
             handleBusca();
         });
 
@@ -67,6 +41,7 @@ public class ListarUsuariosController {
                 handleBusca();
             }
         });
+        loadAllUsers();
     }
 
     public void loadUsuarios(List<String> lines) {
@@ -201,7 +176,6 @@ public class ListarUsuariosController {
 
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-
                 AdmClasses.usuariosArray.clear();
 
                 if (filteredData != null) {
@@ -212,7 +186,6 @@ public class ListarUsuariosController {
                 try {
                     Files.write(Path.of("usuariosInfo.txt"), new java.util.ArrayList<>());
                     Files.write(Path.of("emailInfo.txt"), new java.util.ArrayList<>());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     AlertHelper.showInfo("Erro ao limpar os arquivos: " + e.getMessage());
@@ -220,11 +193,8 @@ public class ListarUsuariosController {
                 }
 
                 AlertHelper.showInfo("Todos os usuários foram removidos.");
+                loadAllUsers();
             }
-            AlertHelper.showInfo("Todos os usuários foram removidos.");
-            loadAllUsers();
-        }
+        });
     }
-
-
 }
