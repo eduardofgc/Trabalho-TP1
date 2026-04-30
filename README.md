@@ -1,18 +1,18 @@
 # Sistema de Gestão de Recrutamento
 
-Trabalho Final — Técnicas de Programação 1  
+Trabalho Final — Técnicas de Programação 1
 **Grupo 6** | Universidade de Brasília
 
 ---
 
 ## Integrantes
 
-| Nome | |
-|---|---|
-| Eduardo Rocha Biagini | |
-| Lucas Centurion Netto | |
-| Filipe Araújo Lopes Grillo | |
-| João Vitor Lopes Rocha | |
+| Nome |
+|---|
+| Eduardo Rocha Biagini |
+| Lucas Centurion Netto |
+| Filipe Araújo Lopes Grillo |
+| João Vitor Lopes Rocha |
 
 **Professora:** Roberta Barbosa Oliveira
 
@@ -34,7 +34,7 @@ Sistema desktop de gerenciamento de recrutamento e seleção desenvolvido em Jav
 
 ---
 
-## Pré-requisitos
+## ⚙️ Pré-requisitos
 
 Antes de executar o projeto, certifique-se de ter instalado:
 
@@ -48,20 +48,23 @@ Antes de executar o projeto, certifique-se de ter instalado:
 ## Como Executar
 
 1. **Clone o repositório:**
+
 ```bash
-   git clone https://github.com/eduardofgc/Trabalho-TP1.git
-   cd Trabalho-TP1
+git clone https://github.com/eduardofgc/Trabalho-TP1.git
+cd Trabalho-TP1
 ```
 
 2. **Abra o projeto na sua IDE** e navegue até:
 
+```
 trabalho/src/main/java/grupo/trabalho/HelloApplication.java
+```
 
-3. **Configure o JavaFX:**
-   - Adicione a biblioteca JavaFX ao classpath do projeto
-   - Configure o VM Options com o module path correto:
+3. **Configure o JavaFX** — adicione a biblioteca ao classpath e defina o VM Options com o module path correto:
 
-  --module-path /caminho/para/javafx/lib --add-modules javafx.controls,javafx.fxml
+```
+--module-path /caminho/para/javafx/lib --add-modules javafx.controls,javafx.fxml
+```
 
 4. **Execute a função `main()`** dentro de `HelloApplication.java`.
 
@@ -69,17 +72,19 @@ trabalho/src/main/java/grupo/trabalho/HelloApplication.java
 
 ## Estrutura do Projeto
 
+```
 Trabalho-TP1/
-├── trabalho/                   # Código-fonte principal (Maven)
+├── trabalho/                    # Código-fonte principal (Maven)
 │   └── src/main/java/grupo/trabalho/
-├── Diagramas e seus códigos/   # Diagramas UML e PlantUML
-├── Relatório_Final_Grupo_6.pdf # Relatório final do projeto
-├── Relatório_Parcial_*.pdf     # Relatórios parciais de entrega
+├── Diagramas e seus códigos/    # Diagramas UML e PlantUML
+├── Relatório_Final_Grupo_6.pdf  # Relatório final do projeto
+├── Relatório_Parcial_*.pdf      # Relatórios parciais de entrega
 └── README.md
+```
 
 ---
 
-## 📄 Documentação
+## Documentação
 
 Os relatórios com a especificação completa do sistema, diagramas de classe, casos de uso e decisões de projeto estão disponíveis nos arquivos PDF na raiz do repositório.
 
