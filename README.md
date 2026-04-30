@@ -1,11 +1,82 @@
-Trabalho final de Técnicas de Programação 1
+# Sistema de Gestão de Recrutamento
 
-Alunos: Eduardo Rocha Biagini, Lucas Centurion Netto, Filipe Araújo Lopes Grillo e João Vitor Lopes Rocha
+Trabalho Final — Técnicas de Programação 1  
+**Grupo 6** | Universidade de Brasília
 
-Professora: Roberta Barbosa Oliveira
+---
 
-IDE utilizada: Intellij IDEA
+## Integrantes
 
-Dependências: JavaFX, Maven, ApachePDF, IDE para execução da classe "HelloApplication.java"
+| Nome | |
+|---|---|
+| Eduardo Rocha Biagini | |
+| Lucas Centurion Netto | |
+| Filipe Araújo Lopes Grillo | |
+| João Vitor Lopes Rocha | |
 
-Instruções: vá para "Trabalho-TP\trabalho\src\main\java\grupo\trabalho\HelloApplication.java" e, usando seu editor de texto de preferência, rode a função "main()" em "HelloApplication.java". Certifique-se de configurar os caminhos para a biblioteca do JavaFX e module paths corretamente.
+**Professora:** Roberta Barbosa Oliveira
+
+---
+
+## Sobre o Projeto
+
+Sistema desktop de gerenciamento de recrutamento e seleção desenvolvido em Java com interface gráfica JavaFX. A aplicação permite o controle de vagas, candidatos, entrevistas e funcionários, além da geração de relatórios em PDF.
+
+---
+
+## Tecnologias Utilizadas
+
+- **Java** — Linguagem principal
+- **JavaFX** — Interface gráfica
+- **Maven** — Gerenciamento de dependências
+- **Apache PDFBox** — Geração de relatórios em PDF
+- **IntelliJ IDEA** — IDE recomendada para execução
+
+---
+
+## Pré-requisitos
+
+Antes de executar o projeto, certifique-se de ter instalado:
+
+- [Java JDK 17+](https://www.oracle.com/java/technologies/downloads/)
+- [Maven 3.8+](https://maven.apache.org/download.cgi)
+- [JavaFX SDK](https://openjfx.io/) (caso não esteja sendo gerenciado pelo Maven)
+- IntelliJ IDEA (recomendado) ou outra IDE com suporte a Maven
+
+---
+
+## Como Executar
+
+1. **Clone o repositório:**
+```bash
+   git clone https://github.com/eduardofgc/Trabalho-TP1.git
+   cd Trabalho-TP1
+```
+
+2. **Abra o projeto na sua IDE** e navegue até:
+
+trabalho/src/main/java/grupo/trabalho/HelloApplication.java
+
+3. **Configure o JavaFX:**
+   - Adicione a biblioteca JavaFX ao classpath do projeto
+   - Configure o VM Options com o module path correto:
+
+  --module-path /caminho/para/javafx/lib --add-modules javafx.controls,javafx.fxml
+
+4. **Execute a função `main()`** dentro de `HelloApplication.java`.
+
+---
+
+## Estrutura do Projeto
+
+---
+
+## 📄 Documentação
+
+Os relatórios com a especificação completa do sistema, diagramas de classe, casos de uso e decisões de projeto estão disponíveis nos arquivos PDF na raiz do repositório.
+
+---
+
+## Licença
+
+Projeto acadêmico desenvolvido para fins educacionais — Universidade de Brasília, 2024.
