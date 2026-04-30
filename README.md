@@ -69,6 +69,14 @@ trabalho/src/main/java/grupo/trabalho/HelloApplication.java
 
 ## Estrutura do Projeto
 
+Trabalho-TP1/
+├── trabalho/                   # Código-fonte principal (Maven)
+│   └── src/main/java/grupo/trabalho/
+├── Diagramas e seus códigos/   # Diagramas UML e PlantUML
+├── Relatório_Final_Grupo_6.pdf # Relatório final do projeto
+├── Relatório_Parcial_*.pdf     # Relatórios parciais de entrega
+└── README.md
+
 ---
 
 ## 📄 Documentação
