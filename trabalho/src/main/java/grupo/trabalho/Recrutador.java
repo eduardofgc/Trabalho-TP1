@@ -14,15 +14,11 @@ public class Recrutador extends Usuario
     Recrutador(String meuEmail, String meuLogin, String minhaSenha)
 
     {
-        // TÉCNICA: CHAMADA À SUPERCLASSE (super)
-        // A palavra 'super' chama o construtor da classe pai ('Usuario').
-        // Em vez de reinicializar os atributos aqui, delegamos a
-        // responsabilidade para a superclasse, reutilizando sua lógica.
+
         super(meuEmail, meuLogin, minhaSenha);
     }
 
-    // TÉCNICA: MODULARIZAÇÃO (Definição de Comportamento)
-    // Este metodo define um comportamento específico do 'Recrutador'.
+
     public Contratacao solicitarContratacao(Date dataSolicitacao){
 
 
@@ -33,12 +29,10 @@ public class Recrutador extends Usuario
     }
 
 
-    // TÉCNICA: MODULARIZAÇÃO (Definição de Comportamento)
-    // Outro metodo que define uma responsabilidade única do 'Recrutador'.
+
     public Entrevista agendarEntrevista(LocalDate dataMarcada, String meuAvaliador){
 
-        // O metodo atua como uma "fábrica" simples para o objeto 'Entrevista',
-        // garantindo que ele seja criado com os dados corretos.
+
         Entrevista minhaEntrevista = new Entrevista(dataMarcada, meuAvaliador);
         return minhaEntrevista;
     }

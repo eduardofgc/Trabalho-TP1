@@ -19,13 +19,13 @@ public class AdmController {
     private MainController mainController;
     public BorderPane root;
 
-    public void setMainController(MainController mainController){
+    public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
     @FXML
     public void onHover(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(
+        ((Button) e.getSource()).setStyle(
                 "-fx-background-color: #e8eef5; -fx-text-fill: #2c3e50; -fx-font-size: 14px; " +
                         "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.03; -fx-scale-y: 1.03;"
         );
@@ -33,7 +33,7 @@ public class AdmController {
 
     @FXML
     public void onExit(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(
+        ((Button) e.getSource()).setStyle(
                 "-fx-background-color: white; -fx-text-fill: #2c3e50; -fx-font-size: 14px; " +
                         "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
         );
@@ -41,17 +41,17 @@ public class AdmController {
 
     @FXML
     public void onPress(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 0.97; -fx-scale-y: 0.97;");
+        ((Button) e.getSource()).setStyle(((Button) e.getSource()).getStyle() + "-fx-scale-x: 0.97; -fx-scale-y: 0.97;");
     }
 
     @FXML
     public void onRelease(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(((Button)e.getSource()).getStyle() + "-fx-scale-x: 1.03; -fx-scale-y: 1.03;");
+        ((Button) e.getSource()).setStyle(((Button) e.getSource()).getStyle() + "-fx-scale-x: 1.03; -fx-scale-y: 1.03;");
     }
 
     @FXML
     public void onHoverDark(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(
+        ((Button) e.getSource()).setStyle(
                 "-fx-background-color: #1f2b38; -fx-text-fill: white; -fx-font-size: 14px; " +
                         "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.04; -fx-scale-y: 1.04;"
         );
@@ -59,7 +59,7 @@ public class AdmController {
 
     @FXML
     public void onExitDark(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(
+        ((Button) e.getSource()).setStyle(
                 "-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; " +
                         "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1; -fx-scale-y: 1;"
         );
@@ -67,41 +67,26 @@ public class AdmController {
 
     @FXML
     public void onReleaseDark(javafx.scene.input.MouseEvent e) {
-        ((Button)e.getSource()).setStyle(
+        ((Button) e.getSource()).setStyle(
                 "-fx-background-color: #1f2b38; -fx-text-fill: white; -fx-font-size: 14px; " +
                         "-fx-padding: 10 20 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-scale-x: 1.04; -fx-scale-y: 1.04;"
         );
     }
 
-
-    @FXML
-    public TextField emailTextField;
-    @FXML
-    private Button cadastrarUsuarioButton;
-    @FXML
-    private Button listarUsuariosButton;
-    @FXML
-    private Button gerarRelatoriosButton;
-    @FXML
-    private Button voltarMenuButton;
-    @FXML
-    private AnchorPane contentArea;
-    @FXML
-    private Button activeButton;
-    @FXML
-    private Button cadastrarUsuarioFinal;
-    @FXML
-    private TextField senhaTextField;
-    @FXML
-    private TextField loginTextField;
-    @FXML
-    private CheckBox adminCheckBox;
-    @FXML
-    private CheckBox gestorCheckBox;
-    @FXML
-    private CheckBox recrutadorCheckBox;
-    @FXML
-    private CheckBox candidatoCheckBox;
+    @FXML public TextField emailTextField;
+    @FXML private Button cadastrarUsuarioButton;
+    @FXML private Button listarUsuariosButton;
+    @FXML private Button gerarRelatoriosButton;
+    @FXML private Button voltarMenuButton;
+    @FXML private AnchorPane contentArea;
+    @FXML private Button activeButton;
+    @FXML private Button cadastrarUsuarioFinal;
+    @FXML private TextField senhaTextField;
+    @FXML private TextField loginTextField;
+    @FXML private CheckBox adminCheckBox;
+    @FXML private CheckBox gestorCheckBox;
+    @FXML private CheckBox recrutadorCheckBox;
+    @FXML private CheckBox candidatoCheckBox;
 
     @FXML
     public void showGerarRelatorios() {
@@ -115,7 +100,6 @@ public class AdmController {
         }
     }
 
-
     @FXML
     private void voltarMenu() throws IOException {
         mainController.goBackMenu(voltarMenuButton);
@@ -124,11 +108,9 @@ public class AdmController {
     public Object loadUI(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-
             AnchorPane pane = loader.load();
             contentArea.getChildren().clear();
             contentArea.getChildren().add(pane);
-
             return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,17 +118,16 @@ public class AdmController {
         }
     }
 
-    private void setActiveButton(Button button){
-        if (activeButton != null){
+    private void setActiveButton(Button button) {
+        if (activeButton != null) {
             activeButton.setId("buttonLateral");
-            activeButton = button;
         }
         button.setId("buttonLateralActive");
         activeButton = button;
     }
 
     @FXML
-    public void showCadastrarUsuario(){
+    public void showCadastrarUsuario() {
         loadUI("/grupo/trabalho/cadastrarUsuario-view.fxml");
         setActiveButton(cadastrarUsuarioButton);
     }
@@ -157,7 +138,7 @@ public class AdmController {
         setActiveButton(listarUsuariosButton);
         if (controllerObj instanceof ListarUsuariosController controller) {
             try {
-                List<String> lines = Files.readAllLines(Path.of("usuariosInfo.txt"));
+                List<String> lines = Files.readAllLines(Path.of(AppConfig.USUARIOS_INFO));
                 controller.loadUsuarios(lines);
             } catch (IOException e) {
                 AlertHelper.showInfo("Erro: impossível acessar usuariosInfo.txt");
@@ -171,47 +152,49 @@ public class AdmController {
         String novaSenha = senhaTextField.getText();
         String novoLogin = loginTextField.getText();
         String novoEmail = emailTextField.getText();
-        String permissions = null;
 
-        if (novaSenha.isEmpty() || novoLogin.isEmpty() || novoEmail.isEmpty()){
+        if (novaSenha.isEmpty() || novoLogin.isEmpty() || novoEmail.isEmpty()) {
             AlertHelper.showInfo("Erro: por favor, preencha todos os campos.");
             return;
         }
 
-        Usuario novoUsuario = new Usuario(novoEmail, novoLogin, novaSenha);
-        novoUsuario.isAdmin = adminCheckBox.isSelected();
-        novoUsuario.isGestor = gestorCheckBox.isSelected();
-        novoUsuario.isCandidato = candidatoCheckBox.isSelected();
-        novoUsuario.isRecrutador = recrutadorCheckBox.isSelected();
+        boolean isAdmin = adminCheckBox.isSelected();
+        boolean isGestor = gestorCheckBox.isSelected();
+        boolean isCandidato = candidatoCheckBox.isSelected();
+        boolean isRecrutador = recrutadorCheckBox.isSelected();
 
-        AdmClasses.addToUserList(novoUsuario);
-
-        if (novoUsuario.isAdmin){
-            permissions = "true,false,false,false";
+        // FIX: validação de permissões ANTES de criar o usuário
+        int totalPermissoes = (isAdmin ? 1 : 0) + (isGestor ? 1 : 0)
+                + (isCandidato ? 1 : 0) + (isRecrutador ? 1 : 0);
+        if (totalPermissoes > 1) {
+            AlertHelper.showInfo("Erro: selecione apenas um perfil por usuário.");
+            return;
         }
-        else if (novoUsuario.isGestor){
-            permissions = "false,true,false,false";
-        }
-        else if (novoUsuario.isCandidato){
-            permissions = "false,false,true,false";
-        }
-        else if (novoUsuario.isRecrutador){
-            permissions = "false,false,false,true";
+        if (totalPermissoes == 0) {
+            AlertHelper.showInfo("Erro: selecione pelo menos um perfil.");
+            return;
         }
 
-        if (novoUsuario.isAdmin && novoUsuario.isCandidato || novoUsuario.isAdmin && novoUsuario.isGestor || novoUsuario.isAdmin && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isRecrutador || novoUsuario.isGestor && novoUsuario.isCandidato || novoUsuario.isRecrutador && novoUsuario.isCandidato){
-            AlertHelper.showInfo("Erro: permissões conflitantes.");
-        }
-        else{
-            try(FileWriter writer = new FileWriter("usuariosInfo.txt", true);
-                FileWriter emailWriter = new FileWriter("emailInfo.txt", true)){
-                writer.write(novoLogin + "," + novaSenha + "," + permissions + System.lineSeparator());
-                emailWriter.write(novoEmail + System.lineSeparator());
-                AlertHelper.showInfo("Usuário salvo para usuariosInfo.txt!");
-            } catch (IOException e){
-                AlertHelper.showInfo("Erro cadastrando usuário.");
-                e.printStackTrace();
-            }
+        String senhaHasheada = PasswordUtil.hash(novaSenha);
+
+        Usuario novoUsuario = new Usuario(novoEmail, novoLogin, senhaHasheada);
+        novoUsuario.isAdmin = isAdmin;
+        novoUsuario.isGestor = isGestor;
+        novoUsuario.isCandidato = isCandidato;
+        novoUsuario.isRecrutador = isRecrutador;
+
+        String permissions = isAdmin + "," + isGestor + "," + isCandidato + "," + isRecrutador;
+
+        try (FileWriter writer = new FileWriter(AppConfig.USUARIOS_INFO, true);
+             FileWriter emailWriter = new FileWriter(AppConfig.EMAIL_INFO, true)) {
+            writer.write(novoLogin + "," + senhaHasheada + "," + permissions + System.lineSeparator());
+            emailWriter.write(novoEmail + System.lineSeparator());
+            // Só adiciona à lista em memória após salvar com sucesso
+            AdmClasses.addToUserList(novoUsuario);
+            AlertHelper.showInfo("Usuário cadastrado com sucesso!");
+        } catch (IOException e) {
+            AlertHelper.showInfo("Erro ao cadastrar usuário: não foi possível gravar o arquivo.");
+            e.printStackTrace();
         }
     }
 }

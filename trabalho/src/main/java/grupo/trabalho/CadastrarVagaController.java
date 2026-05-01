@@ -12,18 +12,12 @@ import java.util.ArrayList;
 
 public class CadastrarVagaController {
 
-    @FXML
-    private TextField cargoTextfield;
-    @FXML
-    private TextField requisitosTextfield;
-    @FXML
-    private TextField departamentoTextfield;
-    @FXML
-    private TextField statusTextfield;
-    @FXML
-    private TextField salarioBaseTextfield;
-    @FXML
-    private DatePicker dataAberturaDataPicker;
+    @FXML private TextField cargoTextfield;
+    @FXML private TextField requisitosTextfield;
+    @FXML private TextField departamentoTextfield;
+    @FXML private TextField statusTextfield;
+    @FXML private TextField salarioBaseTextfield;
+    @FXML private DatePicker dataAberturaDataPicker;
 
     public static ArrayList<Vaga> vagasArray = new ArrayList<>();
 
@@ -36,12 +30,9 @@ public class CadastrarVagaController {
         String salarioStr = salarioBaseTextfield.getText();
         LocalDate dataAbertura = dataAberturaDataPicker.getValue();
 
-        if (cargo.isEmpty() || requisitos.isEmpty() || departamento.isEmpty() || status.isEmpty() || salarioStr.isEmpty() || dataAbertura == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Erro");
-            alert.setHeaderText(null);
-            alert.setContentText("Preencha todos os campos!");
-            alert.show();
+        if (cargo.isEmpty() || requisitos.isEmpty() || departamento.isEmpty()
+                || status.isEmpty() || salarioStr.isEmpty() || dataAbertura == null) {
+            AlertHelper.showInfo("Preencha todos os campos!");
             return;
         }
 
@@ -49,26 +40,16 @@ public class CadastrarVagaController {
         try {
             salario = Double.parseDouble(salarioStr);
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Erro");
-            alert.setHeaderText(null);
-            alert.setContentText("Salário inválido!");
-            alert.show();
+            AlertHelper.showInfo("Salário inválido! Insira apenas números.");
             return;
         }
 
         Vaga novaVaga = new Vaga(cargo, requisitos, departamento, status, salario, dataAbertura);
-        vagasArray.add(novaVaga);
 
         vagasArray.add(novaVaga);
         saveVagasToFile(novaVaga);
 
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Vaga cadastrada");
-        alert.setHeaderText(null);
-        alert.setContentText("Vaga cadastrada com sucesso!");
-        alert.show();
+        AlertHelper.showInfo("Vaga cadastrada com sucesso!");
 
         cargoTextfield.clear();
         requisitosTextfield.clear();
@@ -79,30 +60,26 @@ public class CadastrarVagaController {
     }
 
     private void saveVagasToFile(Vaga v) {
-        try (FileWriter writer = new FileWriter("vagasInfo.txt", true)) {
-            writer.write(v.getCargo() + "," + v.getRequisitos() + "," + v.getDepartamento() + "," +
-                    v.getStatus() + "," + v.getSalarioBase() + "," + v.getDataAbertura() + System.lineSeparator());
+        try (FileWriter writer = new FileWriter(AppConfig.VAGAS_INFO, true)) {
+            writer.write(v.getCargo() + "," + v.getRequisitos() + "," + v.getDepartamento() + ","
+                    + v.getStatus() + "," + v.getSalarioBase() + "," + v.getDataAbertura()
+                    + System.lineSeparator());
         } catch (IOException e) {
+            AlertHelper.showInfo("Erro ao salvar a vaga no arquivo.");
             e.printStackTrace();
         }
     }
 
-
     public static void fetchVagasFromFile() {
         vagasArray.clear();
-        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader("vagasInfo.txt"))) {
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(AppConfig.VAGAS_INFO))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 6) {
-                    String cargo = parts[0];
-                    String requisitos = parts[1];
-                    String departamento = parts[2];
-                    String status = parts[3];
                     double salario = Double.parseDouble(parts[4]);
                     LocalDate data = LocalDate.parse(parts[5]);
-                    Vaga v = new Vaga(cargo, requisitos, departamento, status, salario, data);
-                    vagasArray.add(v);
+                    vagasArray.add(new Vaga(parts[0], parts[1], parts[2], parts[3], salario, data));
                 }
             }
         } catch (IOException ignored) {}

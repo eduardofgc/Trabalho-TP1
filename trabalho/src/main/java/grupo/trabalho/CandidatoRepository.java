@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CandidatoRepository {
 
-    private static final String FILE_PATH = "candidatos.dat";
+    private static final String FILE_PATH = AppConfig.CANDIDATOS_DAT;
     private static final ObservableList<Candidato> candidatos = FXCollections.observableArrayList();
 
     static {

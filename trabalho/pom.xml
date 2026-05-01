@@ -13,49 +13,44 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>17</java.version>
+    <javafx.version>17.0.6</javafx.version>
     <junit.version>5.10.2</junit.version>
   </properties>
 
   <dependencies>
 
-    <!-- ControlsFX, FormsFX, ValidatorFX, etc. -->
-      <dependency>
-          <groupId>org.apache.pdfbox</groupId>
-          <artifactId>pdfbox</artifactId>
-          <version>2.0.35</version>
-      </dependency>
+    <!-- ========= JAVAFX ========= -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-web</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-media</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
 
-      <dependency>
+    <!-- ========= UI ========= -->
+    <dependency>
       <groupId>org.controlsfx</groupId>
       <artifactId>controlsfx</artifactId>
       <version>11.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.dlsc.formsfx</groupId>
-      <artifactId>formsfx-core</artifactId>
-      <version>11.6.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.openjfx</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.synedra</groupId>
-      <artifactId>validatorfx</artifactId>
-      <version>0.5.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.openjfx</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.kordamp.ikonli</groupId>
-      <artifactId>ikonli-javafx</artifactId>
-      <version>12.3.1</version>
     </dependency>
     <dependency>
       <groupId>org.kordamp.bootstrapfx</groupId>
@@ -63,78 +58,64 @@
       <version>0.4.0</version>
     </dependency>
     <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-javafx</artifactId>
+      <version>12.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dlsc.formsfx</groupId>
+      <artifactId>formsfx-core</artifactId>
+      <version>11.6.0</version>
+      <exclusions>
+        <exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.synedra</groupId>
+      <artifactId>validatorfx</artifactId>
+      <version>0.5.0</version>
+      <exclusions>
+        <exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>eu.hansolo</groupId>
       <artifactId>tilesfx</artifactId>
       <version>21.0.3</version>
       <exclusions>
-        <exclusion>
-          <groupId>org.openjfx</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
+        <exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion>
       </exclusions>
     </dependency>
-    <!-- ========= JAVA FX ========= -->
-    <dependency><groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId><version>17.0.6</version></dependency>
-    <dependency><groupId>org.openjfx</groupId><artifactId>javafx-fxml</artifactId><version>17.0.6</version></dependency>
-    <dependency><groupId>org.openjfx</groupId><artifactId>javafx-web</artifactId><version>17.0.6</version></dependency>
-    <dependency><groupId>org.openjfx</groupId><artifactId>javafx-swing</artifactId><version>17.0.6</version></dependency>
-    <dependency><groupId>org.openjfx</groupId><artifactId>javafx-media</artifactId><version>17.0.6</version></dependency>
 
-    <!-- ========= UI LIBS ========= -->
-    <dependency><groupId>org.controlsfx</groupId><artifactId>controlsfx</artifactId><version>11.2.1</version></dependency>
-    <dependency><groupId>org.kordamp.bootstrapfx</groupId><artifactId>bootstrapfx-core</artifactId><version>0.4.0</version></dependency>
-    <dependency><groupId>org.kordamp.ikonli</groupId><artifactId>ikonli-javafx</artifactId><version>12.3.1</version></dependency>
-
-    <!-- FXGL (Game framework, optional but kept) -->
+    <!-- ========= PDF ========= -->
+    <!-- Usando apenas Apache PDFBox — removido iText para evitar conflito -->
     <dependency>
-      <groupId>com.github.almasb</groupId>
-      <artifactId>fxgl</artifactId>
-      <version>17.3</version>
-      <exclusions><exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion></exclusions>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>2.0.35</version>
     </dependency>
 
-    <!-- TilesFX -->
+    <!-- ========= TESTES ========= -->
     <dependency>
-      <groupId>eu.hansolo</groupId>
-      <artifactId>tilesfx</artifactId>
-      <version>21.0.3</version>
-      <exclusions><exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion></exclusions>
-    </dependency>
-
-    <!-- FormsFX & ValidatorFX -->
-    <dependency>
-      <groupId>com.dlsc.formsfx</groupId><artifactId>formsfx-core</artifactId><version>11.6.0</version>
-      <exclusions><exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion></exclusions>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>net.synedra</groupId><artifactId>validatorfx</artifactId><version>0.5.0</version>
-      <exclusions><exclusion><groupId>org.openjfx</groupId><artifactId>*</artifactId></exclusion></exclusions>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
-
-    <!-- Gluon -->
-    <dependency><groupId>com.gluonhq</groupId><artifactId>charm-glisten</artifactId><version>6.2.3</version></dependency>
-
-    <!-- ========= PDF LIBRARIES ========= -->
-    <dependency><groupId>org.apache.pdfbox</groupId><artifactId>pdfbox</artifactId><version>2.0.29</version></dependency>
-    <dependency><groupId>com.itextpdf</groupId><artifactId>kernel</artifactId><version>7.2.5</version></dependency>
-    <dependency><groupId>com.itextpdf</groupId><artifactId>layout</artifactId><version>7.2.5</version></dependency>
-    <dependency><groupId>com.itextpdf</groupId><artifactId>io</artifactId><version>7.2.5</version></dependency>
-
-    <!-- ========= TESTING ========= -->
-    <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter-api</artifactId><version>${junit.version}</version><scope>test</scope></dependency>
-    <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter-engine</artifactId><version>${junit.version}</version><scope>test</scope></dependency>
 
   </dependencies>
 
-  <!-- ========= REPOSITORIES ========= -->
+  <!-- ========= REPOSITÓRIOS ========= -->
   <repositories>
     <repository>
       <id>central</id>
       <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    <repository>
-      <id>gluon-releases</id>
-      <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
     </repository>
   </repositories>
 
@@ -142,7 +123,7 @@
   <build>
     <plugins>
 
-      <!-- Compiler -->
+      <!-- Compilador -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -153,7 +134,7 @@
         </configuration>
       </plugin>
 
-      <!-- JavaFX Runner -->
+      <!-- JavaFX — rode com: mvn javafx:run -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -163,12 +144,6 @@
             <id>default-cli</id>
             <configuration>
               <mainClass>grupo.trabalho.HelloApplication</mainClass>
-              <launcher>app</launcher>
-              <jlinkZipName>app</jlinkZipName>
-              <jlinkImageName>app</jlinkImageName>
-              <noManPages>true</noManPages>
-              <stripDebug>true</stripDebug>
-              <noHeaderFiles>true</noHeaderFiles>
             </configuration>
           </execution>
         </executions>

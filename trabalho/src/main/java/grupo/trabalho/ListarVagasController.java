@@ -60,7 +60,7 @@ public class ListarVagasController {
     public void fetchVagasFromArchive() {
         vagasArray.clear();
         try {
-            List<String> lines = Files.readAllLines(Path.of("vagasInfo.txt"));
+            List<String> lines = Files.readAllLines(Path.of(AppConfig.VAGAS_INFO));
             for (String line : lines) {
                 String[] p = line.split(",");
                 if (p.length == 6) {
@@ -81,7 +81,7 @@ public class ListarVagasController {
     }
 
     public void saveVaga(Vaga v) {
-        try (FileWriter writer = new FileWriter("vagasInfo.txt", true)) {
+        try (FileWriter writer = new FileWriter(AppConfig.VAGAS_INFO, true)) {
             writer.write(String.join(",", v.cargo, v.requisitos, v.departamento, v.status, String.valueOf(v.salarioBase), v.dataAbertura) + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,11 +110,11 @@ public class ListarVagasController {
         listaElementos.getItems().remove(selected);
 
         try {
-            List<String> allLines = Files.readAllLines(Path.of("vagasInfo.txt"));
+            List<String> allLines = Files.readAllLines(Path.of(AppConfig.VAGAS_INFO));
             List<String> updated = allLines.stream()
                     .filter(line -> !line.startsWith(cargoSelecionado + ","))
                     .collect(Collectors.toList());
-            Files.write(Path.of("vagasInfo.txt"), updated);
+            Files.write(Path.of(AppConfig.VAGAS_INFO), updated);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,7 +128,7 @@ public class ListarVagasController {
             if (response == ButtonType.OK) {
                 vagasArray.clear();
                 listaElementos.getItems().clear();
-                try (FileWriter fw = new FileWriter("vagasInfo.txt", false)) {
+                try (FileWriter fw = new FileWriter(AppConfig.VAGAS_INFO, false)) {
                     fw.write("");
                 } catch (IOException e) {
                     e.printStackTrace();

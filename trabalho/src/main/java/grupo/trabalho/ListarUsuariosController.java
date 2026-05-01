@@ -80,8 +80,8 @@ public class ListarUsuariosController {
 
     private void loadAllUsers() {
         try {
-            originalUsersData = Files.readAllLines(Path.of("usuariosInfo.txt"));
-            originalEmailsData = Files.readAllLines(Path.of("emailInfo.txt"));
+            originalUsersData = Files.readAllLines(Path.of(AppConfig.USUARIOS_INFO));
+            originalEmailsData = Files.readAllLines(Path.of(AppConfig.EMAIL_INFO));
             loadUsuarios(originalUsersData);
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,8 +134,8 @@ public class ListarUsuariosController {
         }
 
         try {
-            List<String> allUsers = new java.util.ArrayList<>(Files.readAllLines(Path.of("usuariosInfo.txt")));
-            List<String> allEmails = new java.util.ArrayList<>(Files.readAllLines(Path.of("emailInfo.txt")));
+            List<String> allUsers = new java.util.ArrayList<>(Files.readAllLines(Path.of(AppConfig.USUARIOS_INFO)));
+            List<String> allEmails = new java.util.ArrayList<>(Files.readAllLines(Path.of(AppConfig.EMAIL_INFO)));
 
             int indexToRemove = -1;
             for (int i = 0; i < allUsers.size(); i++) {
@@ -153,8 +153,8 @@ public class ListarUsuariosController {
                 }
             }
 
-            Files.write(Path.of("usuariosInfo.txt"), allUsers);
-            Files.write(Path.of("emailInfo.txt"), allEmails);
+            Files.write(Path.of(AppConfig.USUARIOS_INFO), allUsers);
+            Files.write(Path.of(AppConfig.EMAIL_INFO), allEmails);
 
             loadAllUsers();
 
@@ -184,8 +184,8 @@ public class ListarUsuariosController {
                 tabelaUsuarios.getItems().clear();
 
                 try {
-                    Files.write(Path.of("usuariosInfo.txt"), new java.util.ArrayList<>());
-                    Files.write(Path.of("emailInfo.txt"), new java.util.ArrayList<>());
+                    Files.write(Path.of(AppConfig.USUARIOS_INFO), new java.util.ArrayList<>());
+                    Files.write(Path.of(AppConfig.EMAIL_INFO), new java.util.ArrayList<>());
                 } catch (IOException e) {
                     e.printStackTrace();
                     AlertHelper.showInfo("Erro ao limpar os arquivos: " + e.getMessage());

@@ -49,8 +49,8 @@ public class DetalhesSalarioController {
     @FXML private TableColumn<LancamentoTabela, String> colTipo;
     @FXML private TableColumn<LancamentoTabela, String> colDescricao;
     @FXML private TableColumn<LancamentoTabela, Double> colValor;
-    private static final String CAMINHO_LANCAMENTOS = "lancamentos.txt";
-    private static final String CAMINHO_FUNCIONARIOS = "trabalho/dados_Funcionarios.txt";
+    private static final String CAMINHO_LANCAMENTOS = AppConfig.LANCAMENTOS;
+    private static final String CAMINHO_FUNCIONARIOS = AppConfig.DADOS_FUNCIONARIOS;
     private Funcionario funcionario;
 
     private List<Lancamento> proventos = new ArrayList<>();
@@ -260,7 +260,7 @@ public class DetalhesSalarioController {
     }
     @FXML
     private void salvarFuncionario() {
-        String caminho = "funcionarios.txt";
+        String caminho = AppConfig.FUNCIONARIOS;
         try (PrintWriter pw = new PrintWriter(new FileWriter(caminho, true))) {
             pw.println("Nome: " + funcionario.getNome());
 

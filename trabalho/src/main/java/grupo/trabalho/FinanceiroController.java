@@ -86,7 +86,7 @@ public class FinanceiroController {
         }
     }
 
-    private final String CAMINHO_ARQUIVO = "trabalho/dados_Funcionarios.txt"; //dados_Funcionarios.txt PRA MIM
+    private final String CAMINHO_ARQUIVO = AppConfig.DADOS_FUNCIONARIOS;
 
     @FXML
     public void atualizarTabela() {

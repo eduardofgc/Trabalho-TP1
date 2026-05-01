@@ -13,18 +13,12 @@ import java.io.IOException;
 public class HelloController {
 
     static Usuario currentUser;
-    static boolean gambiarra;
 
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private TextField passwordField;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button exitButton;
-    @FXML
-    private Button logoutButton;
+    @FXML private TextField usernameField;
+    @FXML private TextField passwordField;
+    @FXML private Button loginButton;
+    @FXML private Button exitButton;
+    @FXML private Button logoutButton;
 
     @FXML
     public void initialize() {
@@ -38,29 +32,28 @@ public class HelloController {
         String triedUsername = usernameField.getText();
         String triedPassword = passwordField.getText();
 
+        if (triedUsername.isEmpty() || triedPassword.isEmpty()) {
+            AlertHelper.showInfo("Preencha o login e a senha.");
+            return;
+        }
+        
         boolean found = AdmClasses.checkForUser(triedUsername, triedPassword);
         currentUser = AdmClasses.searchFor(triedUsername);
-
-        if (currentUser != null) {
-            System.out.println(currentUser.getLogin());
-            System.out.println(currentUser.isAdmin);
-            System.out.println(currentUser.isGestor);
-            System.out.println(currentUser.isCandidato);
-            System.out.println(currentUser.isRecrutador);
-        }
 
         if (found && currentUser != null) {
             Stage prevStage = (Stage) loginButton.getScene().getWindow();
             prevStage.close();
 
-            FXMLLoader mainScreenFXML = new FXMLLoader(getClass().getResource("second-view.fxml"));
-            Parent mainRoot = mainScreenFXML.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("second-view.fxml"));
+            Parent root = loader.load();
             Stage mainStage = new Stage();
             mainStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
-            mainStage.setScene(new Scene(mainRoot));
+            mainStage.setScene(new Scene(root));
             mainStage.setResizable(false);
             mainStage.setTitle("Gestão de RH - Menu Principal");
             mainStage.show();
+        } else {
+            AlertHelper.showInfo("Login ou senha incorretos.");
         }
     }
 
@@ -68,13 +61,13 @@ public class HelloController {
     private void handleLogout() throws IOException {
         Stage prevStage = (Stage) logoutButton.getScene().getWindow();
         prevStage.close();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo/trabalho/hello-view.fxml"));
+        Parent root = loader.load();
         Stage loginStage = new Stage();
-        FXMLLoader loginFXMLLoader = new FXMLLoader(getClass().getResource("/grupo/trabalho/hello-view.fxml"));
-        Parent loginRoot = loginFXMLLoader.load();
-        Scene scene = new Scene(loginRoot);
         loginStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo trabalho tp.png")));
         loginStage.setTitle("Gestão de RH");
-        loginStage.setScene(scene);
+        loginStage.setScene(new Scene(root));
         loginStage.setResizable(false);
         loginStage.show();
     }
@@ -85,4 +78,3 @@ public class HelloController {
         prevStage.close();
     }
 }
-

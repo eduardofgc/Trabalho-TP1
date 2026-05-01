@@ -121,7 +121,7 @@ public class EntrevistaController {
     }
 
     private void saveEntrevistasToFile() {
-        try (FileWriter fw = new FileWriter("entrevistasInfo.txt")) {
+        try (FileWriter fw = new FileWriter(AppConfig.ENTREVISTAS_INFO)) {
             for (Entrevista e : entrevistasArray) {
                 fw.write(e.getData() + "," + e.getAvaliador() + "," + (e.getParecer() != null ? e.getParecer() : "") + "," + e.getNota() + System.lineSeparator());
             }
@@ -132,7 +132,7 @@ public class EntrevistaController {
 
     private void fetchEntrevistasFromFile() {
         entrevistasArray.clear();
-        try (BufferedReader br = new BufferedReader(new FileReader("entrevistasInfo.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(AppConfig.ENTREVISTAS_INFO))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(",", 4);
@@ -149,6 +149,3 @@ public class EntrevistaController {
         } catch (IOException ignored) {}
     }
 }
-
-
-
