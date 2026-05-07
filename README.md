@@ -6,7 +6,7 @@ Trabalho Final — Técnicas de Programação 1
 <div align="center">
   <img src="docs/logo.png" alt="Tela principal do sistema"/>
 </div>
----
+
 
 ## Integrantes
 
