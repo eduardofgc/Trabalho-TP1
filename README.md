@@ -3,6 +3,8 @@
 Trabalho Final — Técnicas de Programação 1
 **Grupo 6** | Universidade de Brasília
 
+![Gamma RH](docs/logo.png)
+
 ---
 
 ## Integrantes
